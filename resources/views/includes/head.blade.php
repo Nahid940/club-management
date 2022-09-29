@@ -30,4 +30,6 @@
     .col-sm-3 {
         max-width: 20% !important;
     }
+    @yield('style')
 </style>
+
