@@ -154,7 +154,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="">Educational Background</label>
-                                    <table id="" class="table table-bordered table-hover">
+                                    <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
                                                 <th>Name of the Institution</th>
@@ -353,7 +353,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="">Membership Details of Other Club/Institution/Association</label>
-                                    <table id="" class="table table-bordered table-hover">
+                                    <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
                                                 <th>Club Name</th>
@@ -425,7 +425,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="">Dependent Details</label>
-                                    <table id="" class="table table-bordered table-hover">
+                                    <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>

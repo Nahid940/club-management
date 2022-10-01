@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\MemberServiceProvider;
+
 return [
 
     /*
@@ -174,6 +176,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // My providers
+        App\Providers\MemberServiceProvider::class,
 
     ],
 

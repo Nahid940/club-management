@@ -12,6 +12,9 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>
+                        </tr>
+                        <tr>
                             <th>Rendering engine</th>
                             <th>Browser</th>
                             <th>Platform(s)</th>

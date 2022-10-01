@@ -18,6 +18,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::controller(MemberController::class)->group(function () {
+    Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
     Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
