@@ -7,4 +7,5 @@ interface MemberInterface{
     public function addMember(array $data);
     public function deleteMember(int $id);
     public function updateMember(array $data);
+    public function getPostedData(object $data);
 }

@@ -21,15 +21,8 @@
 <!-- Daterange picker -->
 <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 <!-- summernote -->
-<link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+<link rel="stylesheet" href="{{asset('css/bs-stepper.min.css')}}">
 <style>
-    .form-control{
-        height: calc(1.85rem)!important;
-        padding: .1rem 0.75rem!important;
-    }
-    .col-sm-3 {
-        max-width: 20% !important;
-    }
     @yield('style')
 </style>
 

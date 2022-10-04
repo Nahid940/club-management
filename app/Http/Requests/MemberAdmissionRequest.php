@@ -24,6 +24,7 @@ class MemberAdmissionRequest extends FormRequest
     public function rules()
     {
         return [
+            'registration_date'=>'required',
             'name'=>'required',
             'member_type'=>'required',
             'nid'=>'required',
