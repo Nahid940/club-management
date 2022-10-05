@@ -38,7 +38,12 @@ class MemberController extends Controller
 
     public function save(MemberAdmissionRequest $request)
     {
-        $data=$this->memberInfo->getPostedData($request);;
-        dd($data);
+        $data=$this->memberInfo->getPostedData($request);
+        $insert_id=$this->memberInfo->addMember($data);
+        if(!empty($insert_id))
+        {
+            $message="Member added successfully!!";
+            return redirect()->route('member-admission')->with(['message' => $message,'id'=>$insert_id]);
+        }
     }
 }

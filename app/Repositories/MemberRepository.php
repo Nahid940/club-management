@@ -2,6 +2,7 @@
 namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Cast\Object_;
 
 class MemberRepository implements MemberInterface
@@ -16,6 +17,60 @@ class MemberRepository implements MemberInterface
     }
 
     public function addMember(array $data){
+        $member_basic_data=array(
+            'registration_date'         =>   $data['registration_date'],
+            "first_name"                =>   $data['name'],
+            "last_name"                 =>   $data['name'],
+            "member_type"               =>   $data['member_type'],
+            "blood_group"               =>   $data['blood_group'],
+            "college_roll"              =>   $data['college_roll'],
+            "date_of_birth"             =>   $data['date_of_birth'],
+            "nid"                       =>   $data['nid'],
+            "passport"                  =>   $data['passport'],
+            "marital_status"            =>   $data['marital_status'],
+            "date_of_annniversary"      =>   $data['date_of_annniversary'],
+            "no_of_dependants"          =>   $data['no_of_dependants'],
+            "fathers_name"              =>   $data['fathers_name'],
+            "mothers_name"              =>   $data['mothers_name'],
+            "mobile_number"             =>   $data['mobile_number'],
+            "email"                     =>   $data['email'],
+            "present_address"           =>   $data['present_address'],
+            "permanent_address"         =>   $data['permanent_address'],
+            "company_name"              =>   $data['company_name'],
+            "designation"               =>   $data['designation'],
+            "office_address"            =>   $data['office_address'],
+            "office_phone"              =>   $data['office_phone'],
+            "office_mobile"             =>   $data['office_mobile'],
+            "all_correspondence"        =>   $data['all_correspondence'],
+            "should_be_sent_to"         =>   $data['should_be_sent_to'],
+            "ever_declined"             =>   $data['ever_declined'],
+            "details_of_decline"        =>   $data['details_of_decline'],
+            "application_rejected"      =>   $data['application_rejected'],
+            "details_of_reject"         =>   $data['details_of_reject'],
+            "criminal_ofence"           =>   $data['criminal_ofence'],
+            "details_of_criminal_ofence"=>   $data['details_of_criminal_ofence'],
+            "car_owned"                 =>   $data['car_owned'],
+            "car_reg_no"                =>   $data['car_reg_no'],
+            "car_ownership_type"        =>   $data['car_ownership_type'],
+            "spouse_name"               =>   $data['spouse_name'],
+            "spouse_date_of_birth"      =>   $data['spouse_date_of_birth'],
+            "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
+            "spouse_email"              =>   $data['spouse_email'],
+        );
+        $id=DB::table('members')->insertGetId($member_basic_data);
+        return $id;
+        // "club_name"=>$data['club_name'],
+        // "membership_no"=>$data['membership_no'],
+        // "membership_type"=>$data['membership_type'],
+        // "dep_name"=>$data['dep_name'],
+        // "dep_dob"=>$data['dep_dob'],
+        // "dep_blood_group"=>$data['dep_blood_group'],
+        // "dep_occupation"=>$data['dep_occupation'],
+        // "dep_nid"=>$data['dep_nid'],
+        // "branch_name"=>$data['branch_name'],
+        // "acc_no"=>$data['acc_no'],
+
+        // DB::table('student_details')->insert($data);
 
     }
 
