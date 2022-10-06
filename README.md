@@ -11,4 +11,3 @@ This is going to be a powerful club management system that can help to aid day t
 - Membership, Payment tracking and ledger.
 - User, role & permission wise activity.
 - Security.
-

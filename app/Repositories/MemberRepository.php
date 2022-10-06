@@ -9,11 +9,30 @@ class MemberRepository implements MemberInterface
 {
 
     public function getMember(int $id){
-        echo $id;
+        $member = DB::table('members')
+                ->where('id', $id)
+                ->where('status',1)// 1 for active
+                ->where('branch_id',1)
+                ->first();
+        if($member->member_type==1)
+        {
+            $member->member_type="Donor Member";
+        }elseif($member->member_type==2)
+        {
+            $member->member_type="Life Member";
+        }elseif($member->member_type==3)
+        {
+            $member->member_type="NRB Member";
+        }else
+        {
+            $member->member_type="Genera Member";
+        }
+        return $member;
     }
 
     public function getMembers(array $data){
-
+        $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")->paginate(15);
+        return $members;
     }
 
     public function addMember(array $data){
@@ -34,6 +53,7 @@ class MemberRepository implements MemberInterface
             "mothers_name"              =>   $data['mothers_name'],
             "mobile_number"             =>   $data['mobile_number'],
             "email"                     =>   $data['email'],
+            "occupation_type"           =>   $data['occupation_type'],
             "present_address"           =>   $data['present_address'],
             "permanent_address"         =>   $data['permanent_address'],
             "company_name"              =>   $data['company_name'],
@@ -41,6 +61,7 @@ class MemberRepository implements MemberInterface
             "office_address"            =>   $data['office_address'],
             "office_phone"              =>   $data['office_phone'],
             "office_mobile"             =>   $data['office_mobile'],
+            "office_email"              =>   $data['office_email'],
             "all_correspondence"        =>   $data['all_correspondence'],
             "should_be_sent_to"         =>   $data['should_be_sent_to'],
             "ever_declined"             =>   $data['ever_declined'],
@@ -111,6 +132,7 @@ class MemberRepository implements MemberInterface
         $data['office_address']=$request->office_address;
         $data['office_phone']=$request->office_phone;
         $data['office_mobile']=$request->office_mobile;
+        $data['office_email']=$request->office_email;
         $data['all_correspondence']=$request->all_correspondence;
         $data['should_be_sent_to']=$request->should_be_sent_to;
         $data['ever_declined']=$request->ever_declined;

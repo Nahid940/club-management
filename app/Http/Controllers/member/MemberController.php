@@ -21,13 +21,22 @@ class MemberController extends Controller
     public function index()
     {
         $pageTitle="Member List";
-        return view('pages.member.index',['title' => $pageTitle]);
+        $data['branch_id']=1;
+        $members=$this->memberInfo->getMembers($data);
+        return view('pages.member.index',['title' => $pageTitle,'members'=>$members]);
     }
 
     public function read($id)
     {
         $member=$this->memberInfo->getMember($id);
-        return view('pages.member.view',['title' => ""]);
+        return view('pages.member.view',['title' => "",'member'=>$member]);
+    }
+
+    public function edit($id)
+    {
+        echo $id;die;
+        $member=$this->memberInfo->getMember($id);
+        return view('pages.member.view',['title' => "",'member'=>$member]);
     }
 
     public function admission()

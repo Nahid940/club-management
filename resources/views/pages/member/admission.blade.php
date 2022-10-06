@@ -119,7 +119,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Member Type <span class="txt-info">*</span></label>
-                                    <select class="form-control" id="member_type" name="member_type" value="{{ old('member_type') }}">
+                                    <select class="form-control" id="member_type" name="member_type">
                                         <option value="">--Select--</option>
                                         <option value="1" {{old ('member_type') == 1 ? 'selected' : ''}}>Donor Member</option>
                                         <option value="2" {{old ('member_type') == 2 ? 'selected' : ''}}>Life Member</option>
