@@ -34,9 +34,8 @@ class MemberController extends Controller
 
     public function edit($id)
     {
-        echo $id;die;
         $member=$this->memberInfo->getMember($id);
-        return view('pages.member.view',['title' => "",'member'=>$member]);
+        return view('pages.member.edit',['title' => "",'member'=>$member]);
     }
 
     public function admission()

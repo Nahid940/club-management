@@ -17,15 +17,19 @@ class MemberRepository implements MemberInterface
         if($member->member_type==1)
         {
             $member->member_type="Donor Member";
+            $member->member_type_dropdown=1;
         }elseif($member->member_type==2)
         {
             $member->member_type="Life Member";
+            $member->member_type_dropdown=2;
         }elseif($member->member_type==3)
         {
             $member->member_type="NRB Member";
+            $member->member_type_dropdown=3;
         }else
         {
             $member->member_type="Genera Member";
+            $member->member_type_dropdown=4;
         }
         return $member;
     }
