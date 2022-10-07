@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\MemberServiceProvider;
+use App\Providers\ScheduleServiceProvider;
 
 return [
 
@@ -179,6 +180,7 @@ return [
 
         // My providers
         App\Providers\MemberServiceProvider::class,
+        App\Providers\ScheduleServiceProvider::class,
 
     ],
 

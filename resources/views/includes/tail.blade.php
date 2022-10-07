@@ -3,6 +3,7 @@
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('js/adminlte.min.js')}}"></script>
 <script src="{{asset('js/jquery.overlayScrollbars.min.js')}}"></script>
+@yield('script_link')
 <script>
     @yield('script')
 </script>

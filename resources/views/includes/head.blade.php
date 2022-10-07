@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 <!-- summernote -->
 <link rel="stylesheet" href="{{asset('css/bs-stepper.min.css')}}">
+@yield('style_link')
 <style>
     @yield('style')
 </style>

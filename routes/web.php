@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\member\MemberController;
+use App\Http\Controllers\schedule\ScheduleBookingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,4 +26,10 @@ Route::controller(MemberController::class)->group(function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
     Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
+});
+
+Route::controller(ScheduleBookingController::class)->group(function(){
+    Route::get('schedule/book',[ScheduleBookingController::class,'view'])->name('schedule-book');
+    Route::post('schedule/book',[ScheduleBookingController::class,'addSchedule'])->name('schedule-book');
+    Route::get('schedule/calender-schedules',[ScheduleBookingController::class,'getScheduleForCalender'])->name('calender-schedules');
 });
