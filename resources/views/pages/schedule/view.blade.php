@@ -77,25 +77,7 @@
   </div>
 @stop
 @section('script')
-    function getEvents()
-    {
-        let events_data=[];
-        $.ajax({
-            type:'GET',
-            url:'/schedule/calender-schedules',
-            dataType: 'json',
-            success:function(data)
-            {
-                for(let i=0;i<data.length;i++)
-                {
-                    {{-- console.log(JSON.parse(data[i])) --}}
-                    events_data.push(data[i])
-                }
-            }
-        })
-        return events_data;
-    }
-    
+ 
     $(function () {
 
         {{-- let events = []; --}}
@@ -143,25 +125,26 @@
                 },
                 themeSystem: 'bootstrap',
                 
-                events: function(){
-                    let events_data=[];
-                    $.ajax({
-                        type:'GET',
-                        url:'/schedule/calender-schedules',
-                        dataType: 'json',
-                        success:function(data)
-                        {
-                            for(let i=0;i<data.length;i++)
-                            {
-                                {{-- console.log(JSON.parse(data[i])) --}}
-                                events_data.push(data[i])
-                            }
-                        }
-                    })
-                },
-                  
-                
-
+                events: function (fetchInfo, successCallback, failureCallback) {
+                    jQuery.ajax({
+                      url: "/schedule/calender-schedules",
+                      type: "GET",
+                      success: function (res) {
+                        var events = [];
+                        res.forEach(function (evt) {
+                          events.push({
+                            title: evt.title,
+                            start: evt.start,
+                            end: evt.end,
+                            background: evt.background,
+                            time: evt.time,
+                          });
+                        });
+                        successCallback(events);
+                      },
+                    });
+                  },
+             
                 editable  : true,
                 droppable : true, // this allows things to be dropped onto the calendar !!!
                 drop      : function(info) {
@@ -178,7 +161,7 @@
                     let schedule_title=$('#schedule_title').val()
                     let total_days=$('#total_days').val()
                     let schedule_time=$('#schedule_time').val()
-                    event=createEvent(dateClickInfo.dateStr, schedule_title,parseInt(total_days));
+                    event=createEvent(dateClickInfo.dateStr, schedule_title,parseInt(total_days),schedule_time);
                     let date=new Date(dateClickInfo.dateStr).getDate()
                     let month=new Date(dateClickInfo.dateStr).getMonth()+1
                     let year=new Date(dateClickInfo.dateStr).getFullYear()
@@ -247,7 +230,7 @@
             $('#new-event').val('')
         })
     })
-    function createEvent(startDate, title, no_of_days) {
+    function createEvent(startDate, title, no_of_days,time) {
         let currColor = '#3c8dbc'
         let date=new Date(startDate);
         let event = {
@@ -255,6 +238,7 @@
                 title: title,
                 start: startDate,
                 end: new Date(date.setDate(date.getDate()+no_of_days)),
+                time:  time,
                 allDay:  true,
                 background: '#3c8dbc',
             }
