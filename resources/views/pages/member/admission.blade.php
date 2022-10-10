@@ -334,11 +334,11 @@
                             <div class="col-sm-4">
                                 <label for="ever_declined">Have you ever been declined membership of this club?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="ever_declined" type="checkbox" value="1">
+                                        <input class="form-check-input ever_declined1" name="ever_declined" type="checkbox" value="1">
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="ever_declined" type="checkbox" value="0">
+                                        <input class="form-check-input ever_declined2" name="ever_declined" type="checkbox" value="0">
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -352,11 +352,11 @@
                             <div class="col-sm-4">
                                 <label for="application_rejected">Have your membership application ever been rejected by other club/inst.?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="application_rejected" type="checkbox" value="1">
+                                        <input class="form-check-input application_rejected1" name="application_rejected" type="checkbox" value="1">
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="application_rejected" type="checkbox" value="0">
+                                        <input class="form-check-input application_rejected2" name="application_rejected" type="checkbox" value="0">
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -370,11 +370,11 @@
                             <div class="col-sm-4">
                                 <label for="criminal_ofence">Ever punished for criminal ofence?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="criminal_ofence" type="checkbox" value="1">
+                                        <input class="form-check-input criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="criminal_ofence" type="checkbox" value="0">
+                                        <input class="form-check-input criminal_ofence2" name="criminal_ofence" type="checkbox" value="0">
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -384,20 +384,18 @@
                             </div>
                         </div>
 
-
-
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="car_owned">Car owned?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                      <input type="checkbox"  name="car_owned"  id="checkboxPrimary1" value="1">
+                                      <input type="checkbox"  name="car_owned" class="car_owned1"  id="checkboxPrimary1" value="1">
                                       <label for="checkboxPrimary1">
                                           Yes
                                       </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                      <input type="checkbox"  name="car_owned"  id="checkboxPrimary2" value="0">
+                                      <input type="checkbox"  name="car_owned" class="car_owned2"  id="checkboxPrimary2" value="0">
                                       <label for="checkboxPrimary2">
                                           No
                                       </label>
@@ -412,19 +410,19 @@
                                 <label for="car_owned">Car ownership type?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                        <input name="car_ownership_type" type="checkbox" value="1"  id="car_ownership_type1" value="1">
+                                        <input name="car_ownership_type" type="checkbox"  id="car_ownership_type1" value="1">
                                         <label for="car_ownership_type1">
                                             Personal
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input name="car_ownership_type" type="checkbox" value="2" id="car_ownership_type2" value="2">
+                                        <input name="car_ownership_type" type="checkbox" id="car_ownership_type2" value="2">
                                         <label for="car_ownership_type2">
                                         Office
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input name="car_ownership_type" type="checkbox" value="3" id="car_ownership_type3" value="3">
+                                        <input name="car_ownership_type" type="checkbox" id="car_ownership_type3" value="3">
                                         <label for="car_ownership_type3">
                                             Rented
                                         </label>
@@ -654,7 +652,51 @@
             
         }
         step--;
-        
-        
     });
+
+    $('.ever_declined1').on('click',function(){
+        $('.ever_declined2').prop('checked',false);
+    })
+    $('.ever_declined2').on('click',function(){
+        $('.ever_declined1').prop('checked',false);
+    })
+
+    $('.application_rejected1').on('click',function(){
+        $('.application_rejected2').prop('checked',false);
+    })
+    $('.application_rejected2').on('click',function(){
+        $('.application_rejected1').prop('checked',false);
+    })
+
+
+    $('.criminal_ofence1').on('click',function(){
+        $('.criminal_ofence2').prop('checked',false);
+    })
+    $('.criminal_ofence2').on('click',function(){
+        $('.criminal_ofence1').prop('checked',false);
+    })
+
+    $('.car_owned1').on('click',function(){
+        $('.car_owned2').prop('checked',false);
+    })
+    $('.car_owned2').on('click',function(){
+        $('.car_owned1').prop('checked',false);
+    })
+
+
+    $('#car_ownership_type1').on('click',function(){
+        $('#car_ownership_type2').prop('checked',false);
+        $('#car_ownership_type3').prop('checked',false);
+    })
+
+    $('#car_ownership_type2').on('click',function(){
+        $('#car_ownership_type1').prop('checked',false);
+        $('#car_ownership_type3').prop('checked',false);
+    })
+
+    $('#car_ownership_type3').on('click',function(){
+        $('#car_ownership_type2').prop('checked',false);
+        $('#car_ownership_type1').prop('checked',false);
+    })
+
 @stop
