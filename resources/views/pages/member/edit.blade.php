@@ -334,11 +334,11 @@
                             <div class="col-sm-4">
                                 <label for="ever_declined">Have you ever been declined membership of this club?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="ever_declined" type="checkbox" value="1" {{ $member->ever_declined==1?"checked":"" }}>
+                                        <input class="form-check-input ever_declined1" name="ever_declined" type="checkbox" value="1" {{ $member->ever_declined==1?"checked":"" }}>
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="ever_declined" type="checkbox" value="0" {{ $member->ever_declined==0?"checked":"" }}>
+                                        <input class="form-check-input ever_declined2" name="ever_declined" type="checkbox" value="0" {{ $member->ever_declined==0?"checked":"" }}>
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -352,11 +352,11 @@
                             <div class="col-sm-4">
                                 <label for="application_rejected">Have your membership application ever been rejected by other club/inst.?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="application_rejected" type="checkbox" value="1" {{ $member->application_rejected==1?"checked":"" }}>
+                                        <input class="form-check-input application_rejected1" name="application_rejected" type="checkbox" value="1" {{ $member->application_rejected==1?"checked":"" }}>
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="application_rejected" type="checkbox" value="0"  {{ $member->application_rejected==0?"checked":"" }}>
+                                        <input class="form-check-input application_rejected2" name="application_rejected" type="checkbox" value="0"  {{ $member->application_rejected==0?"checked":"" }}>
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -370,11 +370,11 @@
                             <div class="col-sm-4">
                                 <label for="criminal_ofence">Ever punished for criminal ofence?</label>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="criminal_ofence" type="checkbox" value="1"  {{ $member->criminal_ofence==1?"checked":"" }}>
+                                        <input class="form-check-input criminal_ofence1" name="criminal_ofence" type="checkbox" value="1"  {{ $member->criminal_ofence==1?"checked":"" }}>
                                         <label class="form-check-label">Yes</label>
                                 </div>
                                 <div class="form-check">
-                                        <input class="form-check-input" name="criminal_ofence" type="checkbox" value="0"  {{ $member->criminal_ofence==0?"checked":"" }}>
+                                        <input class="form-check-input criminal_ofence2" name="criminal_ofence" type="checkbox" value="0"  {{ $member->criminal_ofence==0?"checked":"" }}>
                                         <label class="form-check-label">No</label>
                                 </div>
                             </div>
@@ -391,13 +391,13 @@
                                 <label for="car_owned">Car owned?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                      <input type="checkbox"  name="car_owned"  id="checkboxPrimary1" value="1"  {{ $member->car_owned==1?"checked":"" }}>
+                                      <input type="checkbox" class="car_owned1"  name="car_owned"  id="checkboxPrimary1" value="1"  {{ $member->car_owned==1?"checked":"" }}>
                                       <label for="checkboxPrimary1">
                                           Yes
                                       </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                      <input type="checkbox"  name="car_owned"  id="checkboxPrimary2" value="0"  {{ $member->car_owned==0?"checked":"" }}>
+                                      <input type="checkbox" class="car_owned2" name="car_owned"  id="checkboxPrimary2" value="0"  {{ $member->car_owned==0?"checked":"" }}>
                                       <label for="checkboxPrimary2">
                                           No
                                       </label>
@@ -596,7 +596,9 @@
     </div>
 </div>
 @stop
-
+@section('script_link')
+    <script src="{{asset('js/input-form.js')}}"></script>
+@stop
 @section('script')
     let step=0;
     $("#next").click(function(){
@@ -654,7 +656,5 @@
             
         }
         step--;
-        
-        
     });
 @stop
