@@ -106,9 +106,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('schedule-book')}}" class="nav-link">
+                <a href="{{route('user-add')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Manage User</p>
+                  <p>Add new</p>
                 </a>
               </li>
               <li class="nav-item">

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\member\MemberController;
 use App\Http\Controllers\schedule\ScheduleBookingController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,8 @@ Route::controller(ScheduleBookingController::class)->group(function(){
     Route::get('schedule/book',[ScheduleBookingController::class,'view'])->name('schedule-book');
     Route::post('schedule/book',[ScheduleBookingController::class,'addSchedule'])->name('schedule-book');
     Route::get('schedule/calender-schedules',[ScheduleBookingController::class,'getScheduleForCalender'])->name('calender-schedules');
+});
+
+Route::controller(UserController::class)->group(function(){
+    Route::get('user/add',[UserController::class,'add'])->name('user-add');
 });
