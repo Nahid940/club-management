@@ -12,13 +12,23 @@
               <div class="card-header">
                 <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Add new user</h3>
               </div>
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
               <!-- /.card-header -->
               <!-- form start -->
-              <form>
+              <form action="{{route('user-save')}}" method="POST">
+                {{ csrf_field() }}
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">First Name *</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" placeholder="First Name">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Last Name</label>
@@ -30,20 +40,19 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Username *</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Password">
+                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Password">
                   </div>
                   <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password *</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
                           </div>
-                          
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Confirm Password *</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="confirm_password" name="password_confirmation" placeholder="Confirm Password">
                           </div>
                       </div>
                   </div>

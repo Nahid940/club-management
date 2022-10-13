@@ -181,6 +181,7 @@ return [
         // My providers
         App\Providers\MemberServiceProvider::class,
         App\Providers\ScheduleServiceProvider::class,
+        App\Providers\UserServiceProvider::class,
 
     ],
 
