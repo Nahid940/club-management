@@ -28,6 +28,18 @@ class MemberMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $senderEmail = "nahid940@gmail.com";
+        $senderMessage = "Hello I am from SES";
+        $senderName = "Nahid";
+        $data = [
+            'senderEmail' => $senderEmail,
+            'senderMessage' => $senderMessage,
+            'senderName' => $senderName,
+        ];
+        return $this
+            ->from(config('mail.contact.address'))
+            ->replyTo($senderEmail, $senderName)
+            ->view('pages.email.email')
+            ->with($data);
     }
 }

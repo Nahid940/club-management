@@ -4,9 +4,11 @@ namespace App\Http\Controllers\member;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MemberAdmissionRequest;
 use App\Interfaces\MemberInterface;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\MemberAdmissionRequest;
+use App\Mail\MemberMail;
 
 class MemberController extends Controller
 {
@@ -50,6 +52,7 @@ class MemberController extends Controller
         $insert_id=$this->memberInfo->addMember($data);
         if(!empty($insert_id))
         {
+            Mail::to(["nahid35@diit.info"])->send(new MemberMail());
             $message="Member added successfully!!";
             return redirect()->route('member-admission')->with(['message' => $message,'id'=>$insert_id]);
         }
