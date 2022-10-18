@@ -39,7 +39,7 @@ class MemberMail extends Mailable
         return $this
             ->from(config('mail.contact.address'))
             ->replyTo($senderEmail, $senderName)
-            ->view('pages.email.email')
+            ->view('pages.email.new_member_email')
             ->with($data);
     }
 }
