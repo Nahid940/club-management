@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\member\MemberController;
 use App\Http\Controllers\schedule\ScheduleBookingController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,12 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+// Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::controller(MemberController::class)->group(function () {
@@ -39,3 +44,10 @@ Route::controller(UserController::class)->group(function(){
     Route::get('user/add',[UserController::class,'add'])->name('user-add');
     Route::post('user/save',[UserController::class,'save'])->name('user-save');
 });
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
