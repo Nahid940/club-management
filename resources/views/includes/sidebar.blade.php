@@ -119,6 +119,28 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+                Account
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <form method="POST" action="{{ route('logout') }}" class="nav-link">
+                  <a  style="cursor:pointer" data-toggle="" onclick="event.preventDefault();this.closest('form').submit();">
+                    <p>
+                      <i class="fas fa-sign-out-alt "></i> 
+                      Logout
+                    </p>
+                  </a>
+                      @csrf
+              </form>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

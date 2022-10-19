@@ -17,12 +17,12 @@ use App\Http\Controllers\schedule\ScheduleBookingController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
-// Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->middleware(['auth'])->name('home');
 
 
 Route::controller(MemberController::class)->group(function () {
