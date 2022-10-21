@@ -22,7 +22,11 @@ use App\Http\Controllers\schedule\ScheduleBookingController;
 // });
 
 
-Route::get('/', [HomeController::class, 'index'])->middleware(['auth'])->name('home');
+
+
+Route::middleware(['auth', 'user-type:admin'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+});
 
 
 Route::controller(MemberController::class)->group(function () {
