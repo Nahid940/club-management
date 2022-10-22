@@ -4,6 +4,7 @@ namespace App\Http\Controllers\schedule;
 use App\Http\Controllers\Controller;
 use App\Interfaces\ScheduleInterface;
 use App\Http\Requests\ScheduleRequest;
+use App\Providers\ScheduleServiceProvider;
 
 class ScheduleBookingController extends Controller
 {
@@ -32,7 +33,7 @@ class ScheduleBookingController extends Controller
 
     public function getScheduleForCalender()
     {
-        $eventObject=$this->schedule->getScheduleObjects(['branch_id'=>1,"user_id"=>1,"status"=>1]);
+        $eventObject=$this->schedule->getScheduleObjects(['branch_id'=>1,"user_id"=>1,"status"=>config('status_code.ACTIVE_SCHEDULE_STATUS')]);
         return $eventObject;
     }
 }

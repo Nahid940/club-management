@@ -13,6 +13,7 @@ class ScheduleServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
     public function register()
     {
         $this->app->bind(ScheduleInterface::class, ScheduleRepository::class);
