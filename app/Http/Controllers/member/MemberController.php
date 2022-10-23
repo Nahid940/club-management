@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\member;
 
+use App\Mail\MemberMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\MemberInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\MemberAdmissionRequest;
-use App\Mail\MemberMail;
 
 class MemberController extends Controller
 {
@@ -31,6 +32,8 @@ class MemberController extends Controller
     public function read($id)
     {
         $member=$this->memberInfo->getMember($id);
+        // $redis = new Redis();
+        // Redis::set('member', $member);
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
 
