@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Interfaces\MemberInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redis;
 use App\Http\Requests\MemberAdmissionRequest;
+use Illuminate\Support\Facades\Redis;
 
 class MemberController extends Controller
 {
@@ -32,8 +32,13 @@ class MemberController extends Controller
     public function read($id)
     {
         $member=$this->memberInfo->getMember($id);
-        // $redis = new Redis();
-        // Redis::set('member', $member);
+        $redis = new Redis();
+        $member_object=[
+            "name"=>$member->first_name,
+            "email"=>$member->email,
+            "phone"=>$member->phone_number
+        ];
+        $redis::set('member',json_encode($member_object));
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
 
