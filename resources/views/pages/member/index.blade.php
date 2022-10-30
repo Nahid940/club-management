@@ -69,6 +69,15 @@
                         </div>
                     </div>
                 </form>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         {{-- <tr>
@@ -106,7 +115,7 @@
                                 <td>
                                     <a href="{{route('member-read',$member->id)}}" title="View" type="button" class="btn btn-warning action_button"><i class="fas fa-user"></i></a>
                                     <a type="button" href="{{route('member-edit',$member->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i></a>
-                                    <a type="button" title="Delete" class="btn btn-danger action_button"><i class="fas fa-trash"></i></a>
+                                    <a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$member->id}}><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -118,5 +127,35 @@
         {{ $members->links() }}
         <!-- /.card -->
     </div>
+    <form action="{{route('member-delete')}}" method="POST" id="member_del">
+        {{ csrf_field() }}
+        <input type="hidden" name="_method" value="delete" />
+        <input type="hidden" name="member_id" id="member_id"/>
+    </form>
 </div>
+@stop
+@section('script')
+    $('.delete').on('click',function(){
+        let id=$(this).attr('data-id')
+        $('#member_id').val(id)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                {{-- Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                ) --}}
+                $('#member_del').submit();
+            }
+        })
+    })
+    
 @stop

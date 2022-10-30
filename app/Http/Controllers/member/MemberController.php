@@ -9,6 +9,7 @@ use App\Interfaces\MemberInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\MemberAdmissionRequest;
+use App\Http\Requests\MemberDeleteRequest;
 use Illuminate\Support\Facades\Redis;
 
 class MemberController extends Controller
@@ -64,5 +65,13 @@ class MemberController extends Controller
             $message="Member added successfully!!";
             return redirect()->route('member-admission')->with(['message' => $message,'id'=>$insert_id]);
         }
+    }
+
+    public function delete(MemberDeleteRequest $request)
+    {
+       $id=$request->member_id;
+       $this->memberInfo->deleteMember($id);
+       $message="Member moved to trash!!";
+       return redirect()->route('member-index')->with(['message' => $message]);
     }
 }

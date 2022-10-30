@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 class MemberRepository implements MemberInterface
 {
 
+    protected $ACTIVE_STATUS=1;
+
     public function getMember(int $id){
         $member = DB::table('members')
                 ->where('id', $id)
@@ -34,7 +36,9 @@ class MemberRepository implements MemberInterface
     }
 
     public function getMembers(array $data){
-        $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")->paginate(15);
+        $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
+        ->where('status',$this->ACTIVE_STATUS)
+        ->paginate(15);
         return $members;
     }
 
@@ -99,7 +103,9 @@ class MemberRepository implements MemberInterface
     }
 
     public function deleteMember(int $id){
-
+        DB::table('members')
+        ->where('id', $id)
+        ->update(['status' => 0]);
     }
 
     public function updateMember(array $data){

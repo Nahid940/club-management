@@ -37,6 +37,7 @@ Route::controller(MemberController::class)->group(function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
     Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
+    Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');
 });
 
 Route::controller(ScheduleBookingController::class)->group(function(){
