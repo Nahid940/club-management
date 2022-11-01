@@ -33,35 +33,35 @@
                     <div class="row search_frm">
                         <div class="col-2">
                             {{-- <label for="name">Member Name</label> --}}
-                            <input type="text" value="{{ old('name') }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
+                            <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
                         </div>
                         <div class="col-2">
                             {{-- <label for="email">Email</label> --}}
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
+                            <input type="text" value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
                         </div>
                         <div class="col-2">
                             {{-- <label for="mobile_number">Mobile Number</label> --}}
-                            <input type="text" class="form-control" value="{{ old('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                            <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                         </div>
                         <div class="col-2">
                             {{-- <label>Member Type <span class="txt-info"></span></label> --}}
                             <select class="form-control" id="member_type" name="member_type">
                                 <option value="">--Type Select--</option>
-                                <option value="1" {{old ('member_type') == 1 ? 'selected' : ''}}>Donor Member</option>
-                                <option value="2" {{old ('member_type') == 2 ? 'selected' : ''}}>Life Member</option>
-                                <option value="3" {{old ('member_type') == 3 ? 'selected' : ''}}>NRB Member</option>
-                                <option value="4" {{old ('member_type') == 4 ? 'selected' : ''}}>Genera Member</option>
+                                <option value="1" {{ request()->input('member_type') == 1 ? 'selected' : ''}}>Donor Member</option>
+                                <option value="2" {{ request()->input('member_type') == 2 ? 'selected' : ''}}>Life Member</option>
+                                <option value="3" {{ request()->input('member_type') == 3 ? 'selected' : ''}}>NRB Member</option>
+                                <option value="4" {{ request()->input('member_type') == 4 ? 'selected' : ''}}>Genera Member</option>
                             </select>
                         </div>
                         <div class="col-2">
                             {{-- <label for="blood_group">Blood Group</label> --}}
                             <select class="form-control" id="blood_group" name="blood_group">
                                 <option value="">--Bloog Group Select--</option>
-                                <option value="A+" {{old ('blood_group') == 'A+' ? 'selected' : ''}}>A+</option>
-                                <option value="A-" {{old ('blood_group') == 'A-' ? 'selected' : ''}}>A-</option>
-                                <option value="AB+" {{old ('blood_group') == 'AB+' ? 'selected' : ''}}>AB+</option>
-                                <option value="AB-" {{old ('blood_group') == 'AB-' ? 'selected' : ''}}>AB-</option>
-                                <option value="O+" {{old ('blood_group') == 'O+' ? 'selected' : ''}}>O+</option>
+                                <option value="A+" {{ request()->input('blood_group') == 'A+' ? 'selected' : ''}}>A+</option>
+                                <option value="A-" {{ request()->input('blood_group') == 'A-' ? 'selected' : ''}}>A-</option>
+                                <option value="AB+" {{ request()->input('blood_group') == 'AB+' ? 'selected' : ''}}>AB+</option>
+                                <option value="AB-" {{ request()->input('blood_group') == 'AB-' ? 'selected' : ''}}>AB-</option>
+                                <option value="O+" {{ request()->input('blood_group') == 'O+' ? 'selected' : ''}}>O+</option>
                             </select>
                         </div>
                         <div class="col-2">
@@ -77,6 +77,9 @@
                             @endforeach
                         </ul>
                     </div>
+                @endif
+                @if(session('message'))
+                    <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                 @endif
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
