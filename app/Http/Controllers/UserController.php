@@ -43,7 +43,8 @@ class UserController extends Controller
                 "current_password"=>"required",
                 "new_password"=>"required|confirmed",
             ]);
-            return view('pages.user.password_update',['title'=>$pageTitle]);
+            $message=$this->user->updatePassword($request);
+            return redirect()->route('password-update')->with(['message'=>$message]);
         }
         if ($request->isMethod('get'))
         {

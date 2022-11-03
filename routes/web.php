@@ -49,6 +49,7 @@ Route::controller(ScheduleBookingController::class)->group(function(){
 Route::controller(UserController::class)->group(function(){
     Route::get('user/add',[UserController::class,'add'])->name('user-add');
     Route::post('user/save',[UserController::class,'save'])->name('user-save');
+    Route::match(array('GET', 'POST'), 'user/password/update',[UserController::class,'updatePassword'])->name('password-update');
 });
 
 Route::controller(PaymentController::class)->group(function(){

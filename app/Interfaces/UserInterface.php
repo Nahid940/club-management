@@ -8,4 +8,5 @@ interface UserInterface{
     public function deleteUser(int $id);
     public function updateUser(array $data);
     public function getPostedData(object $data);
+    public function updatePassword(object $data);
 }
