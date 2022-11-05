@@ -51,7 +51,4 @@ class UserController extends Controller
             return view('pages.user.password_update',['title'=>$pageTitle]);
         }
     }
-
-
-
 }
