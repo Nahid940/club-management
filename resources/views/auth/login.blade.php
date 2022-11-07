@@ -6,6 +6,7 @@
     <title>Login</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.0/css/font-awesome.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     @yield('style_link')
@@ -34,7 +35,7 @@
           <input type="email" name="email" :value="old('email')" required autofocus class="form-control" placeholder="Email" required>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -42,7 +43,7 @@
           <input type="password" name="password" class="form-control" placeholder="Password" required>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <i class="fa fa-key" aria-hidden="true"></i>
             </div>
           </div>
         </div>
