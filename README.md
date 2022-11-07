@@ -13,18 +13,27 @@ This is going to be a powerful club management system that can help to aid day t
 - Security.
 
 # Some screen shots of this growing project
+## Login
+<img
+  src="ss/login.png"
+  alt="Alt text"
+  title="Login"
+  style="display: inline-block; margin: 0 auto; ">
+
 ## Member admission
 <img
   src="ss/image2.png"
   alt="Alt text"
   title="Member admission"
   style="display: inline-block; margin: 0 auto; ">
+
   ## Member profile
 <img
   src="ss/image3.png"
   alt="Alt text"
   title="Member profile"
   style="display: inline-block; margin: 0 auto; ">
+  
 ## Schedule plan
 <img
   src="ss/image1.png"
