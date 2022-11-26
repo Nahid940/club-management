@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\employee\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -21,9 +22,6 @@ use App\Http\Controllers\schedule\ScheduleBookingController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-
-
 
 Route::middleware(['auth', 'user-type:admin'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -50,6 +48,10 @@ Route::controller(UserController::class)->group(function(){
     Route::get('user/add',[UserController::class,'add'])->name('user-add');
     Route::post('user/save',[UserController::class,'save'])->name('user-save');
     Route::match(array('GET', 'POST'), 'user/password/update',[UserController::class,'updatePassword'])->name('password-update');
+});
+
+Route::controller(EmployeeController::class)->group(function(){
+    Route::get('employee/index',[EmployeeController::class,'index'])->name('inployee-index');
 });
 
 Route::controller(PaymentController::class)->group(function(){

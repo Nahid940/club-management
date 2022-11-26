@@ -22,6 +22,9 @@
     .search_frm{
         margin-bottom:.6rem
     }
+    .action_btn{
+        padding: 0.1rem .1rem
+    }
 @stop
 @section('content')
 <div class="row">
@@ -116,9 +119,17 @@
                                 <td>{{$member->blood_group}}</td>
                                 <td>{{date('d-m-Y',strtotime($member->registration_date))}}</td>
                                 <td>
-                                    <a href="{{route('member-read',$member->id)}}" title="View" type="button" class="btn btn-warning action_button"><i class="fas fa-user"></i></a>
-                                    <a type="button" href="{{route('member-edit',$member->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i></a>
-                                    <a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$member->id}}><i class="fas fa-trash"></i></a>
+                                    <div class>
+                                        <a href="{{route('member-read',$member->id)}}" title="View" type="button" class=" action_button">View </a>
+                                        <button type="button" class="action_btn btn" data-toggle="dropdown">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                          <li class="dropdown-item"><a type="button" href="{{route('member-edit',$member->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
+                                          <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$member->id}}><i class="fas fa-trash"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                
                                 </td>
                             </tr>
                         @endforeach
