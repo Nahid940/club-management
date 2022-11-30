@@ -23,7 +23,8 @@ use App\Http\Controllers\schedule\ScheduleBookingController;
 //     return view('welcome');
 // });
 
-Route::middleware(['auth', 'user-type:admin'])->group(function () {
+// Route::middleware(['auth', 'user-type:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 });
 
