@@ -29,7 +29,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::controller(MemberController::class)->group(function () {
+Route::middleware(['auth','user-type:3'])->group(function () {
+    Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
+    Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
+    Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
+    Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
+    Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
+});
+
+Route::middleware(['auth','user-type:1'])->group(function () {
     Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
     Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
@@ -38,6 +46,7 @@ Route::controller(MemberController::class)->group(function () {
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');
 });
+
 
 Route::controller(ScheduleBookingController::class)->group(function(){
     Route::get('schedule/book',[ScheduleBookingController::class,'view'])->name('schedule-book');

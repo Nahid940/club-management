@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'user_type' => $request->user_type ? $request->user_type : 3, // 3 for guest user by defult
             'password' => Hash::make($request->password),
         ]);
 
