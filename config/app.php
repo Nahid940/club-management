@@ -2,6 +2,7 @@
 
 use App\Providers\MemberServiceProvider;
 use App\Providers\ScheduleServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 return [
 
@@ -164,6 +165,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Package Service Providers...

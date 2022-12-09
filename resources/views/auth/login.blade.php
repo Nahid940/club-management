@@ -30,7 +30,7 @@
             </div>
         @endif
       <form  method="POST" action="{{ route('login') }}">
-        @csrf
+        {{ csrf_field() }}
         <div class="input-group mb-3">
           <input type="email" name="email" :value="old('email')" required autofocus class="form-control" placeholder="Email" required>
           <div class="input-group-append">
