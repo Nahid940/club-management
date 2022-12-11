@@ -185,6 +185,7 @@ return [
         App\Providers\ScheduleServiceProvider::class,
         App\Providers\UserServiceProvider::class,
         App\Providers\UserRoleServiceProvider::class,
+        App\Providers\PermissionServiceProvider::class,
 
     ],
 

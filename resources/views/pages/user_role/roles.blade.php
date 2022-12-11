@@ -68,6 +68,7 @@
                                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a  href="{{route('permission-index',[$role->id,$role->name])}}" title="Assign permission" class="btn btn-warning action_button"><i class="fa fa-check"></i> Permission</a></li>
                                             <li class="dropdown-item"><a type="button" href="{{route('member-edit',$role->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
                                             <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$role->id}}><i class="fas fa-trash"></i> Delete</a></li>
                                         </ul>

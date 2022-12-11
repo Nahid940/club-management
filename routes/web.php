@@ -8,6 +8,7 @@ use App\Http\Controllers\member\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\schedule\ScheduleBookingController;
 use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\PermissionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,7 +75,10 @@ Route::get('/dashboard', function () {
 //=======================================================================
 //User Role
 Route::get('roles',[UserRoleController::class,'index'])->name('role-index');
-
 //=======================================================================
-
+//=======================================================================
+//Permission
+Route::get('permissions/{role_id}/{role_name}',[PermissionController::class,'index'])->name('permission-index');
+Route::post('assign',[PermissionController::class,'assignPermission'])->name('permission-assign');
+//=======================================================================
 require __DIR__.'/auth.php';
