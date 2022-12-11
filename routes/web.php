@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\member\MemberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\schedule\ScheduleBookingController;
-
+use App\Http\Controllers\UserRoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,17 +29,17 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read')->middleware(['auth','user-type:1,3']);
-Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit')->middleware(['auth','user-type:1,3']);
-Route::post('/members/save', [MemberController::class, 'save'])->name('member-add')->middleware(['auth','user-type:1,3']);
+Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
+Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
+Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
 
 
-Route::group(['middleware' => ['auth','role:admin|member', 'permission:add members']], function () {
+Route::group(['middleware' => ['auth','role:admin|member', 'permission:add member']], function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
 });
 
 
-Route::middleware(['auth','user-type:1'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');
@@ -69,5 +69,12 @@ Route::controller(PaymentController::class)->group(function(){
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+//=======================================================================
+//User Role
+Route::get('roles',[UserRoleController::class,'index'])->name('role-index');
+
+//=======================================================================
 
 require __DIR__.'/auth.php';

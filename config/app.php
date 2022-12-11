@@ -184,6 +184,7 @@ return [
         App\Providers\MemberServiceProvider::class,
         App\Providers\ScheduleServiceProvider::class,
         App\Providers\UserServiceProvider::class,
+        App\Providers\UserRoleServiceProvider::class,
 
     ],
 

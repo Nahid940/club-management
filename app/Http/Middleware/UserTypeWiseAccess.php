@@ -16,12 +16,12 @@ class UserTypeWiseAccess
      */
     public function handle(Request $request, Closure $next,...$userType)
     {
-        $roles=array();
-        foreach($userType as $type){$roles[$type]=$type;}
-        if(isset($roles[auth()->user()->user_type]))
-        {
+//        $roles=array();
+//        foreach($userType as $type){$roles[$type]=$type;}
+//        if(isset($roles[auth()->user()->user_type]))
+//        {
             return $next($request);
-        }
-        return response()->json(['You do not have permission to access for this page.']);
+//        }
+//        return response()->json(['You do not have permission to access for this page.']);
     }
 }

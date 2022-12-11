@@ -1,0 +1,10 @@
+
+==================ACL====================
+Member part
+1. add member
+2. edit member
+3. delete member
+4. view member
+5. view member list
+6.
+
