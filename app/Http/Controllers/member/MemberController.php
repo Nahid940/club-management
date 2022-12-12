@@ -61,7 +61,7 @@ class MemberController extends Controller
         $insert_id=$this->memberInfo->addMember($data);
         if(!empty($insert_id))
         {
-            Mail::to(["nahid35@diit.info"])->send(new MemberMail());
+//            Mail::to(["nahid35@diit.info"])->send(new MemberMail());
             $message="Member added successfully!!";
             return redirect()->route('member-admission')->with(['message' => $message,'id'=>$insert_id]);
         }

@@ -9,7 +9,7 @@ class MemberRepository implements MemberInterface
 
     protected $ACTIVE_STATUS=1;
 
-    public function getMember(int $id){
+    public function getMember($id){
         $member = DB::table('members')
                 ->where('id', $id)
                 ->where('status',1)// 1 for active
@@ -86,6 +86,20 @@ class MemberRepository implements MemberInterface
             "spouse_email"              =>   $data['spouse_email'],
         );
         $id=DB::table('members')->insertGetId($member_basic_data);
+
+        for ($i=0;$i<sizeof($data['institution_name']);$i++)
+        {
+            if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
+                DB::table('member_educations')->insertGetId([
+                    'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
+                    'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+                    'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
+                    'member_id' => $id
+                ]);
+            }
+        }
+
+
         return $id;
         // "club_name"=>$data['club_name'],
         // "membership_no"=>$data['membership_no'],
@@ -102,7 +116,7 @@ class MemberRepository implements MemberInterface
 
     }
 
-    public function deleteMember(int $id){
+    public function deleteMember($id){
         DB::table('members')
         ->where('id', $id)
         ->update(['status' => 0]);

@@ -40,10 +40,21 @@
         font-size:15px;
         margin-bottom: 5px;
         color:#2b73cce8;
+        border-bottom:1px dashed #ccc
     }
-@stop
-@section('content')
+    .card-title{
+        font-size:14px;
+    }
+    .bs-stepper-label{
+        font-size:12px;
+    }
+    [class*=icheck-]>label{
+        vertical-align:baseline
+    }
 
+@stop
+
+@section('content')
 
 <div class="row">
     <div class="col-12">
@@ -59,17 +70,17 @@
                 <div class="line line1"></div>
                 <div class="step" data-target="#logins-part">
                     <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="second_step">
-                        <span class="bs-stepper-circle circle2">2</span>
                         <span class="bs-stepper-label">Second Step</span>
+                        <span class="bs-stepper-circle circle2">2</span>
                     </button>
                 </div>
-                <div class="line line2"></div>
-                <div class="step" data-target="#information-part">
-                    <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="last_step">
-                        <span class="bs-stepper-circle circle3">3</span>
-                        <span class="bs-stepper-label">Final</span>
-                    </button>
-                </div>
+                {{--<div class="line line2"></div>--}}
+                {{--<div class="step" data-target="#information-part">--}}
+                    {{--<button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="last_step">--}}
+                        {{--<span class="bs-stepper-circle circle3">3</span>--}}
+                        {{--<span class="bs-stepper-label">Final</span>--}}
+                    {{--</button>--}}
+                {{--</div>--}}
             </div>
         </div>
     </div>
@@ -103,9 +114,43 @@
                         </ul>
                     </div>
                 @endif
+
                 <form action="{{route('member-add')}}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div id="step_1">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group clearfix">
+                                    <label for="car_owned">Type of Membership: <span class="txt-info">*</span></label>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" {{old ('member_type') == 1 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem1" value="1">
+                                        <label for="mem1">
+                                            Donor Member
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" {{old ('member_type') == 2 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem2" value="2">
+                                        <label for="mem2">
+                                            Life Member
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" {{old ('member_type') == 3 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem3" value="4">
+                                        <label for="mem3">
+                                            NRB Member
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" {{old ('member_type') == 4 ? 'checked' : ''}}  name="member_type" class="member_type"  id="mem4" value="4">
+                                        <label for="mem4">
+                                            General Member
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-3">
                                 <!-- text input -->
@@ -114,21 +159,6 @@
                                         <label for="registration_date">Registration Date <span class="txt-info">*</span></label>
                                         <input type="date" id="registration_date" value="{{date('Y-m-d',strtotime($today))}}" name="registration_date" class="form-control"/>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <!-- text input -->
-                                <div class="form-group">
-                                    <label>Member Type <span class="txt-info">*</span></label>
-                                    <select class="form-control" id="member_type" name="member_type">
-                                        <option value="">--Select--</option>
-                                        <option value="1" {{old ('member_type') == 1 ? 'selected' : ''}}>Donor Member</option>
-                                        <option value="2" {{old ('member_type') == 2 ? 'selected' : ''}}>Life Member</option>
-                                        <option value="3" {{old ('member_type') == 3 ? 'selected' : ''}}>NRB Member</option>
-                                        <option value="4" {{old ('member_type') == 4 ? 'selected' : ''}}>Genera Member</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -317,7 +347,7 @@
                         </div>
                         <div class="row mt-1">
                             <div class="col-sm-6">
-                                <label for="all_correspondence">All Correspondence</label>
+                                <label for="all_correspondence">All Correspondence: </label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input" id="present_addr" name="all_correspondence" type="checkbox" value="1">
                                     <label for="present_addr">
@@ -331,8 +361,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <label for="should_be_sent_to">Should be sent to</label>
+                            <div class="col-sm-4">
+                                <label for="should_be_sent_to" style="align-items: center">Should be sent to: </label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input" id="should_be_sent_to" name="should_be_sent_to" type="checkbox" value="1">
                                     <label for="should_be_sent_to">
@@ -386,7 +416,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="criminal_ofence">Ever punished for criminal ofence?</label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input criminal_ofence1" id="criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
@@ -402,14 +432,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="details_of_criminal_ofence">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_criminal_ofence" name="details_of_criminal_ofence" placeholder="Details"/>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <label for="car_owned">Car owned?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
@@ -426,11 +456,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <label for="car_reg_no">Car registration number</label>
                                 <input type="text" class="form-control" id="car_reg_no" name="car_reg_no" placeholder="Reg. No"/>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="car_owned">Car ownership type?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
@@ -458,12 +488,10 @@
                         </div>
                     </div>
                     <!-- ============================================================================================================================ -->
-                    <div id="step_2" class='hidden'>
-                        <div class="row">
-                            <h3 for="">Membership Details of Other Club/Institution/Association</h3>
-                        </div>
+                    <div id="step_2" class="hidden">
                         <div class="row">
                             <div class="col-sm-12">
+                                <div class="form_part_heading" for="">Membership Details of Other Club/Institution/Association</div>
                                 <div class="form-group">
                                     <table id="" class="table  table-borderless">
                                         <thead>
@@ -494,42 +522,42 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <h3 for="">Spouse Details</h3>
-                        </div>
-
                         <div class='row'>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="spouse_name"> Name</label>
-                                    <input type="text" class="form-control" id="spouse_name" name="spouse_name" placeholder="Name"/>
+                            <div class="col-md-12">
+                                <div class="form_part_heading" for="">Spouse Details</div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="spouse_name"> Name</label>
+                                            <input type="text" class="form-control" id="spouse_name" name="spouse_name" placeholder="Name"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="spouse_date_of_birth">Date of Birth</label>
+                                            <input type="date" class="form-control" id="spouse_date_of_birth" name="spouse_date_of_birth"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="spouse_mobile_number">Mobile Number</label>
+                                            <input type="text" class="form-control" id="spouse_mobile_number" name="spouse_mobile_number" placeholder="Mobile Number" require/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="spouse_email">Email</label>
+                                            <input type="text" class="form-control" id="spouse_email" name="spouse_email" placeholder="Email" require/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="spouse_date_of_birth">Date of Birth</label>
-                                    <input type="date" class="form-control" id="spouse_date_of_birth" name="spouse_date_of_birth"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="spouse_mobile_number">Mobile Number</label>
-                                    <input type="text" class="form-control" id="spouse_mobile_number" name="spouse_mobile_number" placeholder="Mobile Number" require/>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="spouse_email">Email</label>
-                                    <input type="text" class="form-control" id="spouse_email" name="spouse_email" placeholder="Email" require/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 for="">Dependant Details</h3>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
+                                <div class="form_part_heading" for="">Dependant Details</div>
                                 <div class="form-group">
                                     <table id="" class="table  table-borderless">
                                         <thead>
@@ -574,39 +602,52 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="icheck-primary d-inline">
+                                    <input name="tc_acceptance" type="checkbox" id="accept" value="2">
+                                    <label for="accept"> <span class="txt-info">*</span>
+                                        I HERE BY DECLARE THAT THE MEMBERSHIP HAS BEEN TAKEN ON MY FREE WILL AND CERTIFY THAT I HAVE READ AND UNDERSTOOD
+                                        THE <a href="">TERMS</a> AND CONDITIONS AND WILL ABIDE BY THE SAME. I ALSO SOLELY SWEAR THAT THE INFORMATION PROVIDED
+                                        BY ME ARE TRUE AND CORRECT.
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <input type="hidden" id="form_step" name="form_step" value="0">
                     <!-- ============================================================================================================================ -->
 
-                    <div id="step_3" class='hidden'>
-                        <div class="row">
-                            <h3 for="">Payment Details</h3>
-                        </div>
-                        <div class='row'>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="bank_name">Bank Name</label>
-                                    <input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Bank Name"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="branch_name">Branch Name</label>
-                                    <input type="text" class="form-control" id="branch_name" name="branch_name"  placeholder="Branch Name"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='row'>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="acc_no">Account Number</label>
-                                    <input type="text" class="form-control" id="acc_no" name="acc_no" placeholder="Account Number"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{--<div id="step_3" class='hidden'>--}}
+                        {{--<div class="row">--}}
+                            {{--<h3 for="">Payment Details</h3>--}}
+                        {{--</div>--}}
+                        {{--<div class='row'>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="bank_name">Bank Name</label>--}}
+                                    {{--<input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Bank Name"/>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="branch_name">Branch Name</label>--}}
+                                    {{--<input type="text" class="form-control" id="branch_name" name="branch_name"  placeholder="Branch Name"/>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class='row'>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<label for="acc_no">Account Number</label>--}}
+                                    {{--<input type="text" class="form-control" id="acc_no" name="acc_no" placeholder="Account Number"/>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="" style="position: relative;width:100%;height: 50px;">
+
+                    <div class="mt-2" style="position: relative;width:100%;height: 50px;">
                         <button type="button" class="btn btn-info hidden btn-xs" id="prev" style="position: absolute; left: 0;"> Previous</button>
                         <button type="button" class="btn btn-success btn-xs" id=next style="position: absolute; right: 0;">Next </button>
                         <button type="submit" class="btn btn-success hidden btn-xs" id=save style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Save</button>
@@ -636,17 +677,18 @@
         }
        
         $('#prev').removeClass('hidden')
-        
-        if(step==2)
+        if(step==1)
         {
-            $('#step_2').addClass('hidden')
-            $('#step_3').removeClass('hidden')
+            $('#step_1').addClass('hidden')
+            $('#step_2').removeClass('hidden')
+            {{--$('#step_3').removeClass('hidden')--}}
             $('#next').addClass('hidden')
             $('#save').removeClass('hidden')
             $('#last_step').css({'color':'#41ff40'})
-            $('.circle3').css({'background':'#41ff40'})
-            $('.line2').css('background','#41ff40')
+            {{--$('.circle3').css({'background':'#41ff40'})--}}
+            {{--$('.line2').css('background','#41ff40')--}}
         }
+        $('#form_step').val(step)
     });
 
     $("#prev").click(function(){
@@ -655,29 +697,27 @@
         {
             $('#prev').addClass('hidden')
             $('#step_2').addClass('hidden')
-            $('#step_3').addClass('hidden')
-
-            
-
+            {{--$('#step_3').addClass('hidden')--}}
             $('#second_step').css({'color':'#6c757d'})
             $('.circle2').css({'background':'#6c757d'})
             $('.line1').css('background','#6c757d')
+            $('#next').removeClass('hidden')
+            $('#save').addClass('hidden')
         }
-        if(step==2)
+        if(step==0)
         {
-            $('#step_1').addClass('hidden')
-            $('#step_2').removeClass('hidden')
-            $('#step_3').addClass('hidden')
+            $('#step_1').removeClass('hidden')
+            $('#step_2').addClass('hidden')
+            {{--$('#step_3').addClass('hidden')--}}
             $('#next').removeClass('hidden')
             $('#save').addClass('hidden')
 
             $('#last_step').css({'color':'#6c757d'})
             $('.circle3').css({'background':'#6c757d'})
             $('.line2').css('background','#6c757d')
-
-            
         }
         step--;
+        $('#form_step').val(step)
     });
 
 @stop
