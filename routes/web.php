@@ -30,21 +30,22 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
-Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
-Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
-
-
-Route::group(['middleware' => ['auth','role:admin|member', 'permission:add member']], function () {
+Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add member|edit member|view member']], function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
+    Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
+    Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
+    Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
+    Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
 });
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/members', [MemberController::class, 'index'])->name('member-index');
-    Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
+Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:delete member']], function () {
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');
 });
+
+Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view member-list']], function () {
+    Route::get('/members', [MemberController::class, 'index'])->name('member-index');
+});
+
 
 Route::controller(ScheduleBookingController::class)->group(function(){
     Route::get('schedule/book',[ScheduleBookingController::class,'view'])->name('schedule-book');

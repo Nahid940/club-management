@@ -25,6 +25,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.min.css">
 @yield('style_link')
 <style>
+    .content-header {
+        padding: 0px 0.1rem;
+    }
+    body{
+        font: 11px "Trebuchet MS","Lucida Grande",Verdana,sans-serif;
+        font-family: "Trebuchet MS", "Lucida Grande", Verdana, sans-serif;
+        color: #444
+    }
+
     @yield('style')
 </style>
 

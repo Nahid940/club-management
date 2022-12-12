@@ -33,13 +33,13 @@ class MemberController extends Controller
     public function read($id)
     {
         $member=$this->memberInfo->getMember($id);
-        $redis = new Redis();
-        $member_object=[
-            "name"=>$member->first_name,
-            "email"=>$member->email,
-            "phone"=>$member->phone_number
-        ];
-        $redis::set('member',json_encode($member_object));
+//        $redis = new Redis();
+//        $member_object=[
+//            "name"=>$member->first_name,
+//            "email"=>$member->email,
+//            "phone"=>$member->phone_number
+//        ];
+//        $redis::set('member',json_encode($member_object));
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
 

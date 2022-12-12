@@ -10,6 +10,8 @@
     .form-control{
         height: calc(1.40rem);
         padding: .1rem 0.75rem;
+        border: 1px solid #b4bae2b5;
+        font-size: 0.7rem;
     }
     .col-sm-3 {
         max-width: 20%;
@@ -20,10 +22,6 @@
     }
     .form-group {
         margin-bottom: 0.4rem;
-    }
-    .form-control{
-        border: 1px solid #b4bae2b5;
-        font-size: 0.99rem;
     }
     .txt-info{
         color:red;
@@ -37,6 +35,11 @@
     }
     .bs-stepper .line, .bs-stepper-line {
         min-height: 6px;
+    }
+    .form_part_heading{
+        font-size:15px;
+        margin-bottom: 5px;
+        color:#2b73cce8;
     }
 @stop
 @section('content')
@@ -237,7 +240,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="">Educational Background</label>
+                                    <div class="form_part_heading" for="">Educational Background <span><i class="fa fa-question-circle" aria-hidden="true"></i></span></div>
                                     <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
@@ -311,56 +314,72 @@
                                 <label for="office_email">Email</label>
                                 <input type="text" class="form-control" id="office_email" value="{{ old('office_email') }}" name="office_email" placeholder="Email"/>
                             </div>
-                            <div class="col-sm-3">
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-6">
                                 <label for="all_correspondence">All Correspondence</label>
-                                <div class="form-check">
-                                        <input class="form-check-input" name="all_correspondence" type="checkbox" value="1">
-                                        <label class="form-check-label">Present Address</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input" id="present_addr" name="all_correspondence" type="checkbox" value="1">
+                                    <label for="present_addr">
+                                        Present Address
+                                    </label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="all_correspondence" type="checkbox" value="2">
-                                    <label class="form-check-label">Permanent Address</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input" id="prmnt_addr" name="all_correspondence" type="checkbox" value="2">
+                                    <label for="prmnt_addr">
+                                        Permanent Address
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <label for="should_be_sent_to">Should be sent to</label>
-                                <div class="form-check">
-                                        <input class="form-check-input" name="should_be_sent_to" type="checkbox" value="1">
-                                        <label class="form-check-label">Office Address</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input" id="should_be_sent_to" name="should_be_sent_to" type="checkbox" value="1">
+                                    <label for="should_be_sent_to">
+                                        Office Address
+                                    </label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="ever_declined">Have you ever been declined membership of this club?</label>
-                                <div class="form-check">
-                                        <input class="form-check-input ever_declined1" name="ever_declined" type="checkbox" value="1">
-                                        <label class="form-check-label">Yes</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input ever_declined1" id="ever_declined1" name="ever_declined" type="checkbox" value="1">
+                                    <label for="ever_declined1">
+                                        Yes
+                                    </label>
                                 </div>
-                                <div class="form-check">
-                                        <input class="form-check-input ever_declined2" name="ever_declined" type="checkbox" value="0">
-                                        <label class="form-check-label">No</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input ever_declined2" id="ever_declined2" name="ever_declined" type="checkbox" value="0">
+                                    <label for="ever_declined2">
+                                        Yes
+                                    </label>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="details_of_decline">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_decline" name="details_of_decline" placeholder="Details"/>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="application_rejected">Have your membership application ever been rejected by other club/inst.?</label>
-                                <div class="form-check">
-                                        <input class="form-check-input application_rejected1" name="application_rejected" type="checkbox" value="1">
-                                        <label class="form-check-label">Yes</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input application_rejected1" id="application_rejected1" name="application_rejected" type="checkbox" value="1">
+                                    <label for="application_rejected1">
+                                        Yes
+                                    </label>
                                 </div>
-                                <div class="form-check">
-                                        <input class="form-check-input application_rejected2" name="application_rejected" type="checkbox" value="0">
-                                        <label class="form-check-label">No</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input application_rejected2" id="application_rejected2"  name="application_rejected" type="checkbox" value="0">
+                                    <label for="application_rejected2">
+                                        No
+                                    </label>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <label for="details_of_reject">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_reject" name="details_of_reject" placeholder="Details"/>
                             </div>
@@ -369,13 +388,18 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <label for="criminal_ofence">Ever punished for criminal ofence?</label>
-                                <div class="form-check">
-                                        <input class="form-check-input criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
-                                        <label class="form-check-label">Yes</label>
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input criminal_ofence1" id="criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
+                                    <label for="criminal_ofence1">
+                                        Yes
+                                    </label>
                                 </div>
-                                <div class="form-check">
-                                        <input class="form-check-input criminal_ofence2" name="criminal_ofence" type="checkbox" value="0">
-                                        <label class="form-check-label">No</label>
+
+                                <div class="icheck-primary d-inline">
+                                    <input class="form-check-input criminal_ofence2" id="criminal_ofence2" name="criminal_ofence" type="checkbox" value="0">
+                                    <label for="criminal_ofence2">
+                                        No
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -583,9 +607,9 @@
                     </div>
 
                     <div class="" style="position: relative;width:100%;height: 50px;">
-                        <button type="button" class="btn btn-info hidden" id="prev" style="position: absolute; left: 0;"> Previous</button>
-                        <button type="button" class="btn btn-success" id=next style="position: absolute; right: 0;">Next </button>
-                        <button type="submit" class="btn btn-success hidden" id=save style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-info hidden btn-xs" id="prev" style="position: absolute; left: 0;"> Previous</button>
+                        <button type="button" class="btn btn-success btn-xs" id=next style="position: absolute; right: 0;">Next </button>
+                        <button type="submit" class="btn btn-success hidden btn-xs" id=save style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Save</button>
                     </div>
                 </form>
             </div>

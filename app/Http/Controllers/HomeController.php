@@ -13,7 +13,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $pageTitle="Dashboard";
+        $pageTitle="";
         return view('pages.home',['title'=>$pageTitle]);
     }
 
