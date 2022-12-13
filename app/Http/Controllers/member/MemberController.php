@@ -4,6 +4,7 @@ namespace App\Http\Controllers\member;
 
 use App\Mail\MemberMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\MemberInterface;
 use App\Http\Controllers\Controller;
@@ -43,6 +44,12 @@ class MemberController extends Controller
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
 
+    public function profile()
+    {
+        $id=Auth::user()->id;
+        $member=$this->memberInfo->getProfile($id);
+        return view('pages.member.view',['title' => "",'member'=>$member]);
+    }
     public function edit($id)
     {
         $member=$this->memberInfo->getMember($id);

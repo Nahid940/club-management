@@ -2,6 +2,7 @@
 namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MemberRepository implements MemberInterface
@@ -35,6 +36,32 @@ class MemberRepository implements MemberInterface
         return $member;
     }
 
+    public function getProfile($id){
+        $member = DB::table('members')
+            ->leftJoin('users','users.id','=','members.user_id')
+            ->where('users.id', $id)
+            ->where('branch_id',1)
+            ->first();
+        if($member->member_type==1)
+        {
+            $member->member_type="Donor Member";
+            $member->member_type_dropdown=1;
+        }elseif($member->member_type==2)
+        {
+            $member->member_type="Life Member";
+            $member->member_type_dropdown=2;
+        }elseif($member->member_type==3)
+        {
+            $member->member_type="NRB Member";
+            $member->member_type_dropdown=3;
+        }else
+        {
+            $member->member_type="Genera Member";
+            $member->member_type_dropdown=4;
+        }
+        return $member;
+    }
+
     public function getMembers(array $data){
         $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
         ->where('status',$this->ACTIVE_STATUS)
@@ -43,6 +70,15 @@ class MemberRepository implements MemberInterface
     }
 
     public function addMember(array $data){
+
+        $user=Auth::user();
+        if ($user->hasRole('member')) {
+            $data['user_id']=$user->id;
+        }else
+        {
+            $data['user_id']=null;
+        }
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
@@ -84,6 +120,7 @@ class MemberRepository implements MemberInterface
             "spouse_date_of_birth"      =>   $data['spouse_date_of_birth'],
             "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
             "spouse_email"              =>   $data['spouse_email'],
+            "user_id"                   =>   $data['user_id']
         );
         $id=DB::table('members')->insertGetId($member_basic_data);
 
