@@ -123,9 +123,10 @@ $('#save').on('click',function () {
 
 
         Swal.fire({
-            title: 'Are all the information correct?',
-            text: "You won't be able to revert this!",
+            title: 'Do you want to submit this form?',
+            text: "You will be notified when application approved.",
             icon: 'warning',
+            color:'green',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
