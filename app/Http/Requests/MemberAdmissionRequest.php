@@ -32,6 +32,7 @@ class MemberAdmissionRequest extends FormRequest
             'date_of_birth'=>'required',
             'mobile_number'=>'required',
             'tc_acceptance'=>'required',
+            'member_photo' => 'required|image|mimes:jpg,jpeg,png,svg|max:90',
         ];
     }
 

@@ -138,3 +138,10 @@ $('#save').on('click',function () {
         })
     }
 })
+
+imgInp.onchange = evt => {
+    const [file] = imgInp.files
+    if (file) {
+        sample_img.src = URL.createObjectURL(file)
+    }
+}

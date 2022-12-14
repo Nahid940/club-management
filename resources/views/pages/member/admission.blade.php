@@ -57,6 +57,29 @@
         width:400;
         color:#dd234b !important;
     }
+
+    .frame {
+        width: 130px;
+        height: 154px;
+        border: 3px solid #ccc;
+        background: #eee;
+        margin-left 2px: ;
+        {{--padding: 60px 25px;--}}
+    }
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 4px 11px;
+        cursor: pointer;
+        color: #0067d2
+    }
+    input[type="file"] {
+        display: none;
+    }
 @stop
 
 @section('content')
@@ -124,8 +147,16 @@
                     {{ csrf_field() }}
                     <div id="step_1">
                         <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="frame">
+                                    <img id="sample_img" src="http://127.0.0.1:8000/img/user.jpeg" alt="your image" />
+                                </div>
+                                <label class="custom-file-upload">
+                                    <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>
+                                    <input type="file" name="member_photo" class="" id="imgInp"/>
+                                </label>
+                            </div>
                             <div class="col-md-12">
-
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
                                     <div class="icheck-primary d-inline">
