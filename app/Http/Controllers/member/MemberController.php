@@ -48,6 +48,10 @@ class MemberController extends Controller
     {
         $id=Auth::user()->id;
         $member=$this->memberInfo->getProfile($id);
+        if(!$member)
+        {
+            return redirect()->route('member-admission')->with(['warning'=>'Your are not a member yet. Please submit your application!']);
+        }
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
     public function edit($id)

@@ -2,6 +2,7 @@
 namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -42,24 +43,31 @@ class MemberRepository implements MemberInterface
             ->where('users.id', $id)
             ->where('branch_id',1)
             ->first();
-        if($member->member_type==1)
+
+        if(!empty($member))
         {
-            $member->member_type="Donor Member";
-            $member->member_type_dropdown=1;
-        }elseif($member->member_type==2)
-        {
-            $member->member_type="Life Member";
-            $member->member_type_dropdown=2;
-        }elseif($member->member_type==3)
-        {
-            $member->member_type="NRB Member";
-            $member->member_type_dropdown=3;
-        }else
-        {
-            $member->member_type="Genera Member";
-            $member->member_type_dropdown=4;
+            if($member->member_type==1)
+            {
+                $member->member_type="Donor Member";
+                $member->member_type_dropdown=1;
+            }elseif($member->member_type==2)
+            {
+                $member->member_type="Life Member";
+                $member->member_type_dropdown=2;
+            }elseif($member->member_type==3)
+            {
+                $member->member_type="NRB Member";
+                $member->member_type_dropdown=3;
+            }else
+            {
+                $member->member_type="Genera Member";
+                $member->member_type_dropdown=4;
+            }
+            return $member;
+        }else{
+            return false;
         }
-        return $member;
+
     }
 
     public function getMembers(array $data){
@@ -79,10 +87,20 @@ class MemberRepository implements MemberInterface
             $data['user_id']=null;
         }
 
+        $image=$data['image'];
+        $input['file'] =$data['member_photo'];
+        $data['member_photo_file']= $data['college_roll']."_".$input['file'];
+        $destinationPath = public_path('/member_photo');
+        $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
+        $imgFile->resize(150, 150, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$input['file']);
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
             "last_name"                 =>   $data['name'],
+            "member_photo"              =>   $data['member_photo_file'],
             "member_type"               =>   $data['member_type'],
             "blood_group"               =>   $data['blood_group'],
             "college_roll"              =>   $data['college_roll'],
@@ -121,6 +139,7 @@ class MemberRepository implements MemberInterface
             "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
             "spouse_email"              =>   $data['spouse_email'],
             "user_id"                   =>   $data['user_id'],
+            "created_at"                =>   Carbon::now(),
             "entry_by"                  =>   $user->id,
         );
         $id=DB::table('members')->insertGetId($member_basic_data);
@@ -162,8 +181,6 @@ class MemberRepository implements MemberInterface
                 ]);
             }
         }
-
-
         return $id;
         // "club_name"=>$data['club_name'],
         // "membership_no"=>$data['membership_no'],
@@ -175,7 +192,6 @@ class MemberRepository implements MemberInterface
         // "dep_nid"=>$data['dep_nid'],
         // "branch_name"=>$data['branch_name'],
         // "acc_no"=>$data['acc_no'],
-
         // DB::table('student_details')->insert($data);
 
     }
@@ -193,58 +209,61 @@ class MemberRepository implements MemberInterface
     public function getPostedData(object $request)
     {
         $validated = $request->validated();
-        $data['registration_date']=$validated['registration_date'];
-        $data['name']=$validated['name'];
-        $data['member_type']=$validated['member_type'];
-        $data['blood_group']=$request->member_type;
-        $data['college_roll']=$request->college_roll;
-        $data['date_of_birth']=$validated['date_of_birth'];
-        $data['nid']=$validated['nid'];
-        $data['passport']=$request->passport;
-        $data['marital_status']=$request->marital_status;
-        $data['date_of_annniversary']=$request->date_of_annniversary;
-        $data['no_of_dependants']=$request->no_of_dependants;
-        $data['fathers_name']=$request->fathers_name;
-        $data['mothers_name']=$request->mothers_name;
-        $data['mobile_number']=$validated['mobile_number'];
-        $data['email']=$request->email;
-        $data['occupation_type']=$request->occupation_type;
-        $data['institution_name']=$request->institution_name;
-        $data['passing_year']=$request->passing_year;
-        $data['degree']=$request->degree;
-        $data['present_address']=$validated['present_address'];
-        $data['permanent_address']=$request->permanent_address;
-        $data['company_name']=$request->company_name;
-        $data['designation']=$request->designation;
-        $data['office_address']=$request->office_address;
-        $data['office_phone']=$request->office_phone;
-        $data['office_mobile']=$request->office_mobile;
-        $data['office_email']=$request->office_email;
-        $data['all_correspondence']=$request->all_correspondence;
-        $data['should_be_sent_to']=$request->should_be_sent_to;
-        $data['ever_declined']=$request->ever_declined;
-        $data['details_of_decline']=$request->details_of_decline;
-        $data['application_rejected']=$request->application_rejected;
-        $data['details_of_reject']=$request->details_of_reject;
-        $data['criminal_ofence']=$request->criminal_ofence;
+        $data['registration_date']      =$validated['registration_date'];
+        $data['name']                   =$validated['name'];
+        $data['member_type']            =$validated['member_type'];
+        $data['blood_group']            =$request->member_type;
+        $data['college_roll']           =$request->college_roll;
+        $data['date_of_birth']          =$validated['date_of_birth'];
+        $data['nid']                    =$validated['nid'];
+        $data['passport']               =$request->passport;
+        $data['marital_status']         =$request->marital_status;
+        $data['date_of_annniversary']   =$request->date_of_annniversary;
+        $data['no_of_dependants']       =$request->no_of_dependants;
+        $data['fathers_name']           =$request->fathers_name;
+        $data['mothers_name']           =$request->mothers_name;
+        $data['mobile_number']          =$validated['mobile_number'];
+        $data['email']                  =$request->email;
+        $data['occupation_type']        =$request->occupation_type;
+        $data['institution_name']       =$request->institution_name;
+        $data['passing_year']           =$request->passing_year;
+        $data['degree']                 =$request->degree;
+        $data['present_address']        =$validated['present_address'];
+        $data['permanent_address']      =$request->permanent_address;
+        $data['company_name']           =$request->company_name;
+        $data['designation']            =$request->designation;
+        $data['office_address']         =$request->office_address;
+        $data['office_phone']           =$request->office_phone;
+        $data['office_mobile']          =$request->office_mobile;
+        $data['office_email']           =$request->office_email;
+        $data['all_correspondence']     =$request->all_correspondence;
+        $data['should_be_sent_to']      =$request->should_be_sent_to;
+        $data['ever_declined']          =$request->ever_declined;
+        $data['details_of_decline']     =$request->details_of_decline;
+        $data['application_rejected']   =$request->application_rejected;
+        $data['details_of_reject']      =$request->details_of_reject;
+        $data['criminal_ofence']        =$request->criminal_ofence;
         $data['details_of_criminal_ofence']=$request->details_of_criminal_ofence;
-        $data['car_owned']=$request->car_owned;
-        $data['car_reg_no']=$request->car_reg_no;
-        $data['car_ownership_type']=$request->car_ownership_type;
-        $data['club_name']=$request->club_name;
-        $data['membership_no']=$request->membership_no;
-        $data['membership_type']=$request->membership_type;
-        $data['spouse_name']=$request->spouse_name;
-        $data['spouse_date_of_birth']=$request->spouse_date_of_birth;
-        $data['spouse_mobile_number']=$request->spouse_mobile_number;
-        $data['spouse_email']=$request->spouse_email;
-        $data['dep_name']=$request->dep_name;
-        $data['dep_dob']=$request->dep_dob;
-        $data['dep_blood_group']=$request->dep_blood_group;
-        $data['dep_occupation']=$request->dep_occupation;
-        $data['dep_nid']=$request->dep_nid;
-        $data['branch_name']=$request->branch_name;
-        $data['acc_no']=$request->acc_no;
+        $data['car_owned']              =$request->car_owned;
+        $data['car_reg_no']             =$request->car_reg_no;
+        $data['car_ownership_type']     =$request->car_ownership_type;
+        $data['club_name']              =$request->club_name;
+        $data['membership_no']          =$request->membership_no;
+        $data['membership_type']        =$request->membership_type;
+        $data['spouse_name']            =$request->spouse_name;
+        $data['spouse_date_of_birth']   =$request->spouse_date_of_birth;
+        $data['spouse_mobile_number']   =$request->spouse_mobile_number;
+        $data['spouse_email']           =$request->spouse_email;
+        $data['dep_name']               =$request->dep_name;
+        $data['dep_dob']                =$request->dep_dob;
+        $data['dep_blood_group']        =$request->dep_blood_group;
+        $data['dep_occupation']         =$request->dep_occupation;
+        $data['dep_nid']                =$request->dep_nid;
+        $data['branch_name']            =$request->branch_name;
+        $data['acc_no']                 =$request->acc_no;
+        $image                          = $request->file('member_photo');
+        $data['image']                  =$image;
+        $data['member_photo']           = time().'.'.$image->getClientOriginalExtension();
         return $data;
     }
     
