@@ -39,6 +39,7 @@ class MemberRepository implements MemberInterface
 
     public function getProfile($id){
         $member = DB::table('members')
+            ->select('members.*','users.email as user_email', 'users.created_at')
             ->leftJoin('users','users.id','=','members.user_id')
             ->where('users.id', $id)
             ->where('branch_id',1)
@@ -63,6 +64,18 @@ class MemberRepository implements MemberInterface
                 $member->member_type="Genera Member";
                 $member->member_type_dropdown=4;
             }
+
+
+            $education = DB::table('member_educations')
+                ->where('member_id', $member->id)
+                ->get();
+
+            $dependants = DB::table('member_dependant_lists')
+                ->where('member_id', $member->id)
+                ->get();
+
+            $member->education=$education;
+            $member->dependants=$dependants;
             return $member;
         }else{
             return false;
@@ -90,7 +103,7 @@ class MemberRepository implements MemberInterface
         $image=$data['image'];
         $input['file'] =$data['member_photo'];
         $data['member_photo_file']= $data['college_roll']."_".$input['file'];
-        $destinationPath = public_path('/member_photo');
+        $destinationPath = public_path('/storage/member_photo');
         $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
         $imgFile->resize(150, 150, function ($constraint) {
             $constraint->aspectRatio();

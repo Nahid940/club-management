@@ -14,7 +14,7 @@
         <div class="card-body box-profile">
             <a href="" title="Edit"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i></a>
             <div class="text-center">
-                <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 109px;color: #00abbd"></i>
+                <img src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
             <h3 class="profile-username text-center">{{$member->first_name}}</h3>
         </div>
@@ -81,7 +81,9 @@
         
         <div class="invoice p-3 mb-3">
             <!-- info row -->
+                <h4>Personal Information</h4>
             <div class="row invoice-info">
+
                 <div class="col-sm-6 invoice-col">
                     <table class="table no-border">
                         <tr>
@@ -127,7 +129,15 @@
                         <tr>
                             <td>Occupation type </td>
                             <td>:</td>
-                            <td>{{$member->occupation_type}} </td>
+                            <td>
+                                @if($member->occupation_type==1)
+                                    Service
+                                @elseif($member->occupation_type==2)
+                                    Self Employed
+                                @else
+                                    Retired
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Company name </td>
@@ -144,6 +154,11 @@
                             <td>:</td>
                             <td>{{$member->office_address}} </td>
                         </tr>
+                    </table>
+                </div>
+
+                <div class="col-md-4 invoice-col">
+                    <table class="table no-border">
                         <tr>
                             <td>Office phone </td>
                             <td>:</td>
@@ -159,38 +174,6 @@
                             <td>:</td>
                             <td>{{$member->office_email}}</td>
                         </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Table row -->
-            <div class="row">
-                <div class="col-12 table-responsive">
-                    <h4>Educational Background</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name of the Institution</th>
-                                <th>Passing Year</th>
-                                <th>Degree//Qualification Obtained</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Call of Duty</td>
-                                <td>455-981-221</td>
-                                <td>El snort testosterone trophy driving gloves handsome</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            <!-- /.col -->
-            </div>
-            
-            <hr>
-            <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                    <table class="table no-border">
                         <tr>
                             <td>Spouse Name  </td>
                             <td>:</td>
@@ -216,14 +199,10 @@
                             <td>:</td>
                             <td>{{$member->spouse_email}}</td>
                         </tr>
-                    </table>
-                </div>
-                <div class="col-sm-4 invoice-col">
-                    <table class="table no-border">
                         <tr>
                             <td>Car owned   </td>
                             <td>:</td>
-                            <td>{{$member->car_owned}} </td>
+                            <td>{{$member->car_owned==0?'No':'Yes'}} </td>
                         </tr>
                         <tr>
                             <td>Car registration no.  </td>
@@ -233,8 +212,56 @@
                         <tr>
                             <td>Car ownership type  </td>
                             <td>:</td>
-                            <td>{{$member->car_ownership_type}}</td>
+                            <td>
+                                @if($member->car_ownership_type==1)
+                                    Personal
+                                @elseif($member->car_ownership_type==2)
+                                    Office
+                                @else
+                                    Rented
+                                @endif
+                            </td>
                         </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <h4>Educational Background</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name of the Institution</th>
+                                <th>Passing Year</th>
+                                <th>Degree//Qualification Obtained</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($member->education as $education)
+                                <tr>
+                                    <td>{{$education->institution_name}}</td>
+                                    <td>{{$education->passing_year}}</td>
+                                    <td>{{$education->degree}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            <!-- /.col -->
+            </div>
+            
+            <hr>
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <table class="table no-border">
+
+                    </table>
+                </div>
+                <div class="col-sm-4 invoice-col">
+                    <table class="table no-border">
+
                     </table>
                 </div>
             </div>
@@ -245,17 +272,23 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Name of the Institution</th>
-                                <th>Passing Year</th>
-                                <th>Degree//Qualification Obtained</th>
+                                <th>Name</th>
+                                <th>Date of Birth</th>
+                                <th>Blood Group</th>
+                                <th>Occupation</th>
+                                <th>NID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Call of Duty</td>
-                                <td>455-981-221</td>
-                                <td>El snort testosterone trophy driving gloves handsome</td>
-                            </tr>
+                            @foreach($member->dependants as $dependant)
+                                <tr>
+                                    <td>{{$dependant->dep_name}}</td>
+                                    <td>{{$dependant->dep_dob}}</td>
+                                    <td>{{$dependant->dep_blood_group}}</td>
+                                    <td>{{$dependant->dep_occupation}}</td>
+                                    <td>{{$dependant->dep_nid}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
