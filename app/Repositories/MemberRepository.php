@@ -5,6 +5,7 @@ use App\Interfaces\MemberInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class MemberRepository implements MemberInterface
 {
@@ -64,7 +65,6 @@ class MemberRepository implements MemberInterface
                 $member->member_type="Genera Member";
                 $member->member_type_dropdown=4;
             }
-
 
             $education = DB::table('member_educations')
                 ->where('member_id', $member->id)
@@ -223,6 +223,127 @@ class MemberRepository implements MemberInterface
     public function updateMember(array $data){
 
     }
+
+
+
+    public function updateProfile(object $data){
+
+        if(!empty($data['image']))
+        {   Storage::delete($data['member_photo']);
+            $image=$data['image'];
+            $input['file'] =$data['member_photo'];
+            $data['member_photo_file']= $data['college_roll']."_".$input['file'];
+            $destinationPath = public_path('/storage/member_photo');
+            $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
+            $imgFile->resize(150, 150, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$data['member_photo_file']);
+        }else
+        {
+            $data['member_photo_file']=$data['member_photo'];
+        }
+
+
+        $member_basic_data=array(
+            'registration_date'         =>   $data['registration_date'],
+            "first_name"                =>   $data['name'],
+            "last_name"                 =>   $data['name'],
+            "member_photo"              =>   $data['member_photo_file'],
+            "member_type"               =>   $data['member_type'],
+            "blood_group"               =>   $data['blood_group'],
+            "college_roll"              =>   $data['college_roll'],
+            "date_of_birth"             =>   $data['date_of_birth'],
+            "nid"                       =>   $data['nid'],
+            "passport"                  =>   $data['passport'],
+            "marital_status"            =>   $data['marital_status'],
+            "date_of_annniversary"      =>   $data['date_of_annniversary'],
+            "no_of_dependants"          =>   $data['no_of_dependants'],
+            "fathers_name"              =>   $data['fathers_name'],
+            "mothers_name"              =>   $data['mothers_name'],
+            "mobile_number"             =>   $data['mobile_number'],
+            "email"                     =>   $data['email'],
+            "occupation_type"           =>   $data['occupation_type'],
+            "present_address"           =>   $data['present_address'],
+            "permanent_address"         =>   $data['permanent_address'],
+            "company_name"              =>   $data['company_name'],
+            "designation"               =>   $data['designation'],
+            "office_address"            =>   $data['office_address'],
+            "office_phone"              =>   $data['office_phone'],
+            "office_mobile"             =>   $data['office_mobile'],
+            "office_email"              =>   $data['office_email'],
+            "all_correspondence"        =>   $data['all_correspondence'],
+            "should_be_sent_to"         =>   $data['should_be_sent_to'],
+            "ever_declined"             =>   $data['ever_declined'],
+            "details_of_decline"        =>   $data['details_of_decline'],
+            "application_rejected"      =>   $data['application_rejected'],
+            "details_of_reject"         =>   $data['details_of_reject'],
+            "criminal_ofence"           =>   $data['criminal_ofence'],
+            "details_of_criminal_ofence"=>   $data['details_of_criminal_ofence'],
+            "car_owned"                 =>   $data['car_owned'],
+            "car_reg_no"                =>   $data['car_reg_no'],
+            "car_ownership_type"        =>   $data['car_ownership_type'],
+            "spouse_name"               =>   $data['spouse_name'],
+            "spouse_date_of_birth"      =>   $data['spouse_date_of_birth'],
+            "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
+            "spouse_email"              =>   $data['spouse_email'],
+            "updated_at"                =>   Carbon::now(),
+            "updated_by"                =>   $data['user_id'],
+        );
+        DB::table('members')->where('id',$data['member_id'])->update($member_basic_data);
+
+//        for ($i=0;$i<sizeof($data['institution_name']);$i++)
+//        {
+//            if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
+//                DB::table('member_educations')->insert([
+//                    'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
+//                    'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+//                    'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
+//                    'member_id' => $id
+//                ]);
+//            }
+//        }
+//
+//        for ($i=0;$i<sizeof($data['club_name']);$i++)
+//        {
+//            if(isset($data['club_name'][$i]) && !empty(isset($data['club_name'][$i]))) {
+//                DB::table('club_memberships')->insert([
+//                    'member_id' => $id,
+//                    'club_name' => isset($data['club_name'][$i]) ? $data['club_name'][$i] : "",
+//                    'membership_no' => isset($data['membership_no'][$i]) ? $data['membership_no'][$i] : 0,
+//                    'membership_type' => isset($data['membership_type'][$i]) ? $data['membership_type'][$i] : "",
+//                ]);
+//            }
+//        }
+//
+//        for ($i=0;$i<sizeof($data['dep_name']);$i++)
+//        {
+//            if(isset($data['dep_name'][$i]) && !empty(isset($data['dep_name'][$i]))) {
+//                DB::table('member_dependant_lists')->insert([
+//                    'member_id' => $id,
+//                    'dep_name' => isset($data['dep_name'][$i]) ? $data['dep_name'][$i] : "",
+//                    'dep_dob' => isset($data['dep_dob'][$i]) ? $data['dep_dob'][$i] : 0,
+//                    'dep_blood_group' => isset($data['dep_blood_group'][$i]) ? $data['dep_blood_group'][$i] : "",
+//                    'dep_occupation' => isset($data['dep_occupation'][$i]) ? $data['dep_occupation'][$i] : "",
+//                    'dep_nid' => isset($data['dep_nid'][$i]) ? $data['dep_nid'][$i] : "",
+//                ]);
+//            }
+//        }
+        return true;
+        // "club_name"=>$data['club_name'],
+        // "membership_no"=>$data['membership_no'],
+        // "membership_type"=>$data['membership_type'],
+        // "dep_name"=>$data['dep_name'],
+        // "dep_dob"=>$data['dep_dob'],
+        // "dep_blood_group"=>$data['dep_blood_group'],
+        // "dep_occupation"=>$data['dep_occupation'],
+        // "dep_nid"=>$data['dep_nid'],
+        // "branch_name"=>$data['branch_name'],
+        // "acc_no"=>$data['acc_no'],
+        // DB::table('student_details')->insert($data);
+
+    }
+
+
 
     public function getPostedData(object $request)
     {

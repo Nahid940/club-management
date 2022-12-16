@@ -158,7 +158,7 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{route('member-update',$member->id)}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('update_profile',$member->id)}}" method="POST" enctype="multipart/form-data" id="member_form">
                     {{ csrf_field() }}
                     <div id="step_1">
                         <div class="row">
@@ -644,11 +644,10 @@
                             {{--</div>--}}
                         {{--</div>--}}
                     {{--</div>--}}
-
                     <div class="" style="position: relative;width:100%;height: 50px;">
                         <button type="button" class="btn btn-info hidden btn-xs" id="prev" style="position: absolute; left: 0;"> Previous</button>
-                        <button type="button" class="btn btn-success btn-xs" id=next style="position: absolute; right: 0;">Next </button>
-                        <button type="submit" class="btn btn-success hidden btn-xs" id=save style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Update</button>
+                        <button type="button" class="btn btn-success btn-xs" id="next" style="position: absolute; right: 0;">Next </button>
+                        <button type="button" class="btn btn-success hidden btn-xs" id="update" style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Update</button>
                     </div>
                 </form>
             </div>

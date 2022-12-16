@@ -10,4 +10,10 @@ if(!function_exists('isAlreadyApplied'))
             return $member_data_exits->user_id;
         }
     }
+
+    function getMemberShortInfo($user_id)
+    {
+        $member_id=DB::table('members')->where('user_id',$user_id)->select('id','member_photo')->first();
+        return $member_id;
+    }
 }

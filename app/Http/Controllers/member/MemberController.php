@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\member;
 
+use App\Http\Requests\MemberProfileUpdateRequest;
 use App\Mail\MemberMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,15 @@ class MemberController extends Controller
         $id=Auth::user()->id;
         $member=$this->memberInfo->getProfile($id);
         return view('pages.member.edit',['title' => "",'member'=>$member]);
+    }
+
+    public function updateProfile(MemberProfileUpdateRequest $request)
+    {
+        $id=Auth::user()->id;
+        $member_short_info=getMemberShortInfo($id);
+        $request->merge(['member_id' => $member_short_info->id,'updated_by'=>$id,'member_photo'=>$member_short_info->member_photo]);
+        $this->memberInfo->updateProfile($request);
+        return redirect()->route('member-profile')->with('message','Profile updated successfully!');
     }
 
     public function admission()
