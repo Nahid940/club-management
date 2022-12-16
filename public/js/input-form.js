@@ -145,3 +145,56 @@ imgInp.onchange = evt => {
         sample_img.src = URL.createObjectURL(file)
     }
 }
+
+
+let step=0;
+$("#next").click(function(){
+    step++;
+    if(step==1)
+    {
+        $('#step_1').addClass('hidden')
+        $('#step_2').removeClass('hidden')
+
+        $('#second_step').css({'color':'#41ff40'})
+        $('.circle2').css({'background':'#41ff40'})
+        $('.line1').css('background','#41ff40')
+    }
+
+    $('#prev').removeClass('hidden')
+    if(step==1)
+    {
+        $('#step_1').addClass('hidden')
+        $('#step_2').removeClass('hidden')
+        $('#next').addClass('hidden')
+        $('#save').removeClass('hidden')
+        $('#last_step').css({'color':'#41ff40'})
+    }
+    $('#form_step').val(step)
+});
+
+$("#prev").click(function(){
+    $('#step_1').removeClass('hidden')
+    if(step==1)
+    {
+        $('#prev').addClass('hidden')
+        $('#step_2').addClass('hidden')
+        $('#second_step').css({'color':'#6c757d'})
+        $('.circle2').css({'background':'#6c757d'})
+        $('.line1').css('background','#6c757d')
+        $('#next').removeClass('hidden')
+        $('#save').addClass('hidden')
+    }
+    if(step==0)
+    {
+        $('#step_1').removeClass('hidden')
+        $('#step_2').addClass('hidden')
+        $('#next').removeClass('hidden')
+        $('#save').addClass('hidden')
+
+        $('#last_step').css({'color':'#6c757d'})
+        $('.circle3').css({'background':'#6c757d'})
+        $('.line2').css('background','#6c757d')
+    }
+    step--;
+    $('#form_step').val(step)
+});

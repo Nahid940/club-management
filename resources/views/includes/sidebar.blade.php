@@ -4,11 +4,8 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="{{route('home')}}" class="d-block">{{ucfirst(Auth::user()->name)}}</a>
+        <div class="info" style="font-size: 18px;">
+          <a href="{{route('home')}}" class="d-block"><i class="fa fa-user-circle"></i> {{ucfirst(Auth::user()->name)}}</a>
         </div>
       </div>
 

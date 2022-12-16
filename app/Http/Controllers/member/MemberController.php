@@ -55,9 +55,18 @@ class MemberController extends Controller
         }
         return view('pages.member.view',['title' => "",'member'=>$member]);
     }
+
+
     public function edit($id)
     {
         $member=$this->memberInfo->getMember($id);
+        return view('pages.member.edit',['title' => "",'member'=>$member]);
+    }
+
+    public function memberProfileUpdate()
+    {
+        $id=Auth::user()->id;
+        $member=$this->memberInfo->getProfile($id);
         return view('pages.member.edit',['title' => "",'member'=>$member]);
     }
 

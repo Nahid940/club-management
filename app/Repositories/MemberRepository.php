@@ -74,8 +74,13 @@ class MemberRepository implements MemberInterface
                 ->where('member_id', $member->id)
                 ->get();
 
+            $club_memberships = DB::table('club_memberships')
+                ->where('member_id', $member->id)
+                ->get();
+
             $member->education=$education;
             $member->dependants=$dependants;
+            $member->club_memberships=$club_memberships;
             return $member;
         }else{
             return false;

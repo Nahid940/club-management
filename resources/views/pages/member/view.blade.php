@@ -4,6 +4,12 @@
     .table td, .table th {
         padding: .2rem;
     }
+    .section_title{
+        color:#4fa2e8;
+        font-size:14px;
+        font-weight:bold;
+        border-bottom: 1px dashed #6b6b6b61
+    }
 @stop
 @section('content')
 <div class="row">
@@ -11,7 +17,7 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
-            <a href="" title="Edit"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i></a>
+            <a href="{{route('member-profile-update')}}" title="Edit"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i></a>
             <div class="text-center">
                 <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
@@ -88,7 +94,7 @@
         @endif
         <div class="invoice p-3 mb-3">
             <!-- info row -->
-                <h4>Personal Information</h4>
+            <p class="section_title">Personal Information</p>
             <div class="row invoice-info">
 
                 <div class="col-sm-6 invoice-col">
@@ -236,7 +242,7 @@
             <!-- Table row -->
             <div class="row">
                 <div class="col-12 table-responsive">
-                    <h4>Educational Background</h4>
+                    <p class="section_title">Educational Background</p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -258,24 +264,10 @@
                 </div>
             <!-- /.col -->
             </div>
-            
-            <hr>
-            <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                    <table class="table no-border">
-
-                    </table>
-                </div>
-                <div class="col-sm-4 invoice-col">
-                    <table class="table no-border">
-
-                    </table>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-12 table-responsive">
-                    <h4>Dependants Details</h4>
+                    <p class="section_title">Dependants Details</h4>
                     <table class="table table-striped">
                         <thead>
                             <tr>
