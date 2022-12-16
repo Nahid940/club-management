@@ -10,11 +10,10 @@
 <div class="col-md-3">
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
-        
         <div class="card-body box-profile">
             <a href="" title="Edit"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i></a>
             <div class="text-center">
-                <img src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
+                <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
             <h3 class="profile-username text-center">{{$member->first_name}}</h3>
         </div>
@@ -33,7 +32,7 @@
                 <tr>
                     <td colspan="2">
                         <div class="callout callout-danger">
-                            <p>Registration Date: {{date('d-m-Y',strtotime($member->registration_date))}}</p>
+                            <p>Registration Date: <b>{{date('d-m-Y',strtotime($member->registration_date))}}</b></p>
                         </div>
                     </td>
                 </tr>
@@ -78,7 +77,15 @@
     </div>
     <div class="col-9">
         <!-- Main content -->
-        
+        @if($member->status==1)
+            <div class="alert" style="background-color: #c7f7c2;font-size: 14px">
+                <i class="fa fa-check" aria-hidden="true"></i> Membership application approved!
+            </div>
+        @elseif($member->status==-1)
+            <div class="alert" style="background-color: #dc3545;font-size: 14px;color:#fff">
+                <i class="fa fa-spinner fa-pulse"></i> Approval pending!
+            </div>
+        @endif
         <div class="invoice p-3 mb-3">
             <!-- info row -->
                 <h4>Personal Information</h4>

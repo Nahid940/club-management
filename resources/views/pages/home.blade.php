@@ -54,11 +54,11 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="ilqBSQ">
-                            <a class="esp_icons" href="{{route('member-admission')}}" style="color: #2610da;"><i class="fa fa-address-card" aria-hidden="true"></i></a>
+                            <a class="esp_icons" href="{{route('member-admission')}}" style="color: #fd4f0c;"><i class="fa fa-address-card" aria-hidden="true"></i></a>
                             <div class="iLmjWS">Membership<br>application</div>
                         </div>
                         <div class="ilqBSQ">
-                            <a class="esp_icons" href="{{route('member-profile')}}" style="color: #0d9a8d;"><i class="fa fa-address-book" aria-hidden="true"></i></a>
+                            <a class="esp_icons" href="{{route('member-profile')}}" style="color: #c78409;"><i class="fa fa-address-book" aria-hidden="true"></i></a>
                             <div class="iLmjWS">Profile</div>
                         </div>
                         <div class="ilqBSQ">

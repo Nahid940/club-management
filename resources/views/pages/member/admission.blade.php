@@ -60,7 +60,7 @@
 
     .frame {
         width: 130px;
-        height: 154px;
+        height: 134px;
         border: 3px solid #ccc;
         background: #eee;
         margin-left 2px: ;
@@ -68,7 +68,6 @@
     }
     img {
         width: 100%;
-        height: 100%;
     }
     .custom-file-upload {
         border: 1px solid #ccc;
@@ -83,7 +82,6 @@
 @stop
 
 @section('content')
-
 <div class="row">
     <div class="col-12">
         <div class="bs-stepper">

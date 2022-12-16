@@ -107,7 +107,7 @@ class MemberRepository implements MemberInterface
         $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
         $imgFile->resize(150, 150, function ($constraint) {
             $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$input['file']);
+        })->save($destinationPath.'/'.$data['member_photo_file']);
 
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],

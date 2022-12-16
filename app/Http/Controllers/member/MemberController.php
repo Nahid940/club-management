@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\MemberAdmissionRequest;
 use App\Http\Requests\MemberDeleteRequest;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\View;
 
 class MemberController extends Controller
 {
@@ -62,8 +63,17 @@ class MemberController extends Controller
 
     public function admission()
     {
-        $today=date('Y-m-d');
-        return view('pages.member.admission',['title' => "",'today'=>$today]);
+        $user=Auth::user();
+        $is_member=$user->hasRole('member');
+        $is_already_applied=isAlreadyApplied($user->id);
+        if($is_member && $is_already_applied)
+        {
+            return view('pages.member.error',['title' => ""]);
+        }else
+        {
+            $today=date('Y-m-d');
+            return view('pages.member.admission',['title' => "",'today'=>$today]);
+        }
     }
 
     public function save(MemberAdmissionRequest $request)
