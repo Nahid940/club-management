@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card-body" style="display: block;font-size: 12px;color:red;font-weight: bold">
-                    <i class="fa fa-ban" aria-hidden="true"></i> You have already applied for membership. Please check your application status <a href="{{route('member-profile')}}">Here</a> !
+                    <i class="fa fa-ban" aria-hidden="true"></i> You have successfully applied for club membership. Please check your application status <a href="{{route('member-profile')}}">Here</a> !
                 </div>
             </div>
         </div>

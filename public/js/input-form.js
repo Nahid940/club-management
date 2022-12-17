@@ -283,9 +283,9 @@ $("#next").click(function(){
         $('#step_1').addClass('hidden')
         $('#step_2').removeClass('hidden')
 
-        $('#second_step').css({'color':'#41ff40'})
-        $('.circle2').css({'background':'#41ff40'})
-        $('.line1').css('background','#41ff40')
+        $('#second_step').css({'color':'rgb(183 19 19)'})
+        $('.circle2').css({'background':'rgb(183 19 19)'})
+        $('.line1').css('background','rgb(183 19 19)')
     }
 
     $('#prev').removeClass('hidden')
@@ -307,8 +307,8 @@ $("#prev").click(function(){
     {
         $('#prev').addClass('hidden')
         $('#step_2').addClass('hidden')
-        $('#second_step').css({'color':'#6c757d'})
-        $('.circle2').css({'background':'#6c757d'})
+        $('#second_step').css({'color':'rgb(108, 117, 125)'})
+        $('.circle2').css({'background':'rgb(108, 117, 125)'})
         $('.line1').css('background','#6c757d')
         $('#next').removeClass('hidden')
         $('#save').addClass('hidden')
@@ -321,10 +321,8 @@ $("#prev").click(function(){
         $('#next').removeClass('hidden')
         $('#save').addClass('hidden')
         $('#update').addClass('hidden')
-
-        $('#last_step').css({'color':'#6c757d'})
-        $('.circle3').css({'background':'#6c757d'})
-        $('.line2').css('background','#6c757d')
+        $('.line2').css('background','rgb(108, 117, 125)')
+        $('.circle2').css({'background':'rgb(108, 117, 125)'})
     }
     step--;
     $('#form_step').val(step)
@@ -344,20 +342,34 @@ $('.add_more').on('click',function () {
 
 $(document).on('click','.delete_current_edu',function () {
     let sl=$(this).data('id');
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: "POST",
-        url: '/member-education/delete',
-        data: {
-            id:sl
-        },
-        cache: false,
-        success: function(data){
-            document.getElementById('current_edu_row'+sl).remove();
+
+    Swal.fire({
+        title: '<div style="font-size:20px;font-weight:bold;">Do you want to delete this information?</div>',
+        html: '<div style="font-size:10px">Your current information will be deleted!!</div>',
+        icon: 'warning',
+        color:'green',
+        showCancelButton: true,
+        confirmButtonColor: '#0ba70c',
+        cancelButtonColor: '#dd2900',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: '/member-education/delete',
+                data: {
+                    id:sl
+                },
+                cache: false,
+                success: function(data){
+                    document.getElementById('current_edu_row'+sl).remove();
+                }
+            });
         }
-    });
+    })
 });
 
 $(document).on('click','.delete_extra_education',function () {
@@ -385,18 +397,32 @@ $(document).on('click','.delete_extra_club',function () {
 
 $(document).on('click','.current_club_del',function () {
     let sl=$(this).data('id');
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: "POST",
-        url: '/row-delete',
-        data: {
-            id:sl
-        },
-        cache: false,
-        success: function(data){
-            document.getElementById('current_club'+sl).remove();
+
+    Swal.fire({
+        title: '<div style="font-size:20px;font-weight:bold;">Do you want to delete this information?</div>',
+        html: '<div style="font-size:10px">Your current information will be deleted!!</div>',
+        icon: 'warning',
+        color:'green',
+        showCancelButton: true,
+        confirmButtonColor: '#0ba70c',
+        cancelButtonColor: '#dd2900',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: '/row-delete',
+                data: {
+                    id:sl
+                },
+                cache: false,
+                success: function(data){
+                    document.getElementById('current_club'+sl).remove();
+                }
+            });
         }
     });
 });
@@ -424,18 +450,32 @@ $(document).on('click','.delete_extra_dep',function () {
 
 $(document).on('click','.current_dep_del',function () {
     let sl=$(this).data('id');
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: "POST",
-        url: '/row-delete',
-        data: {
-            id:sl
-        },
-        cache: false,
-        success: function(data){
-            document.getElementById('current_dep'+sl).remove();
+
+
+    Swal.fire({
+        title: '<div style="font-size:20px;font-weight:bold;">Do you want to delete this information?</div>',
+        html: '<div style="font-size:10px">Your current information will be deleted!!</div>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0ba70c',
+        cancelButtonColor: '#dd2900',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: '/row-delete',
+                data: {
+                    id:sl
+                },
+                cache: false,
+                success: function(data){
+                    document.getElementById('current_dep'+sl).remove();
+                }
+            });
         }
     });
 });

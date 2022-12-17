@@ -28,10 +28,10 @@
         font-weight:bold
     }
     .circle1{
-        background:#41ff40;
+        background:rgb(183 19 19);
     }
     #first_step{
-        color:#41ff40
+        color:rgb(183 19 19)
     }
     .bs-stepper .line, .bs-stepper-line {
         min-height: 6px;
