@@ -296,7 +296,7 @@
                                 <th>NID</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="dep_list">
                             @foreach($member->dependants as $dependant)
                                 <tr>
                                     <td>{{$dependant->dep_name}}</td>

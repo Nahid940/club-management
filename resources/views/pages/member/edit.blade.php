@@ -40,7 +40,6 @@
         font-size:15px;
         margin-bottom: 5px;
         color:#2b73cce8;
-        border-bottom:1px dashed #ccc
     }
     .card-title{
         font-size:14px;
@@ -319,7 +318,10 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <div class="form_part_heading" for="">Educational Background <span><i class="fa fa-question-circle" aria-hidden="true"></i></span></div>
+                                    <div class="form_part_heading" for="" style="position:  relative;border-bottom: 1px dashed #ccc;height: 25px">
+                                        <span>Educational Background  <i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                                        <a class="btn btn-danger btn-xs add_more" style="right: 0;position: absolute">Add More</a>
+                                    </div>
                                     <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
@@ -329,7 +331,7 @@
                                                 <th>&nbsp;</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="education_tbody">
                                             @foreach($member->education as $education)
                                                 <tr>
                                                     <input type="hidden" name="education_row_id[]" value="{{$education->id}}">
@@ -524,8 +526,9 @@
                     </div>
                     <!-- ============================================================================================================================ -->
                     <div id="step_2" class='hidden'>
-                        <div class="row">
-                            <div class="form_part_heading" for="">Membership Details of Other Club/Institution/Association <span><i class="fa fa-question-circle" aria-hidden="true"></i></span></div>
+                        <div class="form_part_heading" style="position:relative;border-bottom: 1px dashed #ccc;height: 25px">
+                            <span>Membership Details of Other Club/Institution/Association <i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                            <a class="btn btn-danger btn-xs add_more_club_info" style="right: 0;position: absolute">Add More</a>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -538,7 +541,7 @@
                                                 <th>Type of Membership/Position</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="club_info">
                                             @foreach($member->club_memberships as $club_membership)
                                                 <tr>
                                                     <td><input type="text" name="club_name[]" class="form-control" value="{{$club_membership->club_name}}" placeholder="Club Name"/></td>
@@ -582,8 +585,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form_part_heading" for="">Dependant Details</div>
+                        <div class="form_part_heading" style="position:relative;border-bottom: 1px dashed #ccc;height: 25px">
+                            <span>Dependants List <i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                            <a class="btn btn-danger btn-xs add_more_dep_info" style="right: 0;position: absolute">Add More</a>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
@@ -598,11 +602,11 @@
                                                 <th>NID(If any)</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="dep_list">
                                             @foreach($member->dependants as $dependant)
                                                 <tr>
                                                     <td><input type="text" name="dep_name[]" value="{{$dependant->dep_name}}" class="form-control" placeholder="Name"/></td>
-                                                    <td><input type="date" name="dep_dob[]" value="{{$dependant->dep_dob}}" class="form-control" placeholder=""/></td>
+                                                    <td><input type="date" name="dep_dob[]" value="{{$dependant->dep_dob}}" class="form-control" placeholder="Date of Birth"/></td>
                                                     <td><input type="text" name="dep_blood_group[]" value="{{$dependant->dep_blood_group}}"  class="form-control" placeholder="Blood Group"/></td>
                                                     <td><input type="text" name="dep_occupation[]" value="{{$dependant->dep_occupation}}"  class="form-control" placeholder="Occupation"/></td>
                                                     <td><input type="text" name="dep_nid[]" value="{{$dependant->dep_nid}}"  class="form-control" placeholder="NID"/></td>

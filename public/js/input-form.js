@@ -329,3 +329,35 @@ $("#prev").click(function(){
     step--;
     $('#form_step').val(step)
 });
+
+$('.add_more').on('click',function () {
+    $('#education_tbody').append(
+        "<tr>"+
+            "<td><input type='text' name='institution_name[]' class='form-control' placeholder='Name of the Institution'/></td>"+
+            "<td><input type='text' name='passing_year[]' class='form-control' placeholder='Passing Year'/></td>"+
+            "<td><input type='text' name='degree[]' class='form-control' placeholder='Degree'/></td>"+
+        "<tr>"
+    )
+})
+
+$('.add_more_club_info').on('click',function () {
+    $('#club_info').append(
+        "<tr>"+
+            "<td><input type='text' name='club_name[]' class='form-control'  class='form-control' placeholder='Club Name'/></td>"+
+            "<td><input type='text' name='membership_no[]' class='form-control' placeholder='Membership Number'/></td>"+
+            "<td><input type='text' name='membership_type[]' class='form-control' placeholder='Type of Membership/Position'/></td>"+
+        "<tr>"
+    )
+})
+
+$('.add_more_dep_info').on('click',function () {
+    $('#dep_list').append(
+        "<tr>"+
+            "<td><input type='text' name='dep_name[]' class='form-control'  class='form-control' placeholder='Name'/></td>"+
+            "<td><input type='date' name='dep_dob[]' class='form-control' placeholder='Date of Birth'/></td>"+
+            "<td><input type='text' name='dep_blood_group[]' class='form-control' placeholder='Blood Group'/></td>"+
+            "<td><input type='text' name='dep_occupation[]' class='form-control' placeholder='Occupation'/></td>"+
+            "<td><input type='text' name='dep_nid[]' class='form-control' placeholder='NID'/></td>"+
+        "<tr>"
+    )
+})
