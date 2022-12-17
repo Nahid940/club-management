@@ -31,7 +31,7 @@
         background:rgb(183 19 19);
     }
     #first_step{
-        color: rgb(183 19 19)
+        color:rgb(183 19 19)
     }
     .bs-stepper .line, .bs-stepper-line {
         min-height: 6px;
@@ -60,7 +60,7 @@
 
     .frame {
         width: 130px;
-        height: 150px;
+        height: 134px;
         border: 3px solid #ccc;
         background: #eee;
         margin-left 2px: ;

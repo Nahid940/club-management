@@ -10,6 +10,13 @@
         font-weight:bold;
         border-bottom: 1px dashed #6b6b6b61
     }
+    @media print
+    {
+        .no-print, .no-print *
+        {
+            display: none !important;
+        }
+    }
 @stop
 @section('content')
 <div class="row">
@@ -17,7 +24,8 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
-            <a href="{{route('member-profile-update')}}" title="Edit"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i></a>
+            <a href="{{route('member-profile-update')}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+            <a title="Print" class="no-print" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style="color: #db0049"></i>Print</a>
             <div class="text-center">
                 <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
@@ -104,11 +112,11 @@
     <div class="col-9">
         <!-- Main content -->
         @if($member->status==1)
-            <div class="alert" style="background-color: #c7f7c2;font-size: 14px">
+            <div class="alert no-print" style="background-color: #c7f7c2;font-size: 14px">
                 <i class="fa fa-check" aria-hidden="true"></i> Membership application approved!
             </div>
         @elseif($member->status==-1)
-            <div class="alert" style="background-color: #dc3545;font-size: 14px;color:#fff">
+            <div class="alert no-print" style="background-color: #dc3545;font-size: 14px;color:#fff">
                 <i class="fa fa-spinner fa-pulse"></i> Approval pending!
             </div>
         @endif
@@ -127,7 +135,6 @@
             <!-- info row -->
             <p class="section_title">Personal Information</p>
             <div class="row invoice-info">
-
                 <div class="col-sm-6 invoice-col">
                     <table class="table no-border">
                         <tr>
