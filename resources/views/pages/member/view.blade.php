@@ -51,16 +51,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>First Name</td>
+                    <td>Name</td>
                     <td>{{$member->first_name}} </td>
                 </tr>
-                <tr>
-                    <td>Last Name</td>
-                    <td>{{$member->first_name}} </td>
-                </tr>
+                {{--<tr>--}}
+                    {{--<td>Last Name</td>--}}
+                    {{--<td>{{$member->first_name}} </td>--}}
+                {{--</tr>--}}
                 <tr>
                     <td>Member Type </td>
-                    <td>{{$member->member_type}} </td>
+                    <td><span class="badge badge-success" style="font-size: 10px">{{$member->member_type}}</span></td>
                 </tr>
                 <tr>
                     <td>Blood Group </td>
@@ -265,82 +265,88 @@
             </div>
 
             <!-- Table row -->
-            <div class="row">
-                <div class="col-12 table-responsive">
-                    <p class="section_title">Educational Background</p>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name of the Institution</th>
-                                <th>Passing Year</th>
-                                <th>Degree/Qualification Obtained</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($member->education as $education)
+            @if(!empty($member->education))
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <p class="section_title">Educational Background</p>
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{{$education->institution_name}}</td>
-                                    <td>{{$education->passing_year}}</td>
-                                    <td>{{$education->degree}}</td>
+                                    <th>Name of the Institution</th>
+                                    <th>Passing Year</th>
+                                    <th>Degree/Qualification Obtained</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($member->education as $education)
+                                    <tr>
+                                        <td>{{$education->institution_name}}</td>
+                                        <td>{{$education->passing_year}}</td>
+                                        <td>{{$education->degree}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- /.col -->
+                </div>
+            @endif
+
+            @if(!empty($member->club_memberships))
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <p class="section_title">Other Club Memberships</h4>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Club Name</th>
+                                <th>Membership Number</th>
+                                <th>Type of Membership/Position</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dep_list">
+                            @foreach($member->club_memberships as $club_memberships)
+                                <tr>
+                                    <td>{{$club_memberships->club_name}}</td>
+                                    <td>{{$club_memberships->membership_no}}</td>
+                                    <td>{{$club_memberships->membership_type}}</td>
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            <!-- /.col -->
-            </div>
+            @endif
 
-            <div class="row">
-                <div class="col-12 table-responsive">
-                    <p class="section_title">Other Club Memberships</h4>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Club Name</th>
-                            <th>Membership Number</th>
-                            <th>Type of Membership/Position</th>
-                        </tr>
-                        </thead>
-                        <tbody id="dep_list">
-                        @foreach($member->club_memberships as $club_memberships)
-                            <tr>
-                                <td>{{$club_memberships->club_name}}</td>
-                                <td>{{$club_memberships->membership_no}}</td>
-                                <td>{{$club_memberships->membership_type}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 table-responsive">
-                    <p class="section_title">Dependants Details</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Date of Birth</th>
-                                <th>Blood Group</th>
-                                <th>Occupation</th>
-                                <th>NID</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dep_list">
-                            @foreach($member->dependants as $dependant)
+            @if(!empty($member->dependants))
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <p class="section_title">Dependants Details</h4>
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{{$dependant->dep_name}}</td>
-                                    <td>{{$dependant->dep_dob}}</td>
-                                    <td>{{$dependant->dep_blood_group}}</td>
-                                    <td>{{$dependant->dep_occupation}}</td>
-                                    <td>{{$dependant->dep_nid}}</td>
+                                    <th>Name</th>
+                                    <th>Date of Birth</th>
+                                    <th>Blood Group</th>
+                                    <th>Occupation</th>
+                                    <th>NID</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody id="dep_list">
+                                @foreach($member->dependants as $dependant)
+                                    <tr>
+                                        <td>{{$dependant->dep_name}}</td>
+                                        <td>{{$dependant->dep_dob}}</td>
+                                        <td>{{$dependant->dep_blood_group}}</td>
+                                        <td>{{$dependant->dep_occupation}}</td>
+                                        <td>{{$dependant->dep_nid}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            @endif
             <!-- /.row -->
         </div>
         <!-- /.invoice -->
