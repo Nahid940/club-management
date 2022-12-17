@@ -383,6 +383,24 @@ $(document).on('click','.delete_extra_club',function () {
     document.getElementById('extra_club_row'+sl).remove();
 });
 
+$(document).on('click','.current_club_del',function () {
+    let sl=$(this).data('id');
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: '/row-delete',
+        data: {
+            id:sl
+        },
+        cache: false,
+        success: function(data){
+            document.getElementById('current_club'+sl).remove();
+        }
+    });
+});
+
 
 let i3=0;
 $('.add_more_dep_info').on('click',function () {
@@ -402,4 +420,22 @@ $('.add_more_dep_info').on('click',function () {
 $(document).on('click','.delete_extra_dep',function () {
     let sl=$(this).data('sl');
     document.getElementById('extra_dep_row'+sl).remove();
+});
+
+$(document).on('click','.current_dep_del',function () {
+    let sl=$(this).data('id');
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: '/row-delete',
+        data: {
+            id:sl
+        },
+        cache: false,
+        success: function(data){
+            document.getElementById('current_dep'+sl).remove();
+        }
+    });
 });

@@ -410,5 +410,11 @@ class MemberRepository implements MemberInterface
         $data['member_id']              =isset($request->member_id)?$request->member_id:null;
         return $data;
     }
+
+    public function deleteTable($id,$table)
+    {
+        DB::table("$table")->where("id",$id)->delete();
+        return true;
+    }
     
 }

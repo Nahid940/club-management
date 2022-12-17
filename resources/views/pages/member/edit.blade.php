@@ -540,14 +540,16 @@
                                                 <th>Club Name</th>
                                                 <th>Membership Number</th>
                                                 <th>Type of Membership/Position</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody id="club_info">
                                             @foreach($member->club_memberships as $club_membership)
-                                                <tr>
+                                                <tr id="current_club{{$club_membership->id}}">
                                                     <td><input type="text" name="club_name[]" class="form-control" value="{{$club_membership->club_name}}" placeholder="Club Name"/></td>
                                                     <td><input type="text" name="membership_no[]" class="form-control" value="{{$club_membership->membership_no}}"  placeholder="Membership Number"/></td>
                                                     <td><input type="text" name="membership_type[]" class="form-control" value="{{$club_membership->membership_type}}"  placeholder="Type of Membership/Position"/></td>
+                                                    <td><a title="Delete" data-id="{{$club_membership->id}}" class="current_club_del btn btn-danger btn-xs">x</a></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -601,16 +603,18 @@
                                                 <th>Blood Group</th>
                                                 <th>Occupation</th>
                                                 <th>NID(If any)</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody id="dep_list">
                                             @foreach($member->dependants as $dependant)
-                                                <tr>
+                                                <tr id="current_dep{{$dependant->id}}">
                                                     <td><input type="text" name="dep_name[]" value="{{$dependant->dep_name}}" class="form-control" placeholder="Name"/></td>
                                                     <td><input type="date" name="dep_dob[]" value="{{$dependant->dep_dob}}" class="form-control" placeholder="Date of Birth"/></td>
                                                     <td><input type="text" name="dep_blood_group[]" value="{{$dependant->dep_blood_group}}"  class="form-control" placeholder="Blood Group"/></td>
                                                     <td><input type="text" name="dep_occupation[]" value="{{$dependant->dep_occupation}}"  class="form-control" placeholder="Occupation"/></td>
                                                     <td><input type="text" name="dep_nid[]" value="{{$dependant->dep_nid}}"  class="form-control" placeholder="NID"/></td>
+                                                    <td><a title="Delete" data-id="{{$dependant->id}}" class="current_dep_del btn btn-danger btn-xs">x</a></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

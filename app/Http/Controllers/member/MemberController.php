@@ -115,4 +115,19 @@ class MemberController extends Controller
        $message="Member moved to trash!!";
        return redirect()->route('member-index')->with(['message' => $message]);
     }
+
+    public function educationDelete(Request $request)
+    {
+        return $this->memberInfo->deleteTable($request->id,"member_educations");
+    }
+
+    public function clubDelete(Request $request)
+    {
+        return $this->memberInfo->deleteTable($request->id,"club_memberships");
+    }
+
+    public function dependentDelete(Request $request)
+    {
+        return $this->memberInfo->deleteTable($request->id,"member_dependant_lists");
+    }
 }
