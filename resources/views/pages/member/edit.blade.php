@@ -141,10 +141,15 @@
 @endif
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
+        <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Update info</h3>
+                <div style="">
+                    <a href="{{route('member-profile')}}" style="position: absolute;right: 55px;" class="btn btn-danger btn-xs" title="Close">Close</a>
+                    <a href="{{route('member-profile-update')}}" style="position: absolute;right: 2px;" class="btn btn-primary btn-xs" title="Reload">Reload</a>
+                </div>
             </div>
+
             <!-- /.card-header -->
             <div class="card-body">
                 @if ($errors->any())

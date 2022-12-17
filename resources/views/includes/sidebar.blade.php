@@ -33,25 +33,25 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('member-index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Member list</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('member-admission')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Add new</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Editors</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Validation</p>
                 </a>
               </li>
@@ -68,7 +68,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('inployee-index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Employee List</p>
                 </a>
               </li>
@@ -85,13 +85,13 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('user-add')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Add new</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('role-index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>Manage User Role</p>
                 </a>
               </li>
@@ -108,7 +108,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('payment-index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
                   <p>List</p>
                 </a>
               </li>
