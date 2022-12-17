@@ -290,44 +290,44 @@ class MemberRepository implements MemberInterface
             "updated_by"                =>   $data['user_id'],
         );
         DB::table('members')->where('id',$data['member_id'])->update($member_basic_data);
-
-//        for ($i=0;$i<sizeof($data['institution_name']);$i++)
-//        {
-//            if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
-//                DB::table('member_educations')->insert([
-//                    'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
-//                    'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
-//                    'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
-//                    'member_id' => $id
-//                ]);
-//            }
-//        }
-//
-//        for ($i=0;$i<sizeof($data['club_name']);$i++)
-//        {
-//            if(isset($data['club_name'][$i]) && !empty(isset($data['club_name'][$i]))) {
-//                DB::table('club_memberships')->insert([
-//                    'member_id' => $id,
-//                    'club_name' => isset($data['club_name'][$i]) ? $data['club_name'][$i] : "",
-//                    'membership_no' => isset($data['membership_no'][$i]) ? $data['membership_no'][$i] : 0,
-//                    'membership_type' => isset($data['membership_type'][$i]) ? $data['membership_type'][$i] : "",
-//                ]);
-//            }
-//        }
-//
-//        for ($i=0;$i<sizeof($data['dep_name']);$i++)
-//        {
-//            if(isset($data['dep_name'][$i]) && !empty(isset($data['dep_name'][$i]))) {
-//                DB::table('member_dependant_lists')->insert([
-//                    'member_id' => $id,
-//                    'dep_name' => isset($data['dep_name'][$i]) ? $data['dep_name'][$i] : "",
-//                    'dep_dob' => isset($data['dep_dob'][$i]) ? $data['dep_dob'][$i] : 0,
-//                    'dep_blood_group' => isset($data['dep_blood_group'][$i]) ? $data['dep_blood_group'][$i] : "",
-//                    'dep_occupation' => isset($data['dep_occupation'][$i]) ? $data['dep_occupation'][$i] : "",
-//                    'dep_nid' => isset($data['dep_nid'][$i]) ? $data['dep_nid'][$i] : "",
-//                ]);
-//            }
-//        }
+        DB::table('member_educations')->where('member_id',$data['member_id'])->delete();
+        for ($i=0;$i<sizeof($data['institution_name']);$i++)
+        {
+            if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
+                DB::table('member_educations')->insert([
+                    'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
+                    'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+                    'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
+                    'member_id' => $data['member_id']
+                ]);
+            }
+        }
+        DB::table('club_memberships')->where('member_id',$data['member_id'])->delete();
+        for ($i=0;$i<sizeof($data['club_name']);$i++)
+        {
+            if(isset($data['club_name'][$i]) && !empty(isset($data['club_name'][$i]))) {
+                DB::table('club_memberships')->insert([
+                    'member_id' => $data['member_id'],
+                    'club_name' => isset($data['club_name'][$i]) ? $data['club_name'][$i] : "",
+                    'membership_no' => isset($data['membership_no'][$i]) ? $data['membership_no'][$i] : 0,
+                    'membership_type' => isset($data['membership_type'][$i]) ? $data['membership_type'][$i] : "",
+                ]);
+            }
+        }
+        DB::table('member_dependant_lists')->where('member_id',$data['member_id'])->delete();
+        for ($i=0;$i<sizeof($data['dep_name']);$i++)
+        {
+            if(isset($data['dep_name'][$i]) && !empty(isset($data['dep_name'][$i]))) {
+                DB::table('member_dependant_lists')->insert([
+                    'member_id' => $data['member_id'],
+                    'dep_name' => isset($data['dep_name'][$i]) ? $data['dep_name'][$i] : "",
+                    'dep_dob' => isset($data['dep_dob'][$i]) ? $data['dep_dob'][$i] : 0,
+                    'dep_blood_group' => isset($data['dep_blood_group'][$i]) ? $data['dep_blood_group'][$i] : "",
+                    'dep_occupation' => isset($data['dep_occupation'][$i]) ? $data['dep_occupation'][$i] : "",
+                    'dep_nid' => isset($data['dep_nid'][$i]) ? $data['dep_nid'][$i] : "",
+                ]);
+            }
+        }
         return true;
         // "club_name"=>$data['club_name'],
         // "membership_no"=>$data['membership_no'],

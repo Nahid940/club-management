@@ -125,7 +125,6 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h5><i class="icon fas fa-check"></i> Success!</h5>
                 {{session('message')}}
-                <i class="icon fas fa-exclamation-triangle"></i>Click here to view <a href="{{route('member-read',session('id'))}}">profile</a>
             </div>
         </div>
     </div>

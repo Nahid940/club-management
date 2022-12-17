@@ -112,6 +112,17 @@
                 <i class="fa fa-spinner fa-pulse"></i> Approval pending!
             </div>
         @endif
+        @if(session('message'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-check"></i> Success!</h5>
+                        {{session('message')}}
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="invoice p-3 mb-3">
             <!-- info row -->
             <p class="section_title">Personal Information</p>
@@ -255,7 +266,7 @@
                             <tr>
                                 <th>Name of the Institution</th>
                                 <th>Passing Year</th>
-                                <th>Degree//Qualification Obtained</th>
+                                <th>Degree/Qualification Obtained</th>
                             </tr>
                         </thead>
                         <tbody>
