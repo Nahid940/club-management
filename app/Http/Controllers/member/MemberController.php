@@ -75,8 +75,9 @@ class MemberController extends Controller
     {
         $id=Auth::user()->id;
         $member_short_info=getMemberShortInfo($id);
-        $request->merge(['member_id' => $member_short_info->id,'updated_by'=>$id,'member_photo'=>$member_short_info->member_photo]);
-        $this->memberInfo->updateProfile($request);
+        $request->merge(['member_id' => $member_short_info->id,'updated_by'=>$id,'member_old_photo'=>$member_short_info->member_photo]);
+        $data=$this->memberInfo->getPostedData($request);
+        $this->memberInfo->updateProfile($data);
         return redirect()->route('member-profile')->with('message','Profile updated successfully!');
     }
 

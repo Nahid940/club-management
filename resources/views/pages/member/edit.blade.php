@@ -162,7 +162,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="frame">
-                                    <img style="width: 100%" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
+                                    <img style="width: 100%" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="" id="sample_img">
                                 </div>
                                 <label class="custom-file-upload">
                                     <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>

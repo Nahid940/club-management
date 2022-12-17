@@ -285,6 +285,30 @@
 
             <div class="row">
                 <div class="col-12 table-responsive">
+                    <p class="section_title">Other Club Memberships</h4>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Club Name</th>
+                            <th>Membership Number</th>
+                            <th>Type of Membership/Position</th>
+                        </tr>
+                        </thead>
+                        <tbody id="dep_list">
+                        @foreach($member->club_memberships as $club_memberships)
+                            <tr>
+                                <td>{{$club_memberships->club_name}}</td>
+                                <td>{{$club_memberships->membership_no}}</td>
+                                <td>{{$club_memberships->membership_type}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 table-responsive">
                     <p class="section_title">Dependants Details</h4>
                     <table class="table table-striped">
                         <thead>

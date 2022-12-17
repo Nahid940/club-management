@@ -5,6 +5,7 @@ use App\Interfaces\MemberInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class MemberRepository implements MemberInterface
@@ -226,10 +227,10 @@ class MemberRepository implements MemberInterface
 
 
 
-    public function updateProfile(object $data){
-
-        if(!empty($data['image']))
-        {   Storage::delete($data['member_photo']);
+    public function updateProfile(array $data){
+        if(!empty($data['member_photo']))
+        {
+            Storage::disk('local')->delete('public/member_photo/'. $data['member_old_photo']);
             $image=$data['image'];
             $input['file'] =$data['member_photo'];
             $data['member_photo_file']= $data['college_roll']."_".$input['file'];
@@ -240,7 +241,7 @@ class MemberRepository implements MemberInterface
             })->save($destinationPath.'/'.$data['member_photo_file']);
         }else
         {
-            $data['member_photo_file']=$data['member_photo'];
+            $data['member_photo_file']=$data['member_old_photo'];
         }
 
 
@@ -351,7 +352,7 @@ class MemberRepository implements MemberInterface
         $data['registration_date']      =$validated['registration_date'];
         $data['name']                   =$validated['name'];
         $data['member_type']            =$validated['member_type'];
-        $data['blood_group']            =$request->member_type;
+        $data['blood_group']            =$request->blood_group;
         $data['college_roll']           =$request->college_roll;
         $data['date_of_birth']          =$validated['date_of_birth'];
         $data['nid']                    =$validated['nid'];
@@ -400,9 +401,13 @@ class MemberRepository implements MemberInterface
         $data['dep_nid']                =$request->dep_nid;
         $data['branch_name']            =$request->branch_name;
         $data['acc_no']                 =$request->acc_no;
-        $image                          = $request->file('member_photo');
+        $image                          =$request->file('member_photo');
         $data['image']                  =$image;
-        $data['member_photo']           = time().'.'.$image->getClientOriginalExtension();
+        $data['member_photo']           = !empty($image)?time().'.'.$image->getClientOriginalExtension():null;
+
+        $data['member_old_photo']       =isset($request->member_old_photo)?$request->member_old_photo:null;
+        $data['user_id']                =isset($request->user_id)?$request->user_id:null;
+        $data['member_id']              =isset($request->member_id)?$request->member_id:null;
         return $data;
     }
     

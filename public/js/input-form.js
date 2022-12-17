@@ -329,35 +329,59 @@ $("#prev").click(function(){
     step--;
     $('#form_step').val(step)
 });
-
+let i1=0;
 $('.add_more').on('click',function () {
+    i1++;
     $('#education_tbody').append(
-        "<tr>"+
+        "<tr id='extra_edu_row"+i1+"'>"+
             "<td><input type='text' name='institution_name[]' class='form-control' placeholder='Name of the Institution'/></td>"+
             "<td><input type='text' name='passing_year[]' class='form-control' placeholder='Passing Year'/></td>"+
             "<td><input type='text' name='degree[]' class='form-control' placeholder='Degree'/></td>"+
+            "<td><a class='btn btn-danger btn-xs delete_extra_education' data-sl='"+i1+"'>x</a></td>"+
         "<tr>"
     )
-})
+});
 
+$(document).on('click','.delete_extra_education',function () {
+    let sl=$(this).data('sl');
+    document.getElementById('extra_edu_row'+sl).remove();
+});
+
+let i2=0;
 $('.add_more_club_info').on('click',function () {
+    i2++;
     $('#club_info').append(
-        "<tr>"+
+        "<tr id='extra_club_row"+i2+"'>"+
             "<td><input type='text' name='club_name[]' class='form-control'  class='form-control' placeholder='Club Name'/></td>"+
             "<td><input type='text' name='membership_no[]' class='form-control' placeholder='Membership Number'/></td>"+
             "<td><input type='text' name='membership_type[]' class='form-control' placeholder='Type of Membership/Position'/></td>"+
+            "<td><a class='btn btn-danger btn-xs delete_extra_club' data-sl='"+i2+"'>x</a></td>"+
         "<tr>"
     )
 })
 
+$(document).on('click','.delete_extra_club',function () {
+    let sl=$(this).data('sl');
+    document.getElementById('extra_club_row'+sl).remove();
+});
+
+
+let i3=0;
 $('.add_more_dep_info').on('click',function () {
+    i3++;
     $('#dep_list').append(
-        "<tr>"+
+        "<tr id='extra_dep_row"+i3+"'>"+
             "<td><input type='text' name='dep_name[]' class='form-control'  class='form-control' placeholder='Name'/></td>"+
             "<td><input type='date' name='dep_dob[]' class='form-control' placeholder='Date of Birth'/></td>"+
             "<td><input type='text' name='dep_blood_group[]' class='form-control' placeholder='Blood Group'/></td>"+
             "<td><input type='text' name='dep_occupation[]' class='form-control' placeholder='Occupation'/></td>"+
             "<td><input type='text' name='dep_nid[]' class='form-control' placeholder='NID'/></td>"+
+            "<td><a class='btn btn-danger btn-xs delete_extra_dep' data-sl='"+i3+"'>x</a></td>"+
         "<tr>"
     )
-})
+});
+
+$(document).on('click','.delete_extra_dep',function () {
+    let sl=$(this).data('sl');
+    document.getElementById('extra_dep_row'+sl).remove();
+});

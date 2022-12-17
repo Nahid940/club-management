@@ -60,7 +60,7 @@
 
     .frame {
         width: 130px;
-        height: 134px;
+        height: 150px;
         border: 3px solid #ccc;
         background: #eee;
         margin-left 2px: ;

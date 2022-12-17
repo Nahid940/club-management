@@ -8,6 +8,6 @@ interface MemberInterface{
     public function addMember(array $data);
     public function deleteMember($id);
     public function updateMember(array $data);
-    public function updateProfile(object $data);
+    public function updateProfile(array $data);
     public function getPostedData(object $data);
 }
