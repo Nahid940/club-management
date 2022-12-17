@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add
     Route::get('/members/profile', [MemberController::class, 'profile'])->name('member-profile');
     Route::get('members/info/update', [MemberController::class, 'memberProfileUpdate'])->name('member-profile-update');
     Route::post('members/info/update/{id}', [MemberController::class, 'updateProfile'])->name('update_profile');
+    Route::post('member-education/delete', [MemberController::class, 'educationDelete'])->name('education-delete');
 });
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:delete member']], function () {

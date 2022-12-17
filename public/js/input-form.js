@@ -342,6 +342,24 @@ $('.add_more').on('click',function () {
     )
 });
 
+$(document).on('click','.delete_current_edu',function () {
+    let sl=$(this).data('id');
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: '/member-education/delete',
+        data: {
+            id:sl
+        },
+        cache: false,
+        success: function(data){
+            document.getElementById('current_edu_row'+sl).remove();
+        }
+    });
+});
+
 $(document).on('click','.delete_extra_education',function () {
     let sl=$(this).data('sl');
     document.getElementById('extra_edu_row'+sl).remove();

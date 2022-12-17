@@ -318,8 +318,9 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
+                                    {{--<i class="fa fa-question-circle" aria-hidden="true"></i>--}}
                                     <div class="form_part_heading" for="" style="position:  relative;border-bottom: 1px dashed #ccc;height: 25px">
-                                        <span>Educational Background  <i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                                        <span>Educational Background</span>
                                         <a class="btn btn-danger btn-xs add_more" style="right: 0;position: absolute">Add More</a>
                                     </div>
                                     <table id="" class="table  table-borderless">
@@ -333,12 +334,12 @@
                                         </thead>
                                         <tbody id="education_tbody">
                                             @foreach($member->education as $education)
-                                                <tr>
+                                                <tr id="current_edu_row{{$education->id}}">
                                                     <input type="hidden" name="education_row_id[]" value="{{$education->id}}">
                                                     <td><input type="text" name="institution_name[]" class="form-control" value="{{$education->institution_name}}" placeholder="Name of the Institution"/></td>
                                                     <td><input type="text" name="passing_year[]" class="form-control" value="{{$education->passing_year}}" placeholder="Passing Year"/></td>
                                                     <td><input type="text" name="degree[]" class="form-control" value="{{$education->degree}}" placeholder="Degree"/></td>
-                                                    <td><button type="button" class="btn btn-xs btn-danger">x</button></td>
+                                                    <td><button type="button" class="btn btn-xs btn-danger delete_current_edu" data-id="{{$education->id}}">x</button></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
