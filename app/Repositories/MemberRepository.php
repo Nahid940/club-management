@@ -32,7 +32,7 @@ class MemberRepository implements MemberInterface
             $member->member_type_dropdown=3;
         }else
         {
-            $member->member_type="Genera Member";
+            $member->member_type="General Member";
             $member->member_type_dropdown=4;
         }
         return $member;
@@ -62,7 +62,7 @@ class MemberRepository implements MemberInterface
                 $member->member_type_dropdown=3;
             }else
             {
-                $member->member_type="Genera Member";
+                $member->member_type="General Member";
                 $member->member_type_dropdown=4;
             }
 

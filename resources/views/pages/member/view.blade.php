@@ -67,12 +67,32 @@
                     <td>{{date('d-m-Y',strtotime($member->date_of_birth))}} </td>
                 </tr>
                 <tr>
+                    <td>Marital Status  </td>
+                    <td>{{$member->marital_status==1?"Married":"Single"}} </td>
+                </tr>
+                <tr>
+                    <td>Date of Anniversary</td>
+                    <td>{{date('d-m-Y',strtotime($member->date_of_annniversary))}} </td>
+                </tr>
+                <tr>
                     <td>NID </td>
                     <td>{{$member->nid}} </td>
                 </tr>
                 <tr>
                     <td>Passport No. </td>
                     <td>{{$member->passport}} </td>
+                </tr>
+                <tr>
+                    <td>Occupation type </td>
+                    <td>
+                        @if($member->occupation_type==1)
+                            Service
+                        @elseif($member->occupation_type==2)
+                            Self Employed
+                        @else
+                            Retired
+                        @endif
+                    </td>
                 </tr>
             </table>
             
@@ -140,19 +160,6 @@
                             <td>{{$member->present_address}}</td>
                         </tr>
                         <tr>
-                            <td>Occupation type </td>
-                            <td>:</td>
-                            <td>
-                                @if($member->occupation_type==1)
-                                    Service
-                                @elseif($member->occupation_type==2)
-                                    Self Employed
-                                @else
-                                    Retired
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
                             <td>Company name </td>
                             <td>:</td>
                             <td>{{$member->company_name}} </td>
@@ -198,17 +205,17 @@
                             <td>{{$member->spouse_date_of_birth}} </td>
                         </tr>
                         <tr>
-                            <td>Mobile No.  </td>
+                            <td>Spouse Mobile No.  </td>
                             <td>:</td>
                             <td>{{$member->spouse_mobile_number}}</td>
                         </tr>
                         <tr>
-                            <td>Phone No. </td>
+                            <td>Spouse Phone No. </td>
                             <td>:</td>
                             <td>{{$member->spouse_mobile_number}} </td>
                         </tr>
                         <tr>
-                            <td>Email </td>
+                            <td>Spouse Email </td>
                             <td>:</td>
                             <td>{{$member->spouse_email}}</td>
                         </tr>

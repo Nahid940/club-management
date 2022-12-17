@@ -12,6 +12,20 @@ $('.application_rejected2').on('click',function(){
     $('.application_rejected1').prop('checked',false);
 })
 
+$('#present_addr').on('click',function(){
+    $('#prmnt_addr').prop('checked',false);
+})
+$('#prmnt_addr').on('click',function(){
+    $('#present_addr').prop('checked',false);
+})
+
+$('#criminal_ofence1').on('click',function(){
+    $('#criminal_ofence2').prop('checked',false);
+})
+$('#criminal_ofence2').on('click',function(){
+    $('#criminal_ofence1').prop('checked',false);
+})
+
 
 $('.criminal_ofence1').on('click',function(){
     $('.criminal_ofence2').prop('checked',false);
@@ -22,9 +36,15 @@ $('.criminal_ofence2').on('click',function(){
 
 $('.car_owned1').on('click',function(){
     $('.car_owned2').prop('checked',false);
+    $('#car_reg_no').removeAttr('readonly')
 })
 $('.car_owned2').on('click',function(){
     $('.car_owned1').prop('checked',false);
+
+    $('#car_reg_no').attr('readonly','readonly')
+    $('#car_ownership_type1').prop('checked',false);
+    $('#car_ownership_type2').prop('checked',false);
+    $('#car_ownership_type3').prop('checked',false);
 })
 
 
@@ -41,6 +61,29 @@ $('#car_ownership_type2').on('click',function(){
 $('#car_ownership_type3').on('click',function(){
     $('#car_ownership_type2').prop('checked',false);
     $('#car_ownership_type1').prop('checked',false);
+})
+
+$('#mem1').on('click',function(){
+    $('#mem2').prop('checked',false);
+    $('#mem3').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})
+
+$('#mem2').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem3').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})
+
+$('#mem3').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem2').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})
+$('#mem4').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem2').prop('checked',false);
+    $('#mem3').prop('checked',false);
 })
 
 
