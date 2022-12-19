@@ -41,13 +41,12 @@
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-
             @role('member')
             <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fas fa-bullhorn"></i>
+                            <i class="fa fa-bookmark text-purple" aria-hidden="true"></i>
                             Shortcuts
                         </h3>
                     </div>
@@ -70,13 +69,37 @@
                             <div class="iLmjWS">Member list</div>
                         </div>
                         <div class="ilqBSQ">
-                            <a href="{{route('settings')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <a href="{{route('settings')}}" class="esp_icons" style="color: #004edc"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             <div class="iLmjWS">Settings</div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fa fa-sticky-note text-orange" aria-hidden="true"></i>
+                            Notice Board
+                        </h3>
+                    </div>
+                    @foreach($notices as $notice)
+                        <div class="card-row card-secondary">
+                            <div class="card-warning card-outline">
+                                <div class="card-header">
+                                    <p class="text-sm">{{$notice->title}}</p>
+                                    <span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>
+                                </div>
+                                <div class="card-body">
+                                    <p>{{$notice->notice}}</p>
+                                    <a href="">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
             @else
                 <div class="col-md-6">
