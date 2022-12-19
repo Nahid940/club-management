@@ -43,7 +43,7 @@
         <div class="row">
 
             @role('member')
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -68,6 +68,10 @@
                         <div class="ilqBSQ">
                             <a class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
                             <div class="iLmjWS">Member list</div>
+                        </div>
+                        <div class="ilqBSQ">
+                            <a href="{{route('settings')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            <div class="iLmjWS">Settings</div>
                         </div>
                     </div>
                     <!-- /.card-body -->

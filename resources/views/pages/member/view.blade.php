@@ -60,7 +60,7 @@
                 {{--</tr>--}}
                 <tr>
                     <td>Member Type </td>
-                    <td><span class="badge badge-success" style="font-size: 10px">{{$member->member_type}}</span></td>
+                    <td><span class="badge" style="font-size: 10px;background-color: #256b35;color: #fff;">{{$member->member_type}}</span></td>
                 </tr>
                 <tr>
                     <td>Blood Group </td>

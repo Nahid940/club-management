@@ -653,7 +653,8 @@
                                     <input name="tc_acceptance" type="checkbox" {{old('tc_acceptance'=='2'?"checked":"")}} id="accept" value="2">
                                     <label for="accept" class="lbl_accept"> <span class="txt-info">*</span>
                                         I HERE BY DECLARE THAT THE MEMBERSHIP HAS BEEN TAKEN ON MY FREE WILL AND CERTIFY THAT I HAVE READ AND UNDERSTOOD
-                                        THE <a href="">TERMS</a> AND CONDITIONS AND WILL ABIDE BY THE SAME. I ALSO SOLELY SWEAR THAT THE INFORMATION PROVIDED
+                                        THE <a href="#modal-lg" data-toggle="modal"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                             TERMS</a> AND CONDITIONS AND WILL ABIDE BY THE SAME. I ALSO SOLELY SWEAR THAT THE INFORMATION PROVIDED
                                         BY ME ARE TRUE AND CORRECT.
                                     </label>
                                 </div>
@@ -698,6 +699,40 @@
                         <button type="button" class="btn btn-success hidden btn-xs" id="save" style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Save</button>
                     </div>
                 </form>
+            </div>
+
+            <div class="modal fade" id="modal-lg">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-danger"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                 Terms & Conditions</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="font-size: 12px">
+                            <ol>
+                                <li>The amount payable along with the application form should be remitted by crossed cheque of Bank Draft in favour of <b>Club Noterdamians Bangladesh Ltd.</b></li>
+                                <li>The executive committee reserves the right to accept or reject any membership application without assigning any reason.</li>
+                                <li>Only spouse and children bellow 18 years are entitled to Dependent membership and no other friends and relatives are entitled for the same.</li>
+                                <li>Members are bound to be guided by the rules and regulations and by laws of <b>Club Noterdamians Bangladesh Ltd.</b> in force and duty amended from time to time.</li>
+                                <li>Members should furnish their change of addresses, telephone numbers etc. to keep members record up to date.</li>
+                                <li>I understand that the offer is subject to the approvals, restrictions, restraints in impediments etc. I further understand that the liability for any delay/default of an account
+                                    of any such  restrictions/impositions shall not be fastend on <b>Club Noterdamians Bangladesh Ltd.</b></li>
+                                <li>The management of the club has all right to cancel the membership of any member for breaching of any club regulation and the said member is not liable for any refund of membership
+                                    fee from the management.</li>
+                                <li>The decision of management of <b>Club Noterdamins Bangladesh Ltd.</b> would be final all matters relating to admission of members.</li>
+                                <li>The competent authority of <b>Club Noterdamians Bangladesh Ltd.</b> may change the existing policy, laws & by-laws from time to time.</li>
+                            </ol>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
             </div>
             <!-- /.card-body -->
         </div>

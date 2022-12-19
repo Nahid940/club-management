@@ -1,4 +1,4 @@
-<div class="row" style="margin-right: 0px">
+<div class="wrapper top_bar_area" style="margin-right: 0px">
 <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <a href="">
@@ -7,7 +7,7 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">

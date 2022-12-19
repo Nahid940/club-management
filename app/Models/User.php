@@ -19,6 +19,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public function settings()
+    {
+        return $this->hasOne(User_setting::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

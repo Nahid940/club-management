@@ -25,6 +25,27 @@
 <link rel="stylesheet" href="{{asset('css/bs-stepper.min.css')}}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.4/dist/sweetalert2.min.css">
 @yield('style_link')
+
+@php
+    $global_settings=getSettings(\Illuminate\Support\Facades\Auth::user()->id);
+@endphp
+@if(!empty($global_settings->template_color))
+
+    <style>
+        [class*=sidebar-dark-] {
+            background-color: {{$global_settings->template_color}};
+        }
+
+        .navbar-white {
+            background-color: {{$global_settings->template_color}};
+        }
+        .top_bar_area{
+            background-color: {{$global_settings->template_color}};
+        }
+    </style>
+
+@endif
+
 <style>
     .content-header {
         padding: 0px 0.1rem;
@@ -34,7 +55,6 @@
         font-family: "Trebuchet MS", "Lucida Grande", Verdana, sans-serif;
         color: #444
     }
-
     @yield('style')
 </style>
 

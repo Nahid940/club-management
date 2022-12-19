@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\schedule\ScheduleBookingController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\PermissionController;
+use \App\Http\Controllers\SettingsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +44,8 @@ Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add
     Route::post('row-delete', [MemberController::class, 'clubDelete']);
     Route::post('row-delete', [MemberController::class, 'dependentDelete']);
 });
+
+Route::get('settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:delete member']], function () {
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');

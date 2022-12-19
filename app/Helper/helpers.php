@@ -16,4 +16,10 @@ if(!function_exists('isAlreadyApplied'))
         $member_id=DB::table('members')->where('user_id',$user_id)->select('id','member_photo')->first();
         return $member_id;
     }
+
+    function getSettings($user_id)
+    {
+        $settings=\App\Models\User_setting::where('user_id',$user_id)->first();
+        return $settings;
+    }
 }
