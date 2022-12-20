@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class User_setting extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $fillable=["user_id","template_color","font_size"];
 
     public function user()
     {

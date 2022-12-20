@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add
 });
 
 Route::get('settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
+Route::post('settings', [SettingsController::class, 'save'])->name('save-settings')->middleware('auth');
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:delete member']], function () {
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');

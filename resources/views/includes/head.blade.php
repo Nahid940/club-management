@@ -51,7 +51,7 @@
         padding: 0px 0.1rem;
     }
     body{
-        font: 11px "Trebuchet MS","Lucida Grande",Verdana,sans-serif;
+        font: {{isset($global_settings->font_size)?$global_settings->font_size:"11px"}} "Trebuchet MS","Lucida Grande",Verdana,sans-serif;
         font-family: "Trebuchet MS", "Lucida Grande", Verdana, sans-serif;
         color: #444
     }

@@ -533,7 +533,7 @@
                     <!-- ============================================================================================================================ -->
                     <div id="step_2" class='hidden'>
                         <div class="form_part_heading" style="position:relative;border-bottom: 1px dashed #ccc;height: 25px">
-                            <span>Membership Details of Other Club/Institution/Association <i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                            <span>Membership Details of Other Club/Institution/Association <i class="fa fa-question-circle hovertext" aria-hidden="true" data-hover="Hello, this is the tooltip"></i></span>
                             <a class="btn btn-danger btn-xs add_more_club_info" style="right: 0;position: absolute">Add More</a>
                         </div>
                         <div class="row">
