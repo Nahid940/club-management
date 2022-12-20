@@ -61,7 +61,7 @@
                             <div class="iLmjWS">Profile</div>
                         </div>
                         <div class="ilqBSQ">
-                            <a class="esp_icons" style="color: #f7323b"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
+                            <a href="{{route('member-payment-index')}}" class="esp_icons" style="color: #f7323b"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
                             <div class="iLmjWS">Payment</div>
                         </div>
                         <div class="ilqBSQ">

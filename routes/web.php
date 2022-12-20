@@ -10,6 +10,7 @@ use App\Http\Controllers\schedule\ScheduleBookingController;
 use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\PermissionController;
 use \App\Http\Controllers\SettingsController;
+use App\Http\Controllers\member\MemberPaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,4 +92,11 @@ Route::get('roles',[UserRoleController::class,'index'])->name('role-index');
 Route::get('permissions/{role_id}/{role_name}',[PermissionController::class,'index'])->name('permission-index');
 Route::post('assign',[PermissionController::class,'assignPermission'])->name('permission-assign');
 //=======================================================================
+
+
+//=====================================Members=================================================
+Route::group(['middleware' => ['auth','role:member']], function () {
+    Route::get('payments', [MemberPaymentController::class, 'index'])->name('member-payment-index');
+});
+
 require __DIR__.'/auth.php';
