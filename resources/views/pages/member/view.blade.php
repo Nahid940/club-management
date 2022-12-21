@@ -24,7 +24,11 @@
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
-            <a href="{{route('member-profile-update')}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+            @role('member')
+                <a href="{{route('member-profile-update')}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+            @else
+                <a href="{{route('member-edit',$member->id)}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+            @endrole
             <a title="Print" class="no-print" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style="color: #db0049"></i>Print</a>
             <div class="text-center">
                 <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">

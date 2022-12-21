@@ -16,7 +16,6 @@ class MemberRepository implements MemberInterface
     public function getMember($id){
         $member = DB::table('members')
                 ->where('id', $id)
-                ->where('status',1)// 1 for active
                 ->where('branch_id',1)
                 ->first();
         if($member->member_type==1)
@@ -36,6 +35,22 @@ class MemberRepository implements MemberInterface
             $member->member_type="General Member";
             $member->member_type_dropdown=4;
         }
+
+        $education = DB::table('member_educations')
+            ->where('member_id', $member->id)
+            ->get();
+
+        $dependants = DB::table('member_dependant_lists')
+            ->where('member_id', $member->id)
+            ->get();
+
+        $club_memberships = DB::table('club_memberships')
+            ->where('member_id', $member->id)
+            ->get();
+
+        $member->education= $education->isEmpty()?array():$education;
+        $member->dependants= $dependants->isEmpty()?array():$dependants;
+        $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships; ;
         return $member;
     }
 
@@ -91,7 +106,7 @@ class MemberRepository implements MemberInterface
 
     public function getMembers(array $data){
         $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
-        ->where('status',$this->ACTIVE_STATUS)
+        ->where('status',$data['status'])
         ->paginate(15);
         return $members;
     }
@@ -428,6 +443,16 @@ class MemberRepository implements MemberInterface
     {
         DB::table("$table")->where("id",$id)->delete();
         return true;
+    }
+
+    public function approve($id)
+    {
+        DB::table('members')->where('id',$id)->update(['status'=>1]);
+    }
+
+    public function decline($id)
+    {
+        DB::table('members')->where('id',$id)->update(['status'=>0]);
     }
     
 }

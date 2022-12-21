@@ -20,7 +20,7 @@ class UserRoleController extends Controller
     public function index()
     {
         $roles=$this->user_role->getRoles(array());
-        $pageTitle="User Role";
+        $pageTitle="";
         return view('pages.user_role.roles',['title'=>$pageTitle])->with(['roles'=>$roles]);
     }
 }

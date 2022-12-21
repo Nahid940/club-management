@@ -11,4 +11,6 @@ interface MemberInterface{
     public function updateProfile(array $data);
     public function getPostedData(object $data);
     public function deleteTable($table_id,$table);
+    public function approve($id);
+    public function decline($id);
 }

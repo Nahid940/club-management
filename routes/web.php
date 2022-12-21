@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add member|edit member|view member']], function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
     Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
+    Route::get('new/member/{id}', [MemberController::class, 'newApplicants'])->name('new-member-read');
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
     Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
     Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
@@ -53,8 +54,14 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:dele
     Route::delete('/member/delete', [MemberController::class, 'delete'])->name('member-delete');
 });
 
+Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:approve member|decline member']], function () {
+    Route::post('/member/approve', [MemberController::class, 'approve'])->name('member-approve');
+    Route::post('/member/decline', [MemberController::class, 'decline'])->name('member-decline');
+});
+
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view member-list']], function () {
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
+    Route::get('/members/new', [MemberController::class, 'newApplications'])->name('new-applications-index');
 });
 
 

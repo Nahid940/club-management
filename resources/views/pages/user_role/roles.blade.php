@@ -28,7 +28,7 @@
 @stop
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-md-6 offset-md-3">
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -45,6 +45,7 @@
                         <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                     @endif
                     <table id="example2" class="table table-bordered table-hover">
+                        <h5><i class="fa fa-user text-cyan" aria-hidden="true"></i> Manage User Roles</h5>
                         <thead>
                         {{-- <tr>
                             <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>
@@ -60,7 +61,7 @@
                         @foreach ($roles as $role)
                             <tr>
                                 <td>{{++$i}}</td>
-                                <td>{{$role->name}}</td>
+                                <td>{{ucfirst($role->name)}}</td>
                                 <td>
                                     <div class>
                                         <a href="{{route('member-read',$role->id)}}" title="View" type="button" class=" action_button">View </a>
@@ -69,7 +70,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item"><a  href="{{route('permission-index',[$role->id,$role->name])}}" title="Assign permission" class="btn btn-warning action_button"><i class="fa fa-check"></i> Permission</a></li>
-                                            <li class="dropdown-item"><a type="button" href="{{route('member-edit',$role->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
+                                            <li class="dropdown-item"><a type="button" href="" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
                                             <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$role->id}}><i class="fas fa-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>

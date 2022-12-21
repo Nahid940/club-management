@@ -4,16 +4,18 @@
     .table td, .table th {
         padding: .2rem;
         text-align:center;
+        vertical-align: middle;
     }
     .action_button{
         font-weight: 400;
         padding: 0.2rem .2rem;
-        font-size: .7rem;
+        font-size: 10px;
         border-radius: .3re
     }
     .form-control{
         height: calc(1.40rem);
         padding: .1rem 0.75rem;
+        font-size:inherit
     }
     .search_btn{
         padding: .0rem .5rem;
@@ -90,6 +92,7 @@
                             <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>
                         </tr> --}}
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Member Type</th>
                             <th>Mobile</th>
@@ -100,8 +103,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $i=1; @endphp
                         @foreach ($members as $member)
                             <tr>
+                                <td>{{$i++}}</td>
                                 <td>{{$member->first_name}}</td>
                                 <td>
                                     @if($member->member_type==1)

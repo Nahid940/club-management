@@ -54,6 +54,7 @@
                                 <th>Add</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
+                                <th>Execute</th>
                             </tr>
                         </thead>
                         @php $i=0; @endphp
@@ -70,9 +71,10 @@
                                             <td><div align="left">{{++$i}}</div></td>
                                             <td><div align="left">{{ucfirst($prmsn['name'])}}</div></td>
                                             <td width="40px">@if($prmsn['action']=='view')<input  name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='add')<input name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='add' || $prmsn['action']=='approve')<input name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
                                             <td width="40px">@if($prmsn['action']=='edit')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='delete')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='delete' || $prmsn['action']=='decline')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                            <td>&nbsp;</td>
                                         </tr>
                                         @endforeach
                                     @endforeach

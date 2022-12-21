@@ -32,9 +32,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="{{route('new-applications-index')}}" class="nav-link">
+                  <i class="fa fa-file nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
+                  <p>New Membership Applications</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('member-index')}}" class="nav-link">
                   <i class="fa fa-list-ol nav-icon" style="font-size: 10px;color: #00dcff"></i>
-                  <p>Member list</p>
+                  <p>Approved Member list</p>
                 </a>
               </li>
               <li class="nav-item">
