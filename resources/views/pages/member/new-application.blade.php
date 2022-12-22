@@ -77,7 +77,7 @@
                         </div>
                     @endif
                     @if(session('message'))
-                        <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
+                        <div class="alert alert-info alert-dismissible"><i class="fa fa-check-square" aria-hidden="true"></i> {{session('message')}}</div>
                     @endif
                     <button class="btn btn-success btn-xs m-1 item_hide" id="approve_all_btn"><i class="fa fa-check-square" aria-hidden="true"></i> Approve All</button>
                     <table id="example2" class="table table-bordered table-hover">
@@ -95,7 +95,8 @@
                         </thead>
                         <tbody>
                         @php $i=0; @endphp
-                            <form action="">
+                            <form action="{{route('approve-all-applications')}}" method="POST" id="approve_all">
+                                {{csrf_field()}}
                                 @foreach ($members as $member)
                                     @php $i++; @endphp
                                     <tr>
@@ -139,11 +140,6 @@
         {{ $members->links() }}
         <!-- /.card -->
         </div>
-        <form action="{{route('member-delete')}}" method="POST" id="member_del">
-            {{ csrf_field() }}
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="member_id" id="member_id"/>
-        </form>
     </div>
 @stop
 @section('script')
@@ -161,7 +157,7 @@
                 confirmButtonText: 'Yes!'
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    $('#approve_all').submit();
                 }
             })
         });

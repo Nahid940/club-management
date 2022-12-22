@@ -447,7 +447,21 @@ class MemberRepository implements MemberInterface
 
     public function approve($id)
     {
-        DB::table('members')->where('id',$id)->update(['status'=>1]);
+        $ids=array();
+        $application_id_str="";
+        if(is_array($id))
+        {
+//            foreach ($id as $application_id)
+//            {
+//                $ids[$application_id]=$application_id;
+//            }
+//            $application_id_str=implode(',',$ids);
+
+            DB::table('members')->whereIn('id',$id)->update(['status'=>1]);
+        }else
+        {
+            DB::table('members')->where('id',$id)->update(['status'=>1]);
+        }
     }
 
     public function decline($id)

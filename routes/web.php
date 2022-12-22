@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:dele
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:approve member|decline member']], function () {
     Route::post('/member/approve', [MemberController::class, 'approve'])->name('member-approve');
     Route::post('/member/decline', [MemberController::class, 'decline'])->name('member-decline');
+    Route::post('approve-all', [MemberController::class, 'approve'])->name('approve-all-applications');
 });
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view member-list']], function () {

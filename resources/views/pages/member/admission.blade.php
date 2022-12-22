@@ -68,6 +68,7 @@
     }
     img {
         width: 100%;
+        height:inherit
     }
     .custom-file-upload {
         border: 1px solid #ccc;
