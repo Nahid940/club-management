@@ -13,6 +13,14 @@ This is going to be a powerful club management system that can help to aid day t
 - Security.
 
 # Some screen shots of this growing project
+
+## Menu
+<img
+  src="ss/menu_bar.png"
+  alt="Alt text"
+  title="Menu"
+  style="display: inline-block; margin: 0 auto; ">
+
 ## Login
 <img
   src="ss/login.png"
