@@ -9,7 +9,12 @@ class PaymentController extends Controller
     //
 
     public function index()
-    {   $title="Payments";
+    {   $title="";
         return view('pages.payment.index')->with(['title'=>$title]);
+    }
+
+    public function add()
+    {   $title="";
+        return view('pages.payment.add')->with(['title'=>$title]);
     }
 }

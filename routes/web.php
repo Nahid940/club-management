@@ -84,6 +84,7 @@ Route::controller(EmployeeController::class)->group(function(){
 
 Route::controller(PaymentController::class)->group(function(){
     Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index');
+    Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add');
 });
 
 

@@ -93,13 +93,19 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-dollar-sign" style="color: #7cbdff"></i>
+              <i class="nav-icon fas fa-credit-card" style="color: #7cbdff"></i>
               <p>
                 Payment
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('payment-add')}}" class="nav-link">
+                  <i class="fa  fa-plus nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                  <p>Add New</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{route('payment-index')}}" class="nav-link">
                   <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
