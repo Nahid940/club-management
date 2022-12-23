@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view
     Route::get('/members/new', [MemberController::class, 'newApplications'])->name('new-applications-index');
 });
 
+Route::post('/member/search', [MemberController::class, 'search'])->name('member-search');
+
 
 Route::controller(ScheduleBookingController::class)->group(function(){
     Route::get('schedule/book',[ScheduleBookingController::class,'view'])->name('schedule-book');

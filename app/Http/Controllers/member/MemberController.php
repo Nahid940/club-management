@@ -171,4 +171,11 @@ class MemberController extends Controller
         $this->memberInfo->decline($request->id);
         return redirect()->back()->with(['warning' => "Membership application declined!"]);
     }
+
+    public function search(Request $request)
+    {
+        if(empty($request->value)) return false;
+        $members=Member::where('first_name','LIKE',"%$request->value%")->where('status',1)->select('id','first_name','email')->get();
+        return json_encode(["members"=>$members]);
+    }
 }

@@ -16,6 +16,9 @@
     height: auto;
     margin-top:-16px
     }
+    .search-item{
+        border-bottom:1px solid #fff;
+    }
     .suggestion-area .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
     background-color: #0b64d4;
     color:#fff;
@@ -27,7 +30,8 @@
     color:#fff
     }
     .search-item:hover{
-    background-color: #1975e6;
+        background-color: #1975e6;
+        cursor:pointer
     }
     .hidden_area{
     display:none
@@ -46,42 +50,11 @@
                             <div class="col-md-12">
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member</label>
-                                    <input type="text" class="form-control" placeholder="Type Member Name/Code" id="member">
+                                    <input type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search">
+                                    <input type="hidden" id="member_id" name="member_id">
                                 </div>
                                 <div class="suggestion-area hidden_area">
-                                    <li class="search-item listitem" data-code="3839" data-title="Kemei KM-1873 Blackhead Remover Pore Vacuum">
-                                        <a href="show/Kemei-KM-1873-Blackhead-Remover-Pore-Vacuum/3839">
-                                            <div class="title-name">
-                                                <div class="search-content">
-                                                    <span class="content-title">Name: Kemei KM-1873 Blackhead Remover Pore Vacuum</span><br>
-                                                    <span>Email: s@mail.com</span><br>
-                                                    <span>ID: 52345243</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="search-item listitem" data-code="3839" data-title="Kemei KM-1873 Blackhead Remover Pore Vacuum">
-                                        <a href="show/Kemei-KM-1873-Blackhead-Remover-Pore-Vacuum/3839">
-                                            <div class="title-name">
-                                                <div class="search-content">
-                                                    <span class="content-title">Kemei KM-1873 Blackhead Remover Pore Vacuum</span><br>
-                                                    <span>s@mail.com</span><br>
-                                                    <span>52345243</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="search-item listitem" data-code="3839" data-title="Kemei KM-1873 Blackhead Remover Pore Vacuum">
-                                        <a href="show/Kemei-KM-1873-Blackhead-Remover-Pore-Vacuum/3839">
-                                            <div class="title-name">
-                                                <div class="search-content">
-                                                    <span class="content-title">Kemei KM-1873 Blackhead Remover Pore Vacuum</span><br>
-                                                    <span>s@mail.com</span><br>
-                                                    <span>52345243</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -135,4 +108,18 @@
             </div>
         </div>
     </div>
+@stop
+@section('script_link')
+    <script src="{{asset('js/member-search.js')}}"></script>
+@stop
+
+@section('script')
+    $("body").on("click", ".listitem", function () {
+        let name=$(this).data('name');
+        let id=$(this).data('id');
+        $('#member_search').val(name);
+        $('#member_id').val(id);
+        $('.suggestion-area').addClass('hidden_area');
+        $('.suggestion-area').html();
+    });
 @stop
