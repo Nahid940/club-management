@@ -85,8 +85,9 @@ Route::controller(EmployeeController::class)->group(function(){
 });
 
 Route::controller(PaymentController::class)->group(function(){
-    Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index');
-    Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add');
+    Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index')->middleware('auth');
+    Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add')->middleware('auth');
+    Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
 });
 
 
