@@ -66,7 +66,7 @@
                             @endif
                             <div class="col-md-12">
                                 <div class="form-group" style="">
-                                    <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member</label>
+                                    <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search" required>
                                     <input type="hidden" id="member_id" name="member_id">
                                 </div>
@@ -76,19 +76,19 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="date">Date</label>
+                                    <label for="date">Date <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" name="date" id="date" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="amount">Amount</label>
+                                    <label for="amount">Amount <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="amount" id="amount" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group clearfix">
-                                    <label for="" class="mem_type">Payment Method: <span class="txt-info">*</span></label>
+                                    <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
                                     <div class="icheck-primary d-inline">
                                         <input type="checkbox" name="payment_method" class="member_type"  id="mem1" value="1">
                                         <label for="mem1">
@@ -111,10 +111,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="payment_ref_no">Reference No.</label>
+                                    <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="remarks">Remarks</label>
+                                        <input type="text" class="form-control" name="remarks" id="remarks" placeholder="Remarks">
+                                    </div>
+                                </div>
                         </div>
                     </div>
                     <div class="card-footer">

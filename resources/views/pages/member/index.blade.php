@@ -134,7 +134,6 @@
                                           <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$member->id}}><i class="fas fa-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>
-                                
                                 </td>
                             </tr>
                         @endforeach

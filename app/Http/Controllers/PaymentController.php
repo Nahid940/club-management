@@ -14,7 +14,13 @@ class PaymentController extends Controller
 
     public function index()
     {   $title="";
-        return view('pages.payment.index')->with(['title'=>$title]);
+        $payments=Payment::with('member:id,first_name,member_code,email')->orderBy('id','asc')->paginate(20);
+        return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments]);
+    }
+    public function view($id){
+        $title="";
+        $payment=Payment::with('member:id,first_name,member_code,email,member_type,mobile_number')->findOrFail($id);
+        return view('pages.payment.view',["payment"=>$payment,"title"=>$title]);
     }
 
     public function add()
@@ -32,6 +38,7 @@ class PaymentController extends Controller
             "amount"=>$request->amount,
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
+            "remarks"=>$request->remarks,
             "payment_month"=>date('m',strtotime($request->date)),
             "payment_year"=>date('Y',strtotime($request->date)),
             "created_at"=>Carbon::now(),
