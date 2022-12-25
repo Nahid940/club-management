@@ -51,8 +51,8 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-warning ">Cancel</button>
-                        <button type="submit" class="btn btn-danger float-right">Update</button>
+                        <a href="{{route('home')}}" class="btn btn-warning btn-xs">Cancel</a>
+                        <button type="submit" class="btn btn-danger float-right btn-xs">Update</button>
                     </div>
                     <!-- /.card-footer -->
                 </form>
