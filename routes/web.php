@@ -89,6 +89,7 @@ Route::controller(PaymentController::class)->group(function(){
     Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add')->middleware('auth');
     Route::get('payment/view/{id}',[PaymentController::class,'view'])->name('payment-view')->middleware('auth');
     Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
+    Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth');
 });
 
 

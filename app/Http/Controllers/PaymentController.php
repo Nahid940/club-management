@@ -46,4 +46,23 @@ class PaymentController extends Controller
         ]);
         return redirect()->back()->with('message','Payment saved successfully!');
     }
+
+    public function process(Request $request)
+    {
+        if(!empty($request->process_payment) && !empty($request->action_type))
+        {
+            if($request->action_type==1)
+            {
+                Payment::where('id',$request->process_payment)->update(['status'=>1]);
+                return redirect()->back()->with('message','Payment approves successfully!');
+            }else if($request->action_type==2)
+            {
+                Payment::where('id',$request->process_payment)->update(['status'=>-1]);
+                return redirect()->back()->with('warning','Payment declined successfully!');
+            }else if($request->action_type==3){
+                Payment::where('id',$request->process_payment)->update(['status'=>0]);
+                return redirect()->back()->with('warning','Payment reverted successfully!');
+            }
+        }
+    }
 }

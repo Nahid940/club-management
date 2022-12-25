@@ -1,12 +1,30 @@
 @extends('main')
 @section('pageHeading'){{$title}}@stop
 @section('style')
-
+    @media print
+        {
+        .no-print, .no-print *
+        {
+        display: none !important;
+        }
+    }
 @stop
 @section('content')
     <div class="row">
         <div class="col-md-8 offset-md-2 col-sm-12">
             <div class="card card-primary">
+                @if(session('message'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <i class="fa fa-check"></i> {{session('message')}}
+                    </div>
+                @endif
+                @if(session('warning'))
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <i class="fa fa-check"></i> {{session('warning')}}
+                    </div>
+                @endif
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Payment Details</h3>
                 </div>
@@ -27,7 +45,7 @@
                                 <div class="col-sm-4 invoice-col">
                                     Member Details
                                     <address>
-                                        <strong>{{$payment->member->first_name}}</strong><br>
+                                        <strong>Name: {{$payment->member->first_name}}</strong><br>
                                         {{$payment->member_member_code}}<br>
                                         <b>
                                             @if($payment->member->member_type==1)
@@ -52,7 +70,6 @@
 
                                 <div class="col-sm-4 invoice-col">
                                     <b>Payment No.:</b> 4F3S8J<br>
-                                    <b>Payment Due:</b> {{date('d-m-Y',strtotime($payment->payment_date))}}<br>
                                     <b>Payment Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
@@ -72,94 +89,45 @@
                                             <i class="fa fa-times text-danger" aria-hidden="true"></i> Declined
                                         @endif</b>
                                 </div>
-
                             </div>
-
 
                             <div class="row">
                                 <div class="col-12 table-responsive">
                                     <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Qty</th>
-                                            <th>Product</th>
-                                            <th>Serial #</th>
-                                            <th>Description</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                        </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Call of Duty</td>
-                                            <td>455-981-221</td>
-                                            <td>El snort testosterone trophy driving gloves handsome</td>
-                                            <td>$64.50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Need for Speed IV</td>
-                                            <td>247-925-726</td>
-                                            <td>Wes Anderson umami biodiesel</td>
-                                            <td>$50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Monsters DVD</td>
-                                            <td>735-845-642</td>
-                                            <td>Terry Richardson helvetica tousled street art master</td>
-                                            <td>$10.70</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Grown Ups Blue Ray</td>
-                                            <td>422-568-642</td>
-                                            <td>Tousled lomo letterpress</td>
-                                            <td>$25.99</td>
-                                        </tr>
+                                            <tr>
+                                                <td>Amount</td>
+                                                <td>{{$payment->amount}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Payment Date</td>
+                                                <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                <p>{{$payment->remarks}}</p>
                             </div>
-
-                            <div class="row">
-
-                                <div class="col-6">
-                                    <p class="lead">Amount Due 2/22/2014</p>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody><tr>
-                                                <th style="width:50%">Subtotal:</th>
-                                                <td>$250.30</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Tax (9.3%)</th>
-                                                <td>$10.34</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Shipping:</th>
-                                                <td>$5.80</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total:</th>
-                                                <td>$265.24</td>
-                                            </tr>
-                                            </tbody></table>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                        Payment
-                                    </button>
-                                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                        <i class="fas fa-download"></i> Generate PDF
-                                    </button>
+                                    <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
+                                    @if($payment->status==0)
+                                        <button id="decline" type="button" class="btn btn-danger  btn-xs float-right" style="margin-right: 5px;">
+                                            <i class="fas fa-times"></i> Decline
+                                        </button>
+                                        <button id="approve" type="button" class="btn btn-primary  btn-xs float-right" style="margin-right: 5px;">
+                                            <i class="fas fa-check"></i> Approve
+                                        </button>
+                                    @elseif($payment->status==-1)
+                                        <button id="revert" type="button" class="btn btn-warning  btn-xs float-right" style="margin-right: 5px;">
+                                            <i class="fas fa-check"></i> Revert
+                                        </button>
+                                    @endif
+                                    <form action="{{route('process-payment')}}" method="POST" id="process_payment_form">
+                                        {{csrf_field()}}
+                                        <input type="hidden" id="action_type" name="action_type">
+                                        <input type="hidden" name="process_payment" value="{{$payment->id}}">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -175,12 +143,62 @@
 @stop
 
 @section('script')
-    $("body").on("click", ".listitem", function () {
-    let name=$(this).data('name');
-    let id=$(this).data('id');
-    $('#member_search').val(name);
-    $('#member_id').val(id);
-    $('.suggestion-area').addClass('hidden_area');
-    $('.suggestion-area').html();
-    });
+    {{--<script>--}}
+        $('#approve').on('click',function () {
+            $('#action_type').val(1)
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to approve this payment!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#process_payment_form').submit();
+                }
+            })
+
+        });
+
+        $('#decline').on('click',function () {
+            $('#action_type').val(2)
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to decline this payment!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, decline it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#process_payment_form').submit();
+                }
+            })
+        });
+
+
+        $('#revert').on('click',function () {
+            $('#action_type').val(3)
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to revert this payment!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, revert it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#process_payment_form').submit();
+                }
+            })
+        })
+
+
+    {{--</script>--}}
 @stop
