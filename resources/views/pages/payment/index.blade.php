@@ -50,6 +50,9 @@
                             </div>
                         </div>
                     </form>
+                    <a href="{{route('home')}}" class="btn btn-danger btn-xs mb-1 float-right ml-1"><i class="fa fa-window-close"></i> Close</a>
+                    <a href="{{route('payment-add')}}" class="btn btn-success btn-xs mb-1 float-right"><i class="fa fa-plus"></i> Add New</a>
+                    <a href="{{route('payment-index')}}" class="btn btn-warning btn-xs mb-1 float-right mr-1"><i class="fa fa-spinner"></i> Refresh</a>
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -95,11 +98,11 @@
                                     <td>{{number_format($payment->amount,2,".",",")}}</td>
                                     <td>
                                         @if($payment->status==0)
-                                            <span class="badge badge-danger">Unapproved</span>
+                                            <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> Unapproved</span>
                                         @elseif($payment->status==1)
-                                            <span class="badge badge-success">Approved</span>
+                                            <span class="badge badge-success"><i class="fa fa-check"></i> Approved</span>
                                         @elseif($payment->status==-1)
-                                            <span class="badge badge-warning">Declined</span>
+                                            <span class="badge badge-warning"><i class="fa fa-times"></i> Declined</span>
                                         @endif
                                     </td>
                                     <td>
@@ -108,10 +111,12 @@
                                             <button type="button" class="action_btn btn" data-toggle="dropdown">
                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                             </button>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown-item"><a type="button" href="{{route('payment-edit',$payment->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
-                                                <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$payment->id}}><i class="fas fa-trash"></i> Delete</a></li>
-                                            </ul>
+                                            @if($payment->status!=1)
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-item"><a type="button" href="{{route('payment-edit',$payment->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
+                                                    <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$payment->id}}><i class="fas fa-trash"></i> Delete</a></li>
+                                                </ul>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

@@ -74,6 +74,10 @@
                         </div>
                     </div>
                 </form>
+                <a href="{{route('home')}}" class="btn btn-danger btn-xs mb-1 float-right ml-1"><i class="fa fa-window-close"></i> Close</a>
+                <a href="{{route('member-admission')}}" class="btn btn-success btn-xs mb-1 float-right"><i class="fa fa-plus"></i> Add New</a>
+                <a href="{{route('member-index')}}" class="btn btn-warning btn-xs mb-1 float-right mr-1"><i class="fa fa-spinner"></i> Refresh</a>
+                <a href="{{route('new-applications-index')}}" class="btn btn-primary btn-xs mb-1 float-right mr-1"><i class="fa fa-paperclip"></i> Pending Applications</a>
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>

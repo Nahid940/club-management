@@ -43,6 +43,8 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Add New Payment</h3>
+                    <a href="{{route('home')}}" class="btn btn-danger btn-xs float-right"> <i class="fa fa-times"></i></a>
+                    <a href="{{route('payment-index')}}" class="btn btn-success btn-xs float-right mr-1"> <i class="fa fa-list"></i> Payment List</a>
                 </div>
                 <form action="{{route('payment-add')}}" method="POST">
                     {{csrf_field()}}
@@ -67,7 +69,7 @@
                             <div class="col-md-12">
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search" required>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search" required>
                                     <input type="hidden" id="member_id" name="member_id">
                                 </div>
                                 <div class="suggestion-area hidden_area">

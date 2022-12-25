@@ -111,6 +111,7 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
+                                    <a href="{{route('payment-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
                                     @if($payment->status==0)
                                         <button id="decline" type="button" class="btn btn-danger  btn-xs float-right" style="margin-right: 5px;">
                                             <i class="fas fa-times"></i> Decline
