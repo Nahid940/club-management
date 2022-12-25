@@ -88,8 +88,11 @@ Route::controller(PaymentController::class)->group(function(){
     Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index')->middleware('auth');
     Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add')->middleware('auth');
     Route::get('payment/view/{id}',[PaymentController::class,'view'])->name('payment-view')->middleware('auth');
+    Route::get('payment/edit/{id}',[PaymentController::class,'edit'])->name('payment-edit')->middleware('auth');
+    Route::post('payment/update',[PaymentController::class,'update'])->name('payment-update')->middleware('auth');
     Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
     Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth');
+    Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth');
 });
 
 

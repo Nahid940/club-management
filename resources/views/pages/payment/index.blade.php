@@ -60,7 +60,7 @@
                         </div>
                     @endif
                     @if(session('message'))
-                        <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
+                        <div class="alert alert-danger alert-dismissible"><i class="fa fa-trash" aria-hidden="true"></i> {{session('message')}}</div>
                     @endif
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
@@ -109,7 +109,7 @@
                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li class="dropdown-item"><a type="button" href="{{route('member-edit',$payment->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
+                                                <li class="dropdown-item"><a type="button" href="{{route('payment-edit',$payment->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
                                                 <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$payment->id}}><i class="fas fa-trash"></i> Delete</a></li>
                                             </ul>
                                         </div>
@@ -123,20 +123,19 @@
             </div>
         <!-- /.card -->
         </div>
-        <form action="{{route('member-delete')}}" method="POST" id="member_del">
+        <form action="{{route('payment-delete')}}" method="POST" id="payment_del">
             {{ csrf_field() }}
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="member_id" id="member_id"/>
+            <input type="hidden" name="payment_id" id="payment_id"/>
         </form>
     </div>
 @stop
 @section('script')
     $('.delete').on('click',function(){
     let id=$(this).attr('data-id')
-    $('#member_id').val(id)
+    $('#payment_id').val(id)
     Swal.fire({
     title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    text: "You want to delete this!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -149,7 +148,7 @@
     'Your file has been deleted.',
     'success'
     ) --}}
-    $('#member_del').submit();
+    $('#payment_del').submit();
     }
     })
     })

@@ -46,7 +46,7 @@
               <li class="nav-item">
                 <a href="{{route('member-admission')}}" class="nav-link">
                   <i class="fa fa-plus-circle nav-icon" style="font-size: 10px;color: #ff730e"></i>
-                  <p>Add new</p>
+                  <p>New Membership Application</p>
                 </a>
               </li>
             </ul>

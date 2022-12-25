@@ -1,10 +1,6 @@
 <div class="wrapper top_bar_area" style="margin-right: 0px">
 <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <a href="">
-      <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </a>
-  </div>
+
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">

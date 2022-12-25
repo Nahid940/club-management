@@ -97,7 +97,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>Amount</td>
-                                                <td>{{$payment->amount}}</td>
+                                                <td><b>{{number_format($payment->amount,2,".",",")}}</b></td>
                                             </tr>
                                             <tr>
                                                 <td>Payment Date</td>

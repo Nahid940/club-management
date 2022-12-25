@@ -37,3 +37,22 @@ $('#member_search').on('keyup',function (e) {
         $('.suggestion-area').html();
     }
 });
+
+
+$('#mem1').on('click',function(){
+    $('#mem2').prop('checked',false);
+    $('#mem3').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})
+
+$('#mem2').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem3').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})
+
+$('#mem3').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem2').prop('checked',false);
+    $('#mem4').prop('checked',false);
+})

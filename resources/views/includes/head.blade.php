@@ -1,4 +1,3 @@
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -55,6 +54,14 @@
         font-family: "Trebuchet MS", "Lucida Grande", Verdana, sans-serif;
         color: #444
     }
+
+    .form-control{
+        height: calc(1.40rem);
+        padding: .1rem 0.75rem;
+        border: 1px solid #b4bae2b5;
+        font-size: 0.7rem;
+    }
+
     @yield('style')
 </style>
 

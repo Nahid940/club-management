@@ -16,9 +16,10 @@ class MemberPaymentMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    protected $payment;
+    public function __construct($payment)
     {
-        //
+        $this->payment=$payment;
     }
 
     /**
@@ -28,6 +29,6 @@ class MemberPaymentMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('cnbl940@cnbl.com.bd')->view('pages.payment.mail',['payment'=>$this->payment]);
     }
 }

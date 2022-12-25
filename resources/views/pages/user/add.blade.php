@@ -26,24 +26,36 @@
               <form action="{{route('user-save')}}" method="POST">
                 {{ csrf_field() }}
                 <div class="card-body">
+                     <div class="row">
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label for="exampleInputEmail1">First Name <span class="text-danger">*</span></label>
+                                 <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" placeholder="First Name">
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label for="exampleInputPassword1">Last Name</label>
+                                 <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Password">
+                             </div>
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Email <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="col-md-6"">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Username <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
                   <div class="form-group">
-                    <label for="exampleInputEmail1">First Name *</label>
-                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" placeholder="First Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Email *</label>
-                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Username *</label>
-                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">User role *</label>
+                    <label for="exampleInputPassword1">User role <span class="text-danger">*</span></label>
                       <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                           <option value="" selected="selected">---Select Role---</option>
                           <option value="1">Super Admin</option>
@@ -57,7 +69,7 @@
                       </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Current status *</label>
+                    <label for="exampleInputPassword1">Current status <span class="text-danger">*</span></label>
                       <select name="current_status" class="form-control  @error('current_status') is-invalid @enderror">
                         <option value="" selected="selected">--Select--</option>
                         <option value="active">Active</option>
@@ -67,13 +79,13 @@
                   <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password *</label>
+                            <label for="exampleInputPassword1">Password <span class="text-danger">*</span></label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
                           </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Confirm Password *</label>
+                            <label for="exampleInputPassword1">Confirm Password <span class="text-danger">*</span></label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror" id="confirm_password" name="password_confirmation" placeholder="Confirm Password">
                           </div>
                       </div>
@@ -81,7 +93,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer float-right">
-                  <button type="submit" class="btn btn-danger"><b>Save</b></button>
+                  <button type="submit" class="btn btn-danger btn-xs"><b>Save</b></button>
                 </div>
               </form>
             </div>
