@@ -43,6 +43,8 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Edit Payment</h3>
+                    <a href="{{route('home')}}" class="btn btn-danger btn-xs float-right"> <i class="fa fa-times"></i></a>
+                    <a href="{{route('payment-index')}}" class="btn btn-success btn-xs float-right mr-1"> <i class="fa fa-list"></i> Payment List</a>
                 </div>
                 <form action="{{route('payment-update',$payment->id)}}" method="POST">
                     {{csrf_field()}}

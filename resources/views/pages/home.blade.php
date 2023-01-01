@@ -93,7 +93,7 @@
                                     <span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>
                                 </div>
                                 <div class="card-body">
-                                    <p>{{$notice->notice}}</p>
+                                    <p>{!! $notice->notice !!}</p>
                                     <a href="">Read more</a>
                                 </div>
                             </div>

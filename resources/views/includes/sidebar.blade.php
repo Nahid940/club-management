@@ -116,6 +116,29 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-clipboard" style="color: #7cbdff"></i>
+              <p>
+                Notice
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('notice-add')}}" class="nav-link">
+                  <i class="fa fa-pen nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                  <p>New Notice</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('notice-index')}}" class="nav-link">
+                  <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                  <p>Notice List</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-key" style="color: #7cbdff"></i>
               <p>
                 Account

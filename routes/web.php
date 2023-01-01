@@ -11,6 +11,7 @@ use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\PermissionController;
 use \App\Http\Controllers\SettingsController;
 use App\Http\Controllers\member\MemberPaymentController;
+use App\Http\Controllers\NoticeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,6 +96,13 @@ Route::controller(PaymentController::class)->group(function(){
     Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth');
 });
 
+
+
+Route::controller(NoticeController::class)->group(function (){
+    Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
+    Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
+    Route::post('notice/add',[NoticeController::class,'save'])->name('notice-add');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
