@@ -113,28 +113,60 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Member</div>
+                                <a href="{{route('member-index')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Member list</div>
                             </div>
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Add customer</div>
+                                <a href="{{route('payment-add')}}" class="esp_icons" style="color: #3d4cc3"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">New Payment</div>
                             </div>
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Add customer</div>
+                                <a href="{{route('user-add')}}" class="esp_icons" style="color: #33c36b"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">New User</div>
                             </div>
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Add customer</div>
+                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #ffb812"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Post Notice</div>
                             </div>
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Add customer</div>
+                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #c31015"><i class="fa fa-tools" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Password Update</div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bullhorn"></i>
+                                Shortcuts
+                            </h3>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-default">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="ilqBSQ">
+                                <a href="{{route('member-index')}}" class="esp_icons" style="color: #c3365f"><i class="fa fa-mail-bulk" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Email Config</div>
                             </div>
                             <div class="ilqBSQ">
-                                <div class="short_cut_icon"></div>
-                                <div class="iLmjWS">Add customer</div>
+                                <a href="{{route('payment-add')}}" class="esp_icons" style="color: #e25c00"><i class="fa fa-toolbox" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Settings</div>
+                            </div>
+                            <div class="ilqBSQ">
+                                <a href="{{route('user-add')}}" class="esp_icons" style="color: #ff0b4f"><i class="fa fa-user-cog" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">User Role</div>
+                            </div>
+                            <div class="ilqBSQ">
+                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #083aff"><i class="fa fa-book" aria-hidden="true"></i></a>
+                                <div class="iLmjWS">Member Book</div>
                             </div>
                         </div>
                         <!-- /.card-body -->
