@@ -53,6 +53,23 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book" style="color: #7cbdff"></i>
+              <p>
+                Member Book
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="fa fa-book-open nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
+                  <p>Book</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user" style="color: #7cbdff"></i>
               <p>
                 Employee

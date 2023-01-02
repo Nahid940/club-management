@@ -101,7 +101,11 @@ Route::controller(PaymentController::class)->group(function(){
 Route::group(['middleware' => ['auth']],function (){
     Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
     Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
+    Route::get('notice/edit/{id}',[NoticeController::class,'edit'])->name('notice-edit');
+    Route::get('notice/view/{id}',[NoticeController::class,'view'])->name('notice-view');
     Route::post('notice/add',[NoticeController::class,'save'])->name('notice-add');
+    Route::post('notice/delete',[NoticeController::class,'delete'])->name('notice-delete');
+    Route::post('notice/update',[NoticeController::class,'update'])->name('notice-update');
 });
 
 Route::get('/dashboard', function () {

@@ -79,12 +79,12 @@
                                 <td>{{!empty($notice->createdBy->name)?$notice->createdBy->name:""}}</td>
                                 <td>
                                     <div class>
-                                        <a href="{{route('payment-view',$notice->id)}}" title="View" type="button" class=" action_button">View </a>
+                                        <a href="{{route('notice-view',$notice->id)}}" title="View" type="button" class=" action_button">View </a>
                                         <button type="button" class="action_btn btn" data-toggle="dropdown">
                                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li class="dropdown-item"><a type="button" href="{{route('payment-edit',$notice->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
+                                            <li class="dropdown-item"><a type="button" href="{{route('notice-edit',$notice->id)}}" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
                                             <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$notice->id}}><i class="fas fa-trash"></i> Delete</a></li>
                                         </ul>
                                     </div>
@@ -98,16 +98,16 @@
             </div>
             <!-- /.card -->
         </div>
-        <form action="{{route('payment-delete')}}" method="POST" id="payment_del">
+        <form action="{{route('notice-delete')}}" method="POST" id="notice_id_form">
             {{ csrf_field() }}
-            <input type="hidden" name="payment_id" id="payment_id"/>
+            <input type="hidden" name="notice_id" id="notice_id"/>
         </form>
     </div>
 @stop
 @section('script')
     $('.delete').on('click',function(){
     let id=$(this).attr('data-id')
-    $('#payment_id').val(id)
+    $('#notice_id').val(id)
     Swal.fire({
     title: 'Are you sure?',
     text: "You want to delete this!",
@@ -118,12 +118,7 @@
     confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
     if (result.isConfirmed) {
-    {{-- Swal.fire(
-    'Deleted!',
-    'Your file has been deleted.',
-    'success'
-    ) --}}
-    $('#payment_del').submit();
+    $('#notice_id_form').submit();
     }
     })
     })
