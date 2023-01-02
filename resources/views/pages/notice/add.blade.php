@@ -73,11 +73,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Title</label>
-                                <input type="text" class="form-control" name="title">
+                                <input type="text" class="form-control" name="title" placeholder="Title" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="">Date</label>
-                                <input type="date" class="form-control" name="notice_date">
+                                <input type="date" class="form-control" name="notice_date" required>
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-xs align-content-center" style="float: right">Save</button>
-                        <a href="{{route('payment-add')}}" class="btn btn-warning btn-xs align-content-center mr-1" style="float: right"><i class="fa fa-spinner" aria-hidden="true"></i> Refresh</a>
+                        <a href="{{route('notice-add')}}" class="btn btn-warning btn-xs align-content-center mr-1" style="float: right"><i class="fa fa-spinner" aria-hidden="true"></i> Refresh</a>
                     </div>
                 </form>
             </div>

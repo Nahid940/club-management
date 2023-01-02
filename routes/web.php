@@ -98,7 +98,7 @@ Route::controller(PaymentController::class)->group(function(){
 
 
 
-Route::controller(NoticeController::class)->group(function (){
+Route::group(['middleware' => ['auth']],function (){
     Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
     Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
     Route::post('notice/add',[NoticeController::class,'save'])->name('notice-add');
