@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $pageTitle="";
-        $notices=Notice::orderBy('id', 'desc')->take(5)->get();
+        $notices=Notice::where('status',1)->orderBy('id', 'desc')->take(5)->get();
         return view('pages.home',['title'=>$pageTitle,'notices'=>$notices]);
     }
 

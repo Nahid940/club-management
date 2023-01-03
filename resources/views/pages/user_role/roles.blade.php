@@ -64,7 +64,6 @@
                                 <td>{{ucfirst($role->name)}}</td>
                                 <td>
                                     <div class>
-                                        <a href="{{route('member-read',$role->id)}}" title="View" type="button" class=" action_button">View </a>
                                         <button type="button" class="action_btn btn" data-toggle="dropdown">
                                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </button>
@@ -85,7 +84,7 @@
         {{ $roles->links() }}
         <!-- /.card -->
         </div>
-        <form action="{{route('member-delete')}}" method="POST" id="member_del">
+        <form action="" method="POST" id="member_del">
             {{ csrf_field() }}
             <input type="hidden" name="_method" value="delete" />
             <input type="hidden" name="member_id" id="member_id"/>

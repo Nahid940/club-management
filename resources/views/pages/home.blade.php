@@ -141,8 +141,8 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <i class="fas fa-bullhorn"></i>
-                                Shortcuts
+                                <i class="fa fa-mail-bulk"></i>
+                                Summery
                             </h3>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                                 <div class="iLmjWS">User Role</div>
                             </div>
                             <div class="ilqBSQ">
-                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #083aff"><i class="fa fa-book" aria-hidden="true"></i></a>
+                                <a href="{{route('member-book')}}" class="esp_icons" style="color: #083aff"><i class="fa fa-book" aria-hidden="true"></i></a>
                                 <div class="iLmjWS">Member Book</div>
                             </div>
                         </div>

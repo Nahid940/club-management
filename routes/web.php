@@ -12,6 +12,7 @@ use App\Http\Controllers\PermissionController;
 use \App\Http\Controllers\SettingsController;
 use App\Http\Controllers\member\MemberPaymentController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\MemberBookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +100,10 @@ Route::controller(PaymentController::class)->group(function(){
 
 
 Route::group(['middleware' => ['auth']],function (){
+    Route::get('member-book',[MemberBookController::class,'index'])->name('member-book');
+});
+
+Route::group(['middleware' => ['auth']],function (){
     Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
     Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
     Route::get('notice/edit/{id}',[NoticeController::class,'edit'])->name('notice-edit');
@@ -106,6 +111,7 @@ Route::group(['middleware' => ['auth']],function (){
     Route::post('notice/add',[NoticeController::class,'save'])->name('notice-add');
     Route::post('notice/delete',[NoticeController::class,'delete'])->name('notice-delete');
     Route::post('notice/update',[NoticeController::class,'update'])->name('notice-update');
+    Route::post('notice/postpone',[NoticeController::class,'postpone'])->name('notice-postpone');
 });
 
 Route::get('/dashboard', function () {

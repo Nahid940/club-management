@@ -61,7 +61,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('member-book')}}" class="nav-link">
                   <i class="fa fa-book-open nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
                   <p>Book</p>
                 </a>

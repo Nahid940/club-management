@@ -35,6 +35,11 @@
                                 <div class="col-12">
                                     <h4>
                                         Title: {{$notice->title}}
+                                        @if($notice->status==1)
+                                            <i class="fas fa-check text-success"> Published</i>
+                                        @elseif($notice->status==0)
+                                            <i class="fas fa-times text-danger"> Postponed</i>
+                                        @endif
                                         <small class="float-right">Date: {{date('d-m-Y',strtotime($notice->notice_date))}}</small>
                                     </h4>
                                 </div>
@@ -58,9 +63,20 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
+                                    @if($notice->status==1)
+                                        <a class="btn btn-danger btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-times"></i> Postpone Notice</a>
+                                    @elseif($notice->status==0)
+                                        <a class="btn btn-info btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-recycle"></i> Publish Notice</a>
+                                    @endif
                                     <a href="{{route('notice-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
                                 </div>
                             </div>
+
+                            <form action="{{route('notice-postpone')}}" id="postpone_notice" method="POST">
+                                {{csrf_field()}}
+                                <input type="hidden" name="status" value="{{$notice->status}}">
+                                <input type="hidden" name="n_id" value="{{$notice->id}}">
+                            </form>
                         </div>
 
                     </div>
@@ -75,12 +91,12 @@
 
 @section('script')
     {{--<script>--}}
-    $('#approve').on('click',function () {
+    $('#postpone').on('click',function () {
     $('#action_type').val(1)
 
     Swal.fire({
     title: 'Are you sure?',
-    text: "You want to approve this payment!",
+    text: "You want to postpone this notice!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -88,7 +104,7 @@
     confirmButtonText: 'Yes, approve it!'
     }).then((result) => {
     if (result.isConfirmed) {
-    $('#process_payment_form').submit();
+    $('#postpone_notice').submit();
     }
     })
 

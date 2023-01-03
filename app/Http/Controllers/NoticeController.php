@@ -74,4 +74,17 @@ class NoticeController extends Controller
         return redirect()->back()->with('message','Notice deleted successfully!!');
     }
 
+    public function postpone(Request $request)
+    {
+        if($request->status==1)
+        {
+            Notice::where('id',$request->n_id)->update(["status"=>0]);
+            return redirect()->back()->with('message','Notice postponed successfully!!');
+        }else
+        {
+            Notice::where('id',$request->n_id)->update(["status"=>1]);
+            return redirect()->back()->with('message','Notice postponed successfully!!');
+        }
+    }
+
 }
