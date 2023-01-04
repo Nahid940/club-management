@@ -47,6 +47,7 @@
                     <a href="{{route('member-admission')}}" class="btn btn-success btn-xs mb-1 float-right"><i class="fa fa-plus"></i> Add New</a>
                     <a href="{{route('member-book')}}" class="btn btn-warning btn-xs mb-1 float-right mr-1"><i class="fa fa-spinner"></i> Refresh</a>
                     <a href="{{route('new-applications-index')}}" class="btn btn-primary btn-xs mb-1 float-right mr-1"><i class="fa fa-paperclip"></i> Pending Applications</a>
+                    <a href="{{route('book-pdf')}}" class="btn btn-info btn-xs mb-1 float-right mr-1" target="_blank"><i class="fa fa-file-pdf"></i> Download PDF</a>
                     @endrole
                     <table id="example2" class="table">
                         <tbody>
@@ -66,7 +67,19 @@
                                 <tr>
                                     <td class="bordernone"><div align="left" class="text-bold">Type Of Membership</div></td>
                                     <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->membeship_type}}</div></td>
+                                    <td class="bordernone">
+                                        <div align="left" class="text-bold">
+                                            @if($member->member_type==1)
+                                                Donor Member
+                                            @elseif($member->member_type==2)
+                                                Life Member
+                                            @elseif($member->member_type==3)
+                                                NRB Member
+                                            @elseif($member->member_type==4)
+                                                General Member
+                                            @endif
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="bordernone"><div align="left" class="text-bold">Blood Group</div></td>

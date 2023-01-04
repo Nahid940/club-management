@@ -101,6 +101,7 @@ Route::controller(PaymentController::class)->group(function(){
 
 Route::group(['middleware' => ['auth']],function (){
     Route::get('member-book',[MemberBookController::class,'index'])->name('member-book');
+    Route::get('book-pdf',[MemberBookController::class,'pdf'])->name('book-pdf');
 });
 
 Route::group(['middleware' => ['auth']],function (){

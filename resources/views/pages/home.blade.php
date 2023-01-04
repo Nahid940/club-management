@@ -65,8 +65,8 @@
                             <div class="iLmjWS">Payment</div>
                         </div>
                         <div class="ilqBSQ">
-                            <a class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Member list</div>
+                            <a href="{{route('member-book')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
+                            <div class="iLmjWS">Member Book</div>
                         </div>
                         <div class="ilqBSQ">
                             <a href="{{route('settings')}}" class="esp_icons" style="color: #004edc"><i class="fa fa-cog" aria-hidden="true"></i></a>
