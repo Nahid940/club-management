@@ -163,7 +163,7 @@
 @section('script')
     $('.bc-color').on('click',function () {
         let dataid=$(this).data('id')
-        for(let i=1;i<=6;i++)
+        for(let i=1;i<=7;i++)
         {
             if(i==dataid)
             {

@@ -63,20 +63,23 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
-                                    @if($notice->status==1)
-                                        <a class="btn btn-danger btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-times"></i> Postpone Notice</a>
-                                    @elseif($notice->status==0)
-                                        <a class="btn btn-info btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-recycle"></i> Publish Notice</a>
-                                    @endif
+                                    @role('admin|super-admin')
+                                        @if($notice->status==1)
+                                            <a class="btn btn-danger btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-times"></i> Postpone Notice</a>
+                                        @elseif($notice->status==0)
+                                            <a class="btn btn-info btn-xs " id="postpone" data-id="{{$notice->id}}"><i class="fas fa-recycle"></i> Publish Notice</a>
+                                        @endif
                                     <a href="{{route('notice-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
+                                    @endrole
                                 </div>
                             </div>
-
-                            <form action="{{route('notice-postpone')}}" id="postpone_notice" method="POST">
-                                {{csrf_field()}}
-                                <input type="hidden" name="status" value="{{$notice->status}}">
-                                <input type="hidden" name="n_id" value="{{$notice->id}}">
-                            </form>
+                            @role('admin|super-admin')
+                                <form action="{{route('notice-postpone')}}" id="postpone_notice" method="POST">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="status" value="{{$notice->status}}">
+                                    <input type="hidden" name="n_id" value="{{$notice->id}}">
+                                </form>
+                            @endrole
                         </div>
 
                     </div>

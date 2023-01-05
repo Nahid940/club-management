@@ -23,7 +23,7 @@ class MemberBookController extends Controller
         $members=Member::select('first_name','last_name','member_code','member_photo','member_type','blood_group',
             'email','mobile_number','phone_number','present_address','permanent_address')->get();
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pages.member.pdf-book',compact('members'));
-        return $pdf->stream('pdfview.pdf');
+        return $pdf->stream('member_book.pdf');
 
     }
 }

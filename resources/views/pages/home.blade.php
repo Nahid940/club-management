@@ -46,6 +46,59 @@
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">
+                            <i class="fa fa-archive text-blue" aria-hidden="true"></i>
+                            Summery
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="card card-widget widget-user-2 shadow-sm">
+                            <div class="widget-user-header bg-gradient-gray">
+                                <div class="widget-user-image">
+                                    @if(!empty($info->member_photo))
+                                        <img style="width: 50px;border-radius: 10px" src="{{asset('storage/member_photo/'.$info->member_photo)}}" alt=""></div>
+                                    @else
+                                        <img style="width: 50px;border-radius: 10px" src="{{asset('img/user.jpeg')}}" alt=""></div>
+                                    @endif
+                                <h3 class="widget-user-username">{{$info->first_name}}</h3>
+                                <h6 class="widget-user-desc">
+                                    @if($info->member_type==1)
+                                        Donor Member
+                                    @elseif($info->member_type==2)
+                                        Life Member
+                                    @elseif($info->member_type==3)
+                                        NRB Member
+                                    @elseif($info->member_type==4)
+                                        General Member
+                                    @endif
+                                </h6>
+                            </div>
+                            <div class="card-footer p-0">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            Date of Join <span class="float-right ">{{date('d-m-Y',strtotime($info->registration_date))}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            Total Payment <span class="float-right  ">{{$payment->amount}} /-</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            Last Payment Date <span class="float-right ">{{date('d-m-Y',strtotime($payment->payment_date))}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">
                             <i class="fa fa-bookmark text-purple" aria-hidden="true"></i>
                             Shortcuts
                         </h3>
@@ -85,20 +138,30 @@
                             Notice Board
                         </h3>
                     </div>
-                    @foreach($notices as $notice)
+                    @if(empty(!$notices->isEmpty()))
                         <div class="card-row card-secondary">
                             <div class="card-warning card-outline">
-                                <div class="card-header">
-                                    <p class="text-sm">{{$notice->title}}</p>
-                                    <span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>
-                                </div>
                                 <div class="card-body">
-                                    <p>{!! $notice->notice !!}</p>
-                                    <a href="">Read more</a>
+                                    <div class="alert bg-gray">No Notice Posted Yet!</div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @else
+                        @foreach($notices as $notice)
+                            <div class="card-row card-secondary">
+                                <div class="card-warning card-outline">
+                                    <div class="card-header">
+                                        <p class="text-sm">{{$notice->title}}</p>
+                                        <span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{!! substr($notice->notice,0,500) !!}...<a href="{{route('notice-view',$notice->id)}}">Read more</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             @else

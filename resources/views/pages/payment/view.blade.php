@@ -111,19 +111,23 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
-                                    <a href="{{route('payment-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
-                                    @if($payment->status==0)
-                                        <button id="decline" type="button" class="btn btn-danger  btn-xs float-right" style="margin-right: 5px;">
-                                            <i class="fas fa-times"></i> Decline
-                                        </button>
-                                        <button id="approve" type="button" class="btn btn-primary  btn-xs float-right" style="margin-right: 5px;">
-                                            <i class="fas fa-check"></i> Approve
-                                        </button>
-                                    @elseif($payment->status==-1)
-                                        <button id="revert" type="button" class="btn btn-warning  btn-xs float-right" style="margin-right: 5px;">
-                                            <i class="fas fa-check"></i> Revert
-                                        </button>
-                                    @endif
+                                    @role('admin|super-admin')
+                                        <a href="{{route('payment-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
+                                        @if($payment->status==0)
+                                            <button id="decline" type="button" class="btn btn-danger  btn-xs float-right" style="margin-right: 5px;">
+                                                <i class="fas fa-times"></i> Decline
+                                            </button>
+                                            <button id="approve" type="button" class="btn btn-primary  btn-xs float-right" style="margin-right: 5px;">
+                                                <i class="fas fa-check"></i> Approve
+                                            </button>
+                                        @elseif($payment->status==-1)
+                                            <button id="revert" type="button" class="btn btn-warning  btn-xs float-right" style="margin-right: 5px;">
+                                                <i class="fas fa-check"></i> Revert
+                                            </button>
+                                        @endif
+                                    @else
+                                        <a href="{{route('member-payment-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
+                                    @endrole
                                     <form action="{{route('process-payment')}}" method="POST" id="process_payment_form">
                                         {{csrf_field()}}
                                         <input type="hidden" id="action_type" name="action_type">

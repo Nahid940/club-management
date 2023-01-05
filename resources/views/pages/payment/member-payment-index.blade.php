@@ -18,10 +18,13 @@
     }
     .search_btn{
         padding: .0rem .5rem;
-    line-height: 1.3;
+        line-height: 1.3;
+        height: calc(1.40rem);
+        padding: .1rem 0.75rem;
+        font-size:inherit
     }
     .search_frm{
-        margin-bottom:.6rem
+        margin-bottom:.6rem;
     }
     .action_btn{
         padding: 0.1rem .1rem;
@@ -43,16 +46,16 @@
                     <form action="">
                         <div class="row search_frm">
                             <div class="col-3">
-                                <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Transaction ID "/>
+                                <input type="text" value="{{ request()->input('trx_id') }}" class="form-control" id="name" name="trx_id" placeholder="Transaction ID "/>
                             </div>
                             <div class="col-3">
-                                <input type="date" value="{{ request()->input('email') }}" class="form-control" id="email" name="payment_date"/>
-                            </div>
-                            <div class="col-3">
-                                <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                                <input type="date" value="{{ request()->input('payment_date') }}" class="form-control" id="payment_date" name="payment_date"/>
                             </div>
                             <div class="col-2">
                                 <button type="submit" class="btn btn-primary search_btn"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                            </div>
+                            <div class="col-2">
+                                <a href="{{route('member-payment-index')}}" class="btn btn-warning search_btn"><i class="fa fa-recycle" aria-hidden="true"></i> Reload</a>
                             </div>
                         </div>
                     </form>
@@ -73,35 +76,48 @@
                             <tr>
                                 <th>#</th>
                                 <th>Transaction ID</th>
-                                <th>Payment Type</th>
+                                <th>Payment Method</th>
                                 <th>Payment Date</th>
                                 <th>Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>TWERT</td>
-                                <td>TETER</td>
-                                <td>OOOO</td>
-                                <td>DCVFGR</td>
-                                <td>
-                                    <a href="" title="View" type="button" class=" action_button">View </a>
-                                    <button type="button" class="action_btn btn" data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a type="button" href="" title="Edit" class="btn btn-info action_button btn-xs"><i class="fas fa-edit"></i> Edit</a></li>
-                                        <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete btn-xs" data-id=""><i class="fas fa-trash"></i> Delete</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
+                            @php $i=1; @endphp
+                            @foreach($payments as $payment)
+                                <tr>
+                                    <td>{{$i++}}</td>
+                                    <td>{{$payment->id}}</td>
+                                    <td>
+                                        @if($payment->payment_method==1)
+                                            <span class="badge badge-info">Pay Order</span>
+                                        @elseif($payment->payment_method==2)
+                                            <span class="badge badge-info">Cash</span>
+                                        @else
+                                            <span class="badge badge-info">Cheque</span>
+                                        @endif
+                                    </td>
+                                    <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
+                                    <td><div align="right">{{$payment->amount}}</div></td>
+                                    <td>
+                                        <button type="button" class="action_btn btn" data-toggle="dropdown">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item">
+                                                <a href="{{route('member-payment-view',$payment->id)}}" title="View" type="button" class="btn btn-xs btn-success action_button">View </a>
+                                            </li>
+                                            {{--<li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete btn-xs" data-id=""><i class="fas fa-trash"></i> Delete</a></li>--}}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
                 <!-- /.card-body -->
             </div>
+        {{ $payments->links() }}
         <!-- /.card -->
         </div>
     </div>

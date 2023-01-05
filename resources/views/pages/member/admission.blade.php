@@ -159,7 +159,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="frame">
-                                    <img id="sample_img" src="http://127.0.0.1:8000/img/user.jpeg" alt="your image" />
+                                    <img id="sample_img" src="{{asset('img/user.jpeg')}}" alt="your image" />
                                 </div>
                                 <label class="custom-file-upload">
                                     <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>

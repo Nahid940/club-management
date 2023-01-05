@@ -5,15 +5,17 @@
     <style>
         .bordernone{
             border:none !important;
+            background-color: #f9f6d5;
         }
         .table {
             width: 100%;
-            margin-bottom: 1rem;
             color: #212529;
             border-spacing: 0 0px;
         }
-        .table tr, .table td{
-            background-color: #efeedf;
+        .blank_row
+        {
+            height: 10px !important; /* overwrites any other rules */
+            background-color: #fff;
         }
 
         .table td, .table th {
@@ -35,11 +37,12 @@
         @php $i=1; @endphp
         @foreach ($members as $member)
             <tr>
-                <td rowspan="7" class="bordernone"><img height="330" width="280"  src="{{ public_path('storage/member_photo/'.$member->member_photo)}}"  alt=""></td>
-                <td class="bordernone"><div align="left" class="text-bold">Membership ID</div></td>
-                <td class="bordernone">:</td>
+                <td rowspan="7" class="bordernone" style="width: 30%"><img height="280" width="240" src="{{ public_path('storage/member_photo/'.$member->member_photo)}}"  alt=""></td>
+                <td class="bordernone" style="width: 20%"><div align="left" class="text-bold">Membership ID</div></td>
+                <td class="bordernone" style="width: 2%">:</td>
                 <td class="bordernone"><div align="left" class="text-bold">P645645</div></td>
             </tr>
+
             <tr>
                 <td class="bordernone"><div align="left" class="text-bold">Name</div></td>
                 <td class="bordernone">:</td>
@@ -81,6 +84,9 @@
                 <td class="bordernone"><div align="left" class="text-bold">Address</div></td>
                 <td class="bordernone">:</td>
                 <td class="bordernone"><div align="left" class="text-bold">{{$member->present_address}}</div></td>
+            </tr>
+            <tr class="blank_row">
+                <td colspan="4">&nbsp;</td>
             </tr>
         @endforeach
         </tbody>

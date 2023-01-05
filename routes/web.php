@@ -134,6 +134,7 @@ Route::post('assign',[PermissionController::class,'assignPermission'])->name('pe
 //=====================================Members=================================================
 Route::group(['middleware' => ['auth','role:member']], function () {
     Route::get('payments', [MemberPaymentController::class, 'index'])->name('member-payment-index');
+    Route::get('view/payment/{id}', [MemberPaymentController::class, 'view'])->name('member-payment-view');
 });
 
 require __DIR__.'/auth.php';
