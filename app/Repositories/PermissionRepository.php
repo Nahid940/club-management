@@ -39,6 +39,17 @@ class PermissionRepository implements PermissionInterface
 
     }
 
+    public function getRolePermissions($role_id)
+    {
+        $permissions=DB::table('role_has_permissions')->where('role_id',$role_id)->get();
+        $array=array();
+        foreach ($permissions as $permission)
+        {
+            $array[$permission->permission_id]=$permission->permission_id;
+        }
+        return $array;
+    }
+
     public function deletePermission($id)
     {
         DB::table('role_has_permissions')->where('role_id',$id)->delete();

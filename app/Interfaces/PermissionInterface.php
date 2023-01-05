@@ -15,5 +15,6 @@ interface PermissionInterface
     public function getPermission($id);
     public function editPermission($id);
     public function deletePermission($id);
+    public function getRolePermissions($role_id);
     public function assignPermission(array $permissions,$role_id);
 }

@@ -29,9 +29,15 @@
 @stop
 @section('content')
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-8 offset-md-2">
             <div class="card">
                 <!-- /.card-header -->
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-cogs"></i>
+                        Assign Permission for {{ucfirst($role_name)}}
+                    </h3>
+                </div>
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -65,15 +71,15 @@
                                 <input type="hidden" name="role_name" value="{{$role_name}}"/>
                                 <tr>
                                     @foreach($permissions as $module_name=>$permission)
-                                        <td colspan="6" ><div align="left"><b>{{ucfirst($module_name)}}</b></div></td>
+                                        <td colspan="7" ><div align="left"><b>{{ucfirst($module_name)}}</b></div></td>
                                         @foreach($permission as $prmsn)
                                         <tr>
                                             <td><div align="left">{{++$i}}</div></td>
                                             <td><div align="left">{{ucfirst($prmsn['name'])}}</div></td>
-                                            <td width="40px">@if($prmsn['action']=='view')<input  name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='add' || $prmsn['action']=='approve')<input name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='edit')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='delete' || $prmsn['action']=='decline')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='view')<input  name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif >@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='add' || $prmsn['action']=='approve')<input name="permissions[]" @if(isset($role_permissions[$prmsn['id']])) checked @endif  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='edit')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
+                                            <td width="40px">@if($prmsn['action']=='delete' || $prmsn['action']=='decline')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
                                             <td>&nbsp;</td>
                                         </tr>
                                         @endforeach

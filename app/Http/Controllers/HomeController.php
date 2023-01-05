@@ -30,6 +30,7 @@ class HomeController extends Controller
             return view('pages.home',['title'=>$pageTitle,'notices'=>$notices,'info'=>$member_info,'payment'=>$payment_summery]);
         }else
         {
+
             return view('pages.home',['title'=>$pageTitle]);
         }
     }

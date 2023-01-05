@@ -40,7 +40,6 @@
 @section('content')
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
             @role('member')
             <div class="col-md-6">
                 <div class="card card-default">
@@ -129,7 +128,7 @@
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-            </div>
+            {{--</div>--}}
             <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
@@ -156,7 +155,6 @@
                                     </div>
                                     <div class="card-body">
                                         <p>{!! substr($notice->notice,0,500) !!}...<a href="{{route('notice-view',$notice->id)}}">Read more</a></p>
-
                                     </div>
                                 </div>
                             </div>
@@ -165,80 +163,120 @@
                 </div>
             </div>
             @else
-                <div class="col-md-6">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fas fa-bullhorn"></i>
-                                Shortcuts
-                            </h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fa fa-mail-bulk"></i>
+                                    Summery
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Total Members</span>
+                                                <span class="info-box-number">2,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">New Members This Month</span>
+                                                <span class="info-box-number">2,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">New Application</span>
+                                                <span class="info-box-number">2,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Pending Application</span>
+                                                <span class="info-box-number">2,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Total Paymanet</span>
+                                                <span class="info-box-number">2,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="ilqBSQ">
-                                <a href="{{route('member-index')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Member list</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('payment-add')}}" class="esp_icons" style="color: #3d4cc3"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">New Payment</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('user-add')}}" class="esp_icons" style="color: #33c36b"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">New User</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #ffb812"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Post Notice</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('notice-add')}}" class="esp_icons" style="color: #c31015"><i class="fa fa-tools" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Password Update</div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fa fa-mail-bulk"></i>
-                                Summery
-                            </h3>
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-bullhorn"></i>
+                                    Shortcuts
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="ilqBSQ">
+                                    <a href="{{route('member-index')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Member list</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('payment-add')}}" class="esp_icons" style="color: #3d4cc3"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">New Payment</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('user-add')}}" class="esp_icons" style="color: #33c36b"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">New User</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('notice-add')}}" class="esp_icons" style="color: #ffb812"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Post Notice</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('notice-add')}}" class="esp_icons" style="color: #c31015"><i class="fa fa-tools" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Password Update</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('member-index')}}" class="esp_icons" style="color: #c3365f"><i class="fa fa-mail-bulk" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Email Config</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('payment-add')}}" class="esp_icons" style="color: #e25c00"><i class="fa fa-toolbox" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Settings</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('user-add')}}" class="esp_icons" style="color: #ff0b4f"><i class="fa fa-user-cog" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">User Role</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('member-book')}}" class="esp_icons" style="color: #083aff"><i class="fa fa-book" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Member Book</div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-default">
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="ilqBSQ">
-                                <a href="{{route('member-index')}}" class="esp_icons" style="color: #c3365f"><i class="fa fa-mail-bulk" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Email Config</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('payment-add')}}" class="esp_icons" style="color: #e25c00"><i class="fa fa-toolbox" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Settings</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('user-add')}}" class="esp_icons" style="color: #ff0b4f"><i class="fa fa-user-cog" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">User Role</div>
-                            </div>
-                            <div class="ilqBSQ">
-                                <a href="{{route('member-book')}}" class="esp_icons" style="color: #083aff"><i class="fa fa-book" aria-hidden="true"></i></a>
-                                <div class="iLmjWS">Member Book</div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
                 </div>
             @endrole
-
-        </div>
         <div class="row">
             
         </div>

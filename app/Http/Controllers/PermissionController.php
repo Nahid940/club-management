@@ -18,11 +18,12 @@ class PermissionController extends Controller
 
     public function index(Request $request)
     {
-        $pageTitle="Assign Permission";
+        $pageTitle="";
         $permissions=$this->permission->getPermissions(array());
         $role_id=$request->role_id;
         $role_name=$request->role_name;
-        return view('pages.permission.permissions',['title' => $pageTitle,'permissions'=>$permissions,'role_id'=>$role_id,'role_name'=>$role_name]);
+        $role_permissions=$this->permission->getRolePermissions($role_id);
+        return view('pages.permission.permissions',['title' => $pageTitle,'permissions'=>$permissions,'role_id'=>$role_id,'role_name'=>$role_name,'role_permissions'=>$role_permissions]);
     }
 
     public function getAllPermissions()
@@ -33,7 +34,10 @@ class PermissionController extends Controller
     public function assignPermission(Request $request)
     {
         $this->permission->deletePermission($request->role_id);
-        $this->permission->assignPermission($request->permissions,$request->role_id);
+        if(!empty($request->permissions))
+        {
+            $this->permission->assignPermission($request->permissions,$request->role_id);
+        }
         return redirect()->route('permission-index',['role_id'=>$request->role_id,'role_name'=>$request->role_name])->with('message','Permission assigned successfully!!');
 
     }
