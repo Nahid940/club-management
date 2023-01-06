@@ -167,55 +167,50 @@
                     <div class="col-md-12">
                         <div class="card card-default">
                             <div class="card-header">
-                                <h3 class="card-title">
+                                <h3 class="card-title mr-1">
                                     <i class="fa fa-mail-bulk"></i>
                                     Summery
                                 </h3>
+                                <span style="font-size: 19px;font-weight: bold;color:#085dc7;float: right">Date: {{date('d-m-Y',strtotime($today))}}</span>
+
                             </div>
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-12 mb-1">
+                                    </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <div class="info-box">
                                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                                             <div class="info-box-content">
-                                                <span class="info-box-text">Total Members</span>
-                                                <span class="info-box-number">2,000</span>
+                                                <span class="info-box-text">Total Registered Members</span>
+                                                <span class="info-box-number">{{$active_member}}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <div class="info-box">
-                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <span class="info-box-icon bg-purple elevation-1"><i class="fas fa-clipboard-check"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text">New Members This Month</span>
-                                                <span class="info-box-number">2,000</span>
+                                                <span class="info-box-number">{{$this_month_new_member}}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <div class="info-box">
-                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <span class="info-box-icon bg-gradient-pink elevation-1"><i class="fas fa-clipboard-list"></i></span>
                                             <div class="info-box-content">
-                                                <span class="info-box-text">New Application</span>
-                                                <span class="info-box-number">2,000</span>
+                                                <span class="info-box-text">Pending Applications</span>
+                                                <span class="info-box-number">{{$new_member_application}}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <div class="info-box">
-                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                            <span class="info-box-icon bg-gradient-green elevation-1"><i class="fas fa-credit-card"></i></span>
                                             <div class="info-box-content">
-                                                <span class="info-box-text">Pending Application</span>
-                                                <span class="info-box-number">2,000</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="info-box">
-                                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                                            <div class="info-box-content">
-                                                <span class="info-box-text">Total Paymanet</span>
-                                                <span class="info-box-number">2,000</span>
+                                                <span class="info-box-text">Total Payment</span>
+                                                <span class="info-box-number">{{number_format($total_payment,2,".",",")}}</span>
                                             </div>
                                         </div>
                                     </div>
