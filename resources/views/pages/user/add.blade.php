@@ -90,10 +90,11 @@
                           </div>
                       </div>
                   </div>
-                </div>
+
                 <!-- /.card-body -->
                 <div class="card-footer float-right">
                   <button type="submit" class="btn btn-danger btn-xs"><b>Save</b></button>
+                  <a href="{{route('home')}}" class="btn btn-warning btn-xs"><b>Cancel</b></a>
                 </div>
               </form>
             </div>

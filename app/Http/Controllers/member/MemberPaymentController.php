@@ -26,6 +26,7 @@ class MemberPaymentController extends Controller
         }
         $member_id=Member::where('user_id',Auth::user()->id)->select('id')->first();
         $where[]=['member_id',$member_id->id];
+        $where[]=['payment_type',1];
         if(!empty($member_id))
         {
             $payments=Payment::where($where)->orderBy('id','desc')->paginate(20);
@@ -36,7 +37,10 @@ class MemberPaymentController extends Controller
     public function view($id)
     {
         $member_id=Member::where('user_id',Auth::user()->id)->select('id')->first();
-        $payment=Payment::with('member:id,first_name,member_code,email,member_type,mobile_number')->where('member_id',$member_id->id)->findOrFail($id);
+        $payment=Payment::with('member:id,first_name,member_code,email,member_type,mobile_number')
+            ->where('member_id',$member_id->id)
+            ->where('payment_type',1)
+            ->findOrFail($id);
         return view('pages.payment.view',["payment"=>$payment,"title"=>""]);
     }
 }

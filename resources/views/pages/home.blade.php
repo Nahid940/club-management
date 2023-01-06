@@ -41,127 +41,134 @@
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
             @role('member')
-            <div class="col-md-6">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fa fa-archive text-blue" aria-hidden="true"></i>
-                            Summery
-                        </h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="card card-widget widget-user-2 shadow-sm">
-                            <div class="widget-user-header bg-gradient-gray">
-                                <div class="widget-user-image">
-                                    @if(!empty($info->member_photo))
-                                        <img style="width: 50px;border-radius: 10px" src="{{asset('storage/member_photo/'.$info->member_photo)}}" alt=""></div>
-                                    @else
-                                        <img style="width: 50px;border-radius: 10px" src="{{asset('img/user.jpeg')}}" alt=""></div>
-                                    @endif
-                                <h3 class="widget-user-username">{{$info->first_name}}</h3>
-                                <h6 class="widget-user-desc">
-                                    @if($info->member_type==1)
-                                        Donor Member
-                                    @elseif($info->member_type==2)
-                                        Life Member
-                                    @elseif($info->member_type==3)
-                                        NRB Member
-                                    @elseif($info->member_type==4)
-                                        General Member
-                                    @endif
-                                </h6>
+
+                <div class="row">
+                    {{--<div class="col-md-6">--}}
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fa fa-archive text-blue" aria-hidden="true"></i>
+                                    Summery
+                                </h3>
                             </div>
-                            <div class="card-footer p-0">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Date of Join <span class="float-right ">{{date('d-m-Y',strtotime($info->registration_date))}}</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Total Payment <span class="float-right  ">{{$payment->amount}} /-</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Last Payment Date <span class="float-right ">{{date('d-m-Y',strtotime($payment->payment_date))}}</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="card card-widget widget-user-2 shadow-sm">
+                                    <div class="widget-user-header bg-gradient-gray">
+                                        <div class="widget-user-image">
+                                            @if(!empty($info->member_photo))
+                                                <img style="width: 50px;border-radius: 10px" src="{{asset('storage/member_photo/'.$info->member_photo)}}" alt=""></div>
+                                        @else
+                                            <img style="width: 50px;border-radius: 10px" src="{{asset('img/user.jpeg')}}" alt=""></div>
+                                    @endif
+                                    <h3 class="widget-user-username">{{$info->first_name}}</h3>
+                                    <h6 class="widget-user-desc">
+                                        @if($info->member_type==1)
+                                            Donor Member
+                                        @elseif($info->member_type==2)
+                                            Life Member
+                                        @elseif($info->member_type==3)
+                                            NRB Member
+                                        @elseif($info->member_type==4)
+                                            General Member
+                                        @endif
+                                    </h6>
+                                </div>
+                                <div class="card-footer p-0">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                Date of Join <span class="float-right ">{{date('d-m-Y',strtotime($info->registration_date))}}</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                Total Payment <span class="float-right  ">{{$payment->amount}} /-</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                Last Payment Date <span class="float-right ">{{date('d-m-Y',strtotime($payment->payment_date))}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fa fa-bookmark text-purple" aria-hidden="true"></i>
-                            Shortcuts
-                        </h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="ilqBSQ">
-                            <a class="esp_icons" href="{{route('member-admission')}}" style="color: #fd4f0c;"><i class="fa fa-address-card" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Membership<br>application</div>
-                        </div>
-                        <div class="ilqBSQ">
-                            <a class="esp_icons" href="{{route('member-profile')}}" style="color: #c78409;"><i class="fa fa-address-book" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Profile</div>
-                        </div>
-                        <div class="ilqBSQ">
-                            <a href="{{route('member-payment-index')}}" class="esp_icons" style="color: #f7323b"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Payment</div>
-                        </div>
-                        <div class="ilqBSQ">
-                            <a href="{{route('member-book')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Member Book</div>
-                        </div>
-                        <div class="ilqBSQ">
-                            <a href="{{route('settings')}}" class="esp_icons" style="color: #004edc"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                            <div class="iLmjWS">Settings</div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
+                        <!-- /.card-body -->
+                    {{--</div>--}}
+
+                    {{--<div class="col-6">--}}
+                        {{--<div class="card card-default">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-sticky-note text-orange" aria-hidden="true"></i>--}}
+                                    {{--Notice Board--}}
+                                {{--</h3>--}}
+                            {{--</div>--}}
+                            {{--@if(empty(!$notices->isEmpty()))--}}
+                                {{--<div class="card-row card-secondary">--}}
+                                    {{--<div class="card-warning card-outline">--}}
+                                        {{--<div class="card-body">--}}
+                                            {{--<div class="alert bg-gray">No Notice Posted Yet!</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--@else--}}
+                                {{--@foreach($notices as $notice)--}}
+                                    {{--<div class="card-row card-secondary">--}}
+                                        {{--<div class="card-warning card-outline">--}}
+                                            {{--<div class="card-header">--}}
+                                                {{--<p class="text-sm">{{$notice->title}}</p>--}}
+                                                {{--<span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="card-body">--}}
+                                                {{--<p>{!! substr($notice->notice,0,500) !!}...<a href="{{route('notice-view',$notice->id)}}">Read more</a></p>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--@endforeach--}}
+                            {{--@endif--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+
+
+        {{--<div class="card card-default">--}}
+            {{--<div class="card-header">--}}
+                {{--<h3 class="card-title">--}}
+                    {{--<i class="fa fa-bookmark text-purple" aria-hidden="true"></i>--}}
+                    {{--Shortcuts--}}
+                {{--</h3>--}}
+            {{--</div>--}}
+            {{--<!-- /.card-header -->--}}
+            {{--<div class="card-body">--}}
+                {{--<div class="ilqBSQ">--}}
+                    {{--<a class="esp_icons" href="{{route('member-admission')}}" style="color: #fd4f0c;"><i class="fa fa-address-card" aria-hidden="true"></i></a>--}}
+                    {{--<div class="iLmjWS">Membership<br>application</div>--}}
+                {{--</div>--}}
+                {{--<div class="ilqBSQ">--}}
+                    {{--<a class="esp_icons" href="{{route('member-profile')}}" style="color: #c78409;"><i class="fa fa-address-book" aria-hidden="true"></i></a>--}}
+                    {{--<div class="iLmjWS">Profile</div>--}}
+                {{--</div>--}}
+                {{--<div class="ilqBSQ">--}}
+                    {{--<a href="{{route('member-payment-index')}}" class="esp_icons" style="color: #f7323b"><i class="fa fa-credit-card" aria-hidden="true"></i></a>--}}
+                    {{--<div class="iLmjWS">Payment</div>--}}
+                {{--</div>--}}
+                {{--<div class="ilqBSQ">--}}
+                    {{--<a href="{{route('member-book')}}" class="esp_icons" style="color: #0da2c3"><i class="fa fa-book" aria-hidden="true"></i></a>--}}
+                    {{--<div class="iLmjWS">Member Book</div>--}}
+                {{--</div>--}}
+                {{--<div class="ilqBSQ">--}}
+                    {{--<a href="{{route('settings')}}" class="esp_icons" style="color: #004edc"><i class="fa fa-cog" aria-hidden="true"></i></a>--}}
+                    {{--<div class="iLmjWS">Settings</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<!-- /.card-body -->--}}
+        {{--</div>--}}
                 <!-- /.card -->
             {{--</div>--}}
-            <div class="col-md-6">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fa fa-sticky-note text-orange" aria-hidden="true"></i>
-                            Notice Board
-                        </h3>
-                    </div>
-                    @if(empty(!$notices->isEmpty()))
-                        <div class="card-row card-secondary">
-                            <div class="card-warning card-outline">
-                                <div class="card-body">
-                                    <div class="alert bg-gray">No Notice Posted Yet!</div>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        @foreach($notices as $notice)
-                            <div class="card-row card-secondary">
-                                <div class="card-warning card-outline">
-                                    <div class="card-header">
-                                        <p class="text-sm">{{$notice->title}}</p>
-                                        <span style="color: #0d626b">{{date('d-m-Y h:i A',strtotime($notice->created_at))}}<br> Posted by Admin</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>{!! substr($notice->notice,0,500) !!}...<a href="{{route('notice-view',$notice->id)}}">Read more</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
+
             @else
                 <div class="row">
                     <div class="col-md-12">
@@ -235,11 +242,11 @@
                                 </div>
                                 <div class="ilqBSQ">
                                     <a href="{{route('payment-add')}}" class="esp_icons" style="color: #3d4cc3"><i class="fa fa-credit-card" aria-hidden="true"></i></a>
-                                    <div class="iLmjWS">New Payment</div>
+                                    <div class="iLmjWS">Add New Payment</div>
                                 </div>
                                 <div class="ilqBSQ">
-                                    <a href="{{route('user-add')}}" class="esp_icons" style="color: #33c36b"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                    <div class="iLmjWS">New User</div>
+                                    <a href="{{route('donation-add')}}" class="esp_icons" style="color: #ff4b43"><i class="fa fa-donate" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">Add Donation</div>
                                 </div>
                                 <div class="ilqBSQ">
                                     <a href="{{route('notice-add')}}" class="esp_icons" style="color: #ffb812"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
@@ -254,11 +261,15 @@
                                     <div class="iLmjWS">Email Config</div>
                                 </div>
                                 <div class="ilqBSQ">
-                                    <a href="{{route('payment-add')}}" class="esp_icons" style="color: #e25c00"><i class="fa fa-toolbox" aria-hidden="true"></i></a>
+                                    <a href="{{route('settings')}}" class="esp_icons" style="color: #e25c00"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                     <div class="iLmjWS">Settings</div>
                                 </div>
                                 <div class="ilqBSQ">
-                                    <a href="{{route('user-add')}}" class="esp_icons" style="color: #ff0b4f"><i class="fa fa-user-cog" aria-hidden="true"></i></a>
+                                    <a href="{{route('user-add')}}" class="esp_icons" style="color: #33c36b"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                    <div class="iLmjWS">New User</div>
+                                </div>
+                                <div class="ilqBSQ">
+                                    <a href="{{route('role-index')}}" class="esp_icons" style="color: #ff0b4f"><i class="fa fa-user-cog" aria-hidden="true"></i></a>
                                     <div class="iLmjWS">User Role</div>
                                 </div>
                                 <div class="ilqBSQ">

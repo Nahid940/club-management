@@ -13,6 +13,8 @@ use \App\Http\Controllers\SettingsController;
 use App\Http\Controllers\member\MemberPaymentController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\MemberBookController;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\DonorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,8 +97,22 @@ Route::controller(PaymentController::class)->group(function(){
     Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
     Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth');
     Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth');
+
 });
 
+Route::group(['middleware'=>['auth']],function (){
+    Route::get('donation/index',[DonationController::class,'index'])->name('donation-index');
+    Route::get('donation/add',[DonationController::class,'add'])->name('donation-add');
+    Route::get('donation/view/{id}',[DonationController::class,'view'])->name('donation-view');
+    Route::post('donation/add',[DonationController::class,'save'])->name('donation-save');
+    Route::post('donor/add',[DonorController::class,'donorAdd'])->name('donor-add');
+    Route::post('donor/search',[DonorController::class,'search'])->name('donor-search');
+    Route::post('process/donation',[DonorController::class,'process'])->name('process-donation');
+    Route::post('donation/delete',[DonorController::class,'delete'])->name('donation-delete');
+    Route::get('donation/edit/{id}',[DonationController::class,'edit'])->name('donation-edit');
+    Route::post('donation/update',[DonationController::class,'update'])->name('donation-update');
+
+});
 
 
 Route::group(['middleware' => ['auth']],function (){

@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-xs align-content-center" style="float: right">Save</button>
+                        <button type="submit" class="btn btn-primary btn-xs align-content-center" style="float: right">Update</button>
                         <a href="{{route('payment-edit',$payment->id)}}" class="btn btn-warning btn-xs align-content-center mr-1" style="float: right"><i class="fa fa-spinner" aria-hidden="true"></i> Refresh</a>
                     </div>
                 </form>

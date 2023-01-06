@@ -26,6 +26,7 @@ class HomeController extends Controller
             $payment_summery=DB::table('payments')->select(DB::raw('MAX(payment_date) as payment_date,SUM(amount) as amount'))
                 ->where('member_id',$member_info->id)
                 ->where('status',1)
+                ->where('payment_type',1)
                 ->first();
             $notices=Notice::where('status',1)->orderBy('id', 'desc')->paginate(5);
             return view('pages.home',['title'=>$pageTitle,'notices'=>$notices,'info'=>$member_info,'payment'=>$payment_summery]);
@@ -39,7 +40,7 @@ class HomeController extends Controller
                 ->count();
 
             $new_member_application=Member::where('status',-1)->count();
-            $total_payment=Payment::where('status',1)->sum('amount');
+            $total_payment=Payment::where('status',1)->where('payment_type',1)->sum('amount');
 
             return view('pages.home',['title'=>$pageTitle],["today"=>$date,"active_member"=>$active_member,
                 "this_month_new_member"=>$this_month_new_member,"new_member_application"=>$new_member_application,

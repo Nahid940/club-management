@@ -186,6 +186,29 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-donate" style="color: #7cbdff"></i>
+                <p>
+                  Donation
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('donation-add')}}" class="nav-link">
+                    <i class="fa  fa-plus nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>Add New Donation</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('donation-index')}}" class="nav-link">
+                    <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>List</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-clipboard" style="color: #7cbdff"></i>
                 <p>
                   Notice
