@@ -46,7 +46,7 @@
                     <a href="{{route('home')}}" class="btn btn-danger btn-xs float-right"> <i class="fa fa-times"></i></a>
                     <a href="{{route('payment-index')}}" class="btn btn-success btn-xs float-right mr-1"> <i class="fa fa-list"></i> Payment List</a>
                 </div>
-                <form action="{{route('payment-add')}}" method="POST">
+                <form action="{{route('payment-add')}}" method="POST" id="form_submit">
                     {{csrf_field()}}
                     <div class="card-body">
                         <div class="row">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary btn-xs align-content-center" style="float: right">Save</button>
+                        <button type="button" class="btn btn-primary btn-xs align-content-center save_btn" style="float: right">Save</button>
                         <a href="{{route('payment-add')}}" class="btn btn-warning btn-xs align-content-center mr-1" style="float: right"><i class="fa fa-spinner" aria-hidden="true"></i> Refresh</a>
                     </div>
                 </form>
@@ -147,4 +147,21 @@
         $('.suggestion-area').addClass('hidden_area');
         $('.suggestion-area').html();
     });
+
+    $('.save_btn').on('click',function(){
+        Swal.fire({
+            title: 'Do you want to save this data?',
+            text: "Click on Yes to proceed",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+            }).then((result) => {
+            if (result.isConfirmed) {
+            $('.save_btn').attr('disabled','disabled')
+                $('#form_submit').submit();
+            }
+        })
+    })
 @stop

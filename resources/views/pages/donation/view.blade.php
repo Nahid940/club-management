@@ -57,8 +57,8 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Payment No.:</b> 4F3S8J<br>
-                                    <b>Payment Method:
+                                    <b>Donation No.:</b> 4F3S8J<br>
+                                    <b>Donation Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
                                         @elseif($payment->payment_method==2)
@@ -68,7 +68,7 @@
                                         @endif
                                     </b>
                                     </br>
-                                    <b>Payment Status:
+                                    <b>Donation Status:
                                         @if($payment->status==1)
                                             <i class="fa fa-check text-success" aria-hidden="true"></i> Approved
                                         @elseif($payment->status==0)
@@ -88,7 +88,7 @@
                                             <td><b>{{number_format($payment->amount,2,".",",")}}</b></td>
                                         </tr>
                                         <tr>
-                                            <td>Payment Date</td>
+                                            <td>Donation Date</td>
                                             <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
                                         </tr>
                                         </tbody>

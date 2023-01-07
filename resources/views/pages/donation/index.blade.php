@@ -93,7 +93,7 @@
                                             Cheque
                                         @endif
                                     </td>
-                                    <td>{{number_format($payment->amount,2,".",",")}}</td>
+                                    <td><div align="right">{{number_format($payment->amount,2,".",",")}}</div></td>
                                     <td>
                                         @if($payment->status==0)
                                             <span class="badge badge-danger"><i class="fa fa-exclamation-triangle"></i> Unapproved</span>
@@ -122,6 +122,7 @@
                 </div>
                 <!-- /.card-body -->
             </div>
+        {{$payments->links()}}
         <!-- /.card -->
         </div>
         <form action="{{route('donation-delete')}}" method="POST" id="payment_del">

@@ -30,13 +30,13 @@ class PaymentController extends Controller
             $where[] =['phone','=',$request->mobile_number];
         }
         $payments=Payment::with('member:id,first_name,member_code,email')
-            ->orderBy('id','asc')
+            ->orderBy('id','desc')
             ->where('status','!=','-2')
             ->where('payment_type',1)
             ->whereHas('member', function ($query) use ($where){
                 $query->where($where);
             })
-            ->paginate(20);
+            ->paginate(15);
         return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments]);
     }
     public function view($id){

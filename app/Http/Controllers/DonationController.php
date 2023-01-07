@@ -29,13 +29,13 @@ class DonationController extends Controller
             $where[] =['phone','=',$request->mobile_number];
         }
         $payments=Payment::with('donor:id,name,email')
-            ->orderBy('id','asc')
+            ->orderBy('id','desc')
             ->where('status','!=','-2')
             ->where('payment_type',2)
             ->whereHas('donor', function ($query) use ($where){
                 $query->where($where);
             })
-            ->paginate(20);
+            ->paginate(15);
         return view('pages.donation.index')->with(['title'=>$title,'payments'=>$payments]);
     }
 
@@ -77,7 +77,7 @@ class DonationController extends Controller
         if(!empty($request->payment_id)) {
             Payment::where('id', $request->payment_id)->update(['status' => -2]);//delete
         }
-        return redirect()->back()->with('message','Payment data moved to trash!');
+        return redirect()->back()->with('message','Donation data moved to trash!');
     }
 
 
@@ -104,5 +104,25 @@ class DonationController extends Controller
             "updated_by"=>Auth::user()->id
         ]);
         return redirect()->back()->with('message','Donation data updated successfully!');
+    }
+
+    public function process(Request $request)
+    {
+        if(!empty($request->process_payment) && !empty($request->action_type))
+        {
+            if($request->action_type==1)
+            {
+                Payment::where('id',$request->process_payment)->update(['status'=>1]);
+                $payment=Payment::with('donor:id,name,email,phone')->findOrFail($request->process_payment);
+                return redirect()->back()->with('message','Donation approved successfully!');
+            }else if($request->action_type==2)
+            {
+                Payment::where('id',$request->process_payment)->update(['status'=>-1]);
+                return redirect()->back()->with('warning','Donation declined successfully!');
+            }else if($request->action_type==3){
+                Payment::where('id',$request->process_payment)->update(['status'=>0]);
+                return redirect()->back()->with('warning','Donation reverted successfully!');
+            }
+        }
     }
 }

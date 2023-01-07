@@ -107,8 +107,8 @@ Route::group(['middleware'=>['auth']],function (){
     Route::post('donation/add',[DonationController::class,'save'])->name('donation-save');
     Route::post('donor/add',[DonorController::class,'donorAdd'])->name('donor-add');
     Route::post('donor/search',[DonorController::class,'search'])->name('donor-search');
-    Route::post('process/donation',[DonorController::class,'process'])->name('process-donation');
-    Route::post('donation/delete',[DonorController::class,'delete'])->name('donation-delete');
+    Route::post('process/donation',[DonationController::class,'process'])->name('process-donation');
+    Route::post('donation/delete',[DonationController::class,'delete'])->name('donation-delete');
     Route::get('donation/edit/{id}',[DonationController::class,'edit'])->name('donation-edit');
     Route::post('donation/update',[DonationController::class,'update'])->name('donation-update');
 
