@@ -16,6 +16,7 @@ use App\Http\Controllers\MemberBookController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\MemberClassificationController;
+use App\Http\Controllers\report\PaymentReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -161,6 +162,11 @@ Route::post('assign',[PermissionController::class,'assignPermission'])->name('pe
 Route::group(['middleware' => ['auth','role:member']], function () {
     Route::get('payments', [MemberPaymentController::class, 'index'])->name('member-payment-index');
     Route::get('view/payment/{id}', [MemberPaymentController::class, 'view'])->name('member-payment-view');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('payments/report', [PaymentReportController::class, 'index'])->name('payments-report-index');
+    Route::post('payments/report', [PaymentReportController::class, 'report'])->name('payments-report');
 });
 
 require __DIR__.'/auth.php';

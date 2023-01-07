@@ -188,6 +188,7 @@ return [
         App\Providers\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        \App\Providers\PaymentReportServiceProvider::class,
 
     ],
 

@@ -215,6 +215,29 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-chart-pie" style="color: #7cbdff"></i>
+                <p>
+                  Reports
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('payments-report-index')}}" class="nav-link">
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>Payment Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('notice-add')}}" class="nav-link">
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>Donation Report</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-clipboard" style="color: #7cbdff"></i>
                 <p>
                   Notice
