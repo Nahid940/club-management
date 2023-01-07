@@ -18,6 +18,11 @@ class MemberRepository implements MemberInterface
                 ->where('id', $id)
                 ->where('branch_id',1)
                 ->first();
+        $classification=DB::table('member_has_member_classifications')
+        ->where('member_id',$id)
+        ->join('member_classifications', 'member_classifications.id', '=', 'member_has_member_classifications.member_classifications_id')
+        ->select('member_has_member_classifications.member_classifications_id as id','name')->get();
+
         if($member->member_type==1)
         {
             $member->member_type="Donor Member";
@@ -48,9 +53,18 @@ class MemberRepository implements MemberInterface
             ->where('member_id', $member->id)
             ->get();
 
+        if(!empty($classification))
+        {
+            foreach ($classification as $class)
+            {
+                $classification_array[$class->id]=$class->id;
+            }
+        }
+
         $member->education= $education->isEmpty()?array():$education;
         $member->dependants= $dependants->isEmpty()?array():$dependants;
-        $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships; ;
+        $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships;
+        $member->classifications= $classification->isEmpty()?array():$classification;
         return $member;
     }
 
@@ -61,6 +75,11 @@ class MemberRepository implements MemberInterface
             ->where('users.id', $id)
             ->where('branch_id',1)
             ->first();
+
+        $classification=DB::table('member_has_member_classifications')
+            ->where('member_id',$member->id)
+            ->join('member_classifications', 'member_classifications.id', '=', 'member_has_member_classifications.member_classifications_id')
+            ->select('member_has_member_classifications.member_classifications_id as id','name')->get();
 
         if(!empty($member))
         {
@@ -96,7 +115,8 @@ class MemberRepository implements MemberInterface
 
             $member->education= $education->isEmpty()?array():$education;
             $member->dependants= $dependants->isEmpty()?array():$dependants;
-            $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships; ;
+            $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships;
+            $member->classifications= $classification->isEmpty()?array():$classification;
             return $member;
         }else{
             return false;

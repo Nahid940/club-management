@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
+
+    public function classifications($related, $foreignKey = null, $localKey = null)
+    {
+        $this->hasMany(MemberClassification::class);
+    }
 }

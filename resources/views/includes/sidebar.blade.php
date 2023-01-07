@@ -86,8 +86,8 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('new-applications-index')}}" class="nav-link">
-                    <i class="fa fa-file nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
-                    <p>New Membership Applications</p>
+                    <i class="fa fa-exclamation-triangle nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
+                    <p>Pending Approvals</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -102,6 +102,12 @@
                     <p>New Membership Application</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('classification-index')}}" class="nav-link">
+                        <i class="fa fa-star nav-icon" style="font-size: 10px;color: #ff2450"></i>
+                        <p>Membership Classification</p>
+                    </a>
+                 </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -121,23 +127,23 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-user" style="color: #7cbdff"></i>
-                <p>
-                  Employee
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('inployee-index')}}" class="nav-link">
-                    <i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>
-                    <p>Employee List</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
+            {{--<li class="nav-item">--}}
+              {{--<a href="#" class="nav-link">--}}
+                {{--<i class="nav-icon fas fa-user" style="color: #7cbdff"></i>--}}
+                {{--<p>--}}
+                  {{--Employee--}}
+                  {{--<i class="fas fa-angle-left right"></i>--}}
+                {{--</p>--}}
+              {{--</a>--}}
+              {{--<ul class="nav nav-treeview">--}}
+                {{--<li class="nav-item">--}}
+                  {{--<a href="{{route('inployee-index')}}" class="nav-link">--}}
+                    {{--<i class="fa fa-th-large nav-icon" style="font-size: 10px;color: #00dcff"></i>--}}
+                    {{--<p>Employee List</p>--}}
+                  {{--</a>--}}
+                {{--</li>--}}
+              {{--</ul>--}}
+            {{--</li>--}}
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-users" style="color: #7cbdff"></i>

@@ -15,6 +15,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\MemberBookController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\DonorController;
+use App\Http\Controllers\MemberClassificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -118,6 +119,15 @@ Route::group(['middleware'=>['auth']],function (){
 Route::group(['middleware' => ['auth']],function (){
     Route::get('member-book',[MemberBookController::class,'index'])->name('member-book');
     Route::get('book-pdf',[MemberBookController::class,'pdf'])->name('book-pdf');
+});
+
+Route::group(['middleware' => ['auth']],function (){
+    Route::get('classification-inedx',[MemberClassificationController::class,'index'])->name('classification-index');
+    Route::post('classification-new',[MemberClassificationController::class,'add'])->name('classification-new');
+    Route::post('classification-add',[MemberClassificationController::class,'save'])->name('classification-add');
+    Route::get('classification-edit/{id}',[MemberClassificationController::class,'edit'])->name('classification-edit');
+    Route::post('classification-update',[MemberClassificationController::class,'update'])->name('classification-update');
+    Route::delete('classification-delete',[MemberClassificationController::class,'delete'])->name('classification-delete');
 });
 
 Route::group(['middleware' => ['auth']],function (){

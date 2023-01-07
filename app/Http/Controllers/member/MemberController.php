@@ -5,6 +5,7 @@ namespace App\Http\Controllers\member;
 use App\Http\Requests\MemberProfileUpdateRequest;
 use App\Mail\MemberMail;
 use App\Models\Member;
+use App\Models\MemberClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +55,8 @@ class MemberController extends Controller
 //            "phone"=>$member->phone_number
 //        ];
 //        $redis::set('member',json_encode($member_object));
-        return view('pages.member.view',['title' => "",'member'=>$member]);
+        $classifications=MemberClassification::select('id','name')->where('status',1)->get();
+        return view('pages.member.view',['title' => "",'member'=>$member,'classifications'=>$classifications]);
     }
 
     public function newApplicants($id)

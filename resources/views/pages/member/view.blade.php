@@ -18,6 +18,9 @@
         }
     }
 @stop
+@php
+    $class=array();
+@endphp
 @section('content')
 <div class="row">
 <div class="col-md-3">
@@ -26,10 +29,12 @@
         <div class="card-body box-profile">
             @role('member')
                 <a href="{{route('member-profile-update')}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+                <a title="Print" class="no-print" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style="color: #db0049"></i>Print</a>
             @else
-                <a href="{{route('member-edit',$member->id)}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+                <a href="{{route('member-edit',$member->id)}}" title="Edit" class="no-print badge badge-warning"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style=""></i>Edit</a>
+                <a title="Print" class="no-print badge badge-primary" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style=""></i>Print</a>
+                <a data-toggle="modal" data-target="#modal-default" class="badge badge-danger no-print" style="cursor: pointer"><i class="fa fa-id-card-alt"></i> Add Classification</a>
             @endrole
-            <a title="Print" class="no-print" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style="color: #db0049"></i>Print</a>
             <div class="text-center">
                 <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
@@ -66,6 +71,15 @@
                     <td>Member Type </td>
                     <td><span class="badge" style="font-size: 10px;background-color: #256b35;color: #fff;">{{$member->member_type}}</span></td>
                 </tr>
+                @if(!empty($member->classifications))
+                    <tr>
+                        <td colspan="2"><span class="text-info text-bold">Membership Level</span></td>
+                    </tr>
+                    @foreach($member->classifications as $classification)
+                        @php $class[$classification->id]=$classification->id @endphp
+                        <tr><td colspan="2"><i class="fa fa-star text-success"></i> {{$classification->name}}</td></tr>
+                    @endforeach
+                @endif
                 <tr>
                     <td>Blood Group </td>
                     <td>{{$member->blood_group}}</td>
@@ -356,4 +370,58 @@
         <!-- /.invoice -->
     </div><!-- /.col -->
 </div>
+@unlessrole('member')
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Classification</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="classification_form" method="POST" action="{{route('classification-add')}}">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" name="member_no" value="{{$member->id}}">
+                        @foreach($classifications as $key=>$classification)
+                            @if($key%2==0)
+                                <div class="col-6">
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox"  name="classifications[]" @php echo isset($class[$classification->id])?"checked":"" @endphp  id="{{$key}}" value="{{$classification->id}}">
+                                            <label for="{{$key}}">
+                                                {{$classification->name}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-6">
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox"  name="classifications[]" @php echo isset($class[$classification->id])?"checked":"" @endphp   id="{{$key}}" value="{{$classification->id}}">
+                                            <label for="{{$key}}">
+                                                {{$classification->name}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-xs" id="save_classification">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endrole
+@stop
+@section('script_link')
+    <script src="{{asset('js/classification.js')}}"></script>
 @stop
