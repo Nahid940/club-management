@@ -150,6 +150,18 @@ class MemberRepository implements MemberInterface
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$data['member_photo_file']);
 
+
+        if(!empty($data['nid_doc']))
+        {
+            $nid=$data['nid_doc'];
+            $input['file'] =$data['member_nid_doc'];
+            $data['member_nid_file']= $data['college_roll']."_".$input['file'];
+            $nid->move(public_path('/storage/member_nid'),$data['member_nid_file']);
+        }else
+        {
+            $data['member_nid_file']=null;
+        }
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
@@ -192,6 +204,7 @@ class MemberRepository implements MemberInterface
             "spouse_date_of_birth"      =>   $data['spouse_date_of_birth'],
             "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
             "spouse_email"              =>   $data['spouse_email'],
+            "member_nid_file"           =>   $data['member_nid_file'],
             "user_id"                   =>   $data['user_id'],
             "created_at"                =>   Carbon::now(),
             "entry_by"                  =>   $user->id,
@@ -449,11 +462,19 @@ class MemberRepository implements MemberInterface
         $data['dep_nid']                =$request->dep_nid;
         $data['branch_name']            =$request->branch_name;
         $data['acc_no']                 =$request->acc_no;
+
         $image                          =$request->file('member_photo');
         $data['image']                  =$image;
         $data['member_photo']           = !empty($image)?time().'.'.$image->getClientOriginalExtension():null;
-
         $data['member_old_photo']       =isset($request->member_old_photo)?$request->member_old_photo:null;
+
+        $nid                            =$request->file('nid_doc');
+        $data['nid_doc']                =$nid;
+        $data['member_nid_doc']         = !empty($nid)?time().'_NID.'.$nid->getClientOriginalExtension():null;
+        $data['member_nid_old_doc']     =isset($request->member_nid_old_doc)?$request->member_nid_old_doc:null;
+
+
+
         $data['user_id']                =isset($request->user_id)?$request->user_id:null;
         $data['member_id']              =isset($request->member_id)?$request->member_id:null;
         return $data;

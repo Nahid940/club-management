@@ -178,7 +178,7 @@ $('#save').on('click',function () {
             }
         })
     }
-})
+});
 
 $('#update').on('click',function () {
 
@@ -253,7 +253,7 @@ $('#update').on('click',function () {
         Swal.fire({
             title: 'Do you want to update your profile?',
             text: "Your current information will be updated",
-            icon: 'warning',
+            icon: 'info',
             color:'green',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -277,32 +277,85 @@ imgInp.onchange = evt => {
 
 let step=0;
 $("#next").click(function(){
-    step++;
-    if(step==1)
-    {
-        $('#step_1').addClass('hidden')
-        $('#step_2').removeClass('hidden')
 
-        $('#second_step').css({'color':'rgb(183 19 19)'})
-        $('.circle2').css({'background':'rgb(183 19 19)'})
-        $('.line1').css('background','rgb(183 19 19)')
-    }
 
-    $('#prev').removeClass('hidden')
-    if(step==1)
-    {
-        $('#step_1').addClass('hidden')
-        $('#step_2').removeClass('hidden')
-        $('#next').addClass('hidden')
-        $('#save').removeClass('hidden')
-        $('#update').removeClass('hidden')
-        $('#last_step').css({'color':'#41ff40'})
-    }
-    $('#form_step').val(step)
+    // if(!$('.member_type').is(":checked"))
+    // {
+    //     $('.mem_type').css('color','red');
+    //     Swal.fire('Type of membership required!',);
+    // }else if($('#registration_date').val()=="")
+    // {
+    //     Swal.fire("Registration date required!!");
+    //     $('.lbl_reg_date').css('color','red');
+    // }else if($('#registration_date').val()=="")
+    // {
+    //     Swal.fire("Please select membership type!!");
+    //     $('.lbl_reg_date').css('color','red');
+    // }else if($('#name').val()=="")
+    // {
+    //     Swal.fire("Member name required!!");
+    //     $('.lbl_mmbr_name').css('color','red');
+    // }else if($('#college_roll').val()=="")
+    // {
+    //     Swal.fire("College roll required!!");
+    //     $('.lbl_college_roll').css('color','red');
+    // }else if($('#date_of_birth').val()=="")
+    // {
+    //     Swal.fire("Date of Birth required!!");
+    //     $('.lbl_dob').css('color','red');
+    // }else if($('#nid').val()=="")
+    // {
+    //     Swal.fire("NID required!!");
+    //     $('.lbl_nid').css('color','red');
+    // }else if($('#fathers_name').val()=="")
+    // {
+    //     Swal.fire("Father's name required!!");
+    //     $('.lbl_fathers_name').css('color','red');
+    // }else if($('#mothers_name').val()=="")
+    // {
+    //     Swal.fire("Mothers's name required!!");
+    //     $('.lbl_mothers_name').css('color','red');
+    // }else if($('#mobile_number').val()=="")
+    // {
+    //     Swal.fire("Mobile no. required!!");
+    //     $('.lbl_mobile_no').css('color','red');
+    // }else if($('#email').val()=="")
+    // {
+    //     Swal.fire("Email required!!")
+    //     $('.lbl_email').css('color','red');
+    // }else if($('#present_address').val()=="")
+    // {
+    //     Swal.fire("Present address required!!")
+    //     $('.lbl_present_address').css('color','red');
+    // }else
+    // {
+        step++;
+        if(step==1)
+        {
+            $('#step_1').addClass('hidden');
+            $('#step_2').removeClass('hidden');
+
+            $('#second_step').css({'color':'rgb(183 19 19)'});
+            $('.circle2').css({'background':'rgb(183 19 19)'});
+            $('.line1').css('background','rgb(183 19 19)');
+        }
+
+        $('#prev').removeClass('hidden');
+        if(step==1)
+        {
+            $('#step_1').addClass('hidden');
+            $('#step_2').removeClass('hidden');
+            $('#next').addClass('hidden');
+            $('#save').removeClass('hidden');
+            $('#update').removeClass('hidden');
+            $('#last_step').css({'color':'#41ff40'})
+        }
+        $('#form_step').val(step)
+    // }
 });
 
 $("#prev").click(function(){
-    $('#step_1').removeClass('hidden')
+    $('#step_1').removeClass('hidden');
     if(step==1)
     {
         $('#prev').addClass('hidden')

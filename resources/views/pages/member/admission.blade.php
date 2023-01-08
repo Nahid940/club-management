@@ -648,14 +648,39 @@
                                     </table>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i>  <span>Attach Your NID (PDF/Image)</span>
+                                    <input type="file" name="nid_doc" class="" id="nid_doc"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach You HSC Certificate/Testimonial (PDF/Image)</span>
+                                    <input type="file" name="hsc_doc" class="" id="hsc_doc"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach You eTIN/TIN Certificate (PDF/Image)</span>
+                                    <input type="file" name="tin_doc" class="" id="tin_doc"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="icheck-primary d-inline">
                                     <input name="tc_acceptance" type="checkbox" {{old('tc_acceptance'=='2'?"checked":"")}} id="accept" value="2">
                                     <label for="accept" class="lbl_accept"> <span class="txt-info">*</span>
                                         I HERE BY DECLARE THAT THE MEMBERSHIP HAS BEEN TAKEN ON MY FREE WILL AND CERTIFY THAT I HAVE READ AND UNDERSTOOD
                                         THE <a href="#modal-lg" data-toggle="modal"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                             TERMS</a> AND CONDITIONS AND WILL ABIDE BY THE SAME. I ALSO SOLELY SWEAR THAT THE INFORMATION PROVIDED
+                                            TERMS</a> AND CONDITIONS AND WILL ABIDE BY THE SAME. I ALSO SOLELY SWEAR THAT THE INFORMATION PROVIDED
                                         BY ME ARE TRUE AND CORRECT.
                                     </label>
                                 </div>

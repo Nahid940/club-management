@@ -120,6 +120,10 @@
                         @endif
                     </td>
                 </tr>
+                <tr>
+                    <td><i class="fa fa-paperclip text-danger"></i> NID Document</td>
+                    <td><a href="{{route('member-doc-preview',$member->member_nid_file)}}" target="_blank">Preview</a></td>
+                </tr>
             </table>
             
         </div>

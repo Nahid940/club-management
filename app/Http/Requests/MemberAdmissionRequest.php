@@ -33,6 +33,7 @@ class MemberAdmissionRequest extends FormRequest
             'mobile_number'=>'required',
             'tc_acceptance'=>'required',
             'member_photo' => 'required|image|mimes:jpg,jpeg,png,svg|max:90',
+            'nid_doc' => 'mimes:pdf|max:150',
         ];
     }
 

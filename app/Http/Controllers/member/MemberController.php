@@ -180,4 +180,9 @@ class MemberController extends Controller
         $members=Member::where('first_name','LIKE',"%$request->value%")->where('status',1)->select('id','first_name','email')->get();
         return json_encode(["members"=>$members]);
     }
+
+    public function previewDoc(Request $request)
+    {
+        return response()->file("storage/member_nid/".$request->nid);
+    }
 }
