@@ -229,7 +229,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('notice-add')}}" class="nav-link">
+                  <a href="{{route('donation-report-index')}}" class="nav-link">
                     <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>Donation Report</p>
                   </a>

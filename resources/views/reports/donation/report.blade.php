@@ -15,7 +15,7 @@
 <div class="mb-2">
     <table id="heading">
         <thead>
-            <th colspan="2" style="border: none"><div class="text-lg" align="center">Memberwise Payment Report</div></th>
+            <th colspan="2" style="border: none"><div class="text-lg" align="center">Donation Report</div></th>
         </thead>
         <tr>
             @if(!empty($date_from) && !empty($date_to))
@@ -31,8 +31,8 @@
     <table>
         <thead>
             <tr>
-                <th><div align="center">Member Name</div></th>
-                <th><div align="center">Payment Date</div></th>
+                <th><div align="center">Donor Name</div></th>
+                <th><div align="center">Date</div></th>
                 <th><div align="right">Amount</div></th>
             </tr>
         </thead>

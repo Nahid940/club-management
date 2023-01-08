@@ -7,7 +7,7 @@ $('#show-payment-report').on('click',function () {
         },
         type:"post",
         data: form.serialize(),
-        url:"/payments/report",
+        url:"/donation/report",
         beforeSend: function() {
             $('.loading').html('<i class="fas fa-spinner fa-pulse"></i>')
         },

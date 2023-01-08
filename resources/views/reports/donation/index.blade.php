@@ -93,6 +93,6 @@
     </div>
 @stop
 @section('script_link')
-    <script src="{{asset('js/payment-report.js')}}"></script>
+    <script src="{{asset('js/donation-report.js')}}"></script>
 @stop
 
