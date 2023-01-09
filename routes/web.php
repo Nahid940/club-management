@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view
 });
 
 Route::post('/member/search', [MemberController::class, 'search'])->name('member-search');
-Route::get('/member/doc/preview/{nid}', [MemberController::class, 'previewDoc'])->name('member-doc-preview');
+Route::get('/member/doc/preview/{nid}/{type}', [MemberController::class, 'previewDoc'])->name('member-doc-preview');
 
 
 Route::controller(ScheduleBookingController::class)->group(function(){

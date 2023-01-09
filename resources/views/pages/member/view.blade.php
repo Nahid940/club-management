@@ -23,7 +23,7 @@
 @endphp
 @section('content')
 <div class="row">
-<div class="col-md-3">
+<div class="col-md-4">
     <!-- Profile Image -->
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
@@ -120,10 +120,24 @@
                         @endif
                     </td>
                 </tr>
-                <tr>
-                    <td><i class="fa fa-paperclip text-danger"></i> NID Document</td>
-                    <td><a href="{{route('member-doc-preview',$member->member_nid_file)}}" target="_blank">Preview</a></td>
-                </tr>
+                @if(isset($member->member_nid_file) && !empty($member->member_nid_file))
+                    <tr>
+                        <td><i class="fa fa-paperclip text-danger"></i> NID Document</td>
+                        <td><a href="{{route('member-doc-preview',[$member->member_nid_file,'nid'])}}" target="_blank">Preview</a></td>
+                    </tr>
+                @endif
+                @if(isset($member->member_hsc_doc) && !empty($member->member_hsc_doc))
+                    <tr>
+                        <td><i class="fa fa-paperclip text-danger"></i> HSC Document</td>
+                        <td><a href="{{route('member-doc-preview',[$member->member_hsc_doc,'hsc'])}}" target="_blank">Preview</a></td>
+                    </tr>
+                @endif
+                @if(isset($member->member_hsc_doc) && !empty($member->member_tin_doc))
+                    <tr>
+                        <td><i class="fa fa-paperclip text-danger"></i> TIN Document</td>
+                        <td><a href="{{route('member-doc-preview',[$member->member_tin_doc,'tin'])}}" target="_blank">Preview</a></td>
+                    </tr>
+                @endif
             </table>
             
         </div>
@@ -131,7 +145,7 @@
     </div>
     <!-- /.card -->
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <!-- Main content -->
         @if($member->status==1)
             <div class="alert no-print" style="background-color: #c7f7c2;font-size: 14px">

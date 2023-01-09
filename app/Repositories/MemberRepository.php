@@ -21,7 +21,8 @@ class MemberRepository implements MemberInterface
         $classification=DB::table('member_has_member_classifications')
         ->where('member_id',$id)
         ->join('member_classifications', 'member_classifications.id', '=', 'member_has_member_classifications.member_classifications_id')
-        ->select('member_has_member_classifications.member_classifications_id as id','name')->get();
+        ->select('member_has_member_classifications.member_classifications_id as id','name')
+        ->get();
 
         if($member->member_type==1)
         {
@@ -127,6 +128,7 @@ class MemberRepository implements MemberInterface
     public function getMembers(array $data){
         $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
         ->where('status',$data['status'])
+        ->orderBy('id','desc')
         ->paginate(15);
         return $members;
     }
@@ -160,6 +162,28 @@ class MemberRepository implements MemberInterface
         }else
         {
             $data['member_nid_file']=null;
+        }
+
+        if(!empty($data['hsc_doc']))
+        {
+            $hsc=$data['hsc_doc'];
+            $input['file'] =$data['member_hsc_doc'];
+            $data['member_hsc_doc']= $data['college_roll']."_".$input['file'];
+            $hsc->move(public_path('/storage/member_hsc'),$data['member_hsc_doc']);
+        }else
+        {
+            $data['member_tin_doc']=null;
+        }
+
+        if(!empty($data['tin_doc']))
+        {
+            $tin=$data['tin_doc'];
+            $input['file'] =$data['member_tin_doc'];
+            $data['member_tin_doc']= $data['college_roll']."_".$input['file'];
+            $tin->move(public_path('/storage/member_tin'),$data['member_tin_doc']);
+        }else
+        {
+            $data['member_tin_doc']=null;
         }
 
         $member_basic_data=array(
@@ -205,6 +229,8 @@ class MemberRepository implements MemberInterface
             "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
             "spouse_email"              =>   $data['spouse_email'],
             "member_nid_file"           =>   $data['member_nid_file'],
+            "member_hsc_doc"            =>   $data['member_hsc_doc'],
+            "member_tin_doc"            =>   $data['member_tin_doc'],
             "user_id"                   =>   $data['user_id'],
             "created_at"                =>   Carbon::now(),
             "entry_by"                  =>   $user->id,
@@ -473,7 +499,15 @@ class MemberRepository implements MemberInterface
         $data['member_nid_doc']         = !empty($nid)?time().'_NID.'.$nid->getClientOriginalExtension():null;
         $data['member_nid_old_doc']     =isset($request->member_nid_old_doc)?$request->member_nid_old_doc:null;
 
+        $hsc                            =$request->file('hsc_doc');
+        $data['hsc_doc']                =$hsc;
+        $data['member_hsc_doc']         = !empty($hsc)?time().'_HSC.'.$hsc->getClientOriginalExtension():null;
+        $data['member_nid_old_doc']     =isset($request->member_hsc_old_doc)?$request->member_hsc_old_doc:null;
 
+        $tin                            =$request->file('tin_doc');
+        $data['tin_doc']                =$tin;
+        $data['member_tin_doc']         = !empty($tin)?time().'_TIN.'.$tin->getClientOriginalExtension():null;
+        $data['member_tin_old_doc']     =isset($request->member_tin_old_doc)?$request->member_tin_old_doc:null;
 
         $data['user_id']                =isset($request->user_id)?$request->user_id:null;
         $data['member_id']              =isset($request->member_id)?$request->member_id:null;

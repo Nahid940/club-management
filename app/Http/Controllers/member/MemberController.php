@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Interfaces\MemberInterface;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\MemberAdmissionRequest;
 use App\Http\Requests\MemberDeleteRequest;
@@ -183,6 +184,22 @@ class MemberController extends Controller
 
     public function previewDoc(Request $request)
     {
-        return response()->file("storage/member_nid/".$request->nid);
+        if($request->type=='nid')
+        {
+            if(File::exists("storage/member_nid/".$request->nid))
+            {
+                return response()->file("storage/member_nid/".$request->nid);
+            }
+        }elseif ($request->type=='hsc')
+        {
+            if(File::exists("storage/member_hsc/".$request->nid)) {
+                return response()->file("storage/member_hsc/" . $request->nid);
+            }
+        }elseif ($request->type=='tin')
+        {
+            if(File::exists("storage/member_tin/".$request->nid)) {
+                return response()->file("storage/member_tin/" . $request->nid);
+            }
+        }
     }
 }
