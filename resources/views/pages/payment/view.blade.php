@@ -118,7 +118,7 @@
                                                 <i class="fas fa-times"></i> Decline
                                             </button>
                                             <button id="approve" type="button" class="btn btn-primary  btn-xs float-right" style="margin-right: 5px;">
-                                                <i class="fas fa-check"></i> Approve
+                                                 <span class="approval_span"><i class="fas fa-check"></i> Approve</span>
                                             </button>
                                         @elseif($payment->status==-1)
                                             <button id="revert" type="button" class="btn btn-warning  btn-xs float-right" style="margin-right: 5px;">
@@ -162,6 +162,8 @@
                 confirmButtonText: 'Yes, approve it!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#approve').attr('disabled','disabled');
+                    $('.approval_span').html('<i class="fas fa-spinner fa-pulse"></i> Precessing');
                     $('#process_payment_form').submit();
                 }
             })

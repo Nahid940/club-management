@@ -25,6 +25,10 @@ class MemberPaymentController extends Controller
             $where[] =['payment_date','=',$request->payment_date];
         }
         $member_id=Member::where('user_id',Auth::user()->id)->select('id')->first();
+        if(empty($member_id))
+        {
+            return view('pages.payment.member-payment-index',["title"=>""]);
+        }
         $where[]=['member_id',$member_id->id];
         $where[]=['payment_type',1];
         if(!empty($member_id))

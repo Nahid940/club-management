@@ -172,7 +172,7 @@ class MemberRepository implements MemberInterface
             $hsc->move(public_path('/storage/member_hsc'),$data['member_hsc_doc']);
         }else
         {
-            $data['member_tin_doc']=null;
+            $data['member_hsc_doc']=null;
         }
 
         if(!empty($data['tin_doc']))
@@ -319,6 +319,42 @@ class MemberRepository implements MemberInterface
         }
 
 
+        if(!empty($data['nid_doc']))
+        {
+            Storage::disk('local')->delete('public/member_nid/'. $data['member_nid_old_doc']);
+            $nid=$data['nid_doc'];
+            $input['file'] =$data['member_nid_doc'];
+            $data['member_nid_file']= $data['college_roll']."_".$input['file'];
+            $nid->move(public_path('/storage/member_nid'),$data['member_nid_file']);
+        }else
+        {
+            $data['member_nid_file']=$data['member_nid_old_doc'];
+        }
+
+        if(!empty($data['hsc_doc']))
+        {
+            Storage::disk('local')->delete('public/member_hsc/'. $data['member_hsc_old_doc']);
+            $hsc=$data['hsc_doc'];
+            $input['file'] =$data['member_hsc_doc'];
+            $data['member_hsc_doc']= $data['college_roll']."_".$input['file'];
+            $hsc->move(public_path('/storage/member_hsc'),$data['member_hsc_doc']);
+        }else
+        {
+            $data['member_hsc_doc']=$data['member_hsc_old_doc'];
+        }
+
+        if(!empty($data['tin_doc']))
+        {
+            Storage::disk('local')->delete('public/member_tin/'. $data['member_tin_old_doc']);
+            $tin=$data['tin_doc'];
+            $input['file'] =$data['member_tin_doc'];
+            $data['member_tin_doc']= $data['college_roll']."_".$input['file'];
+            $tin->move(public_path('/storage/member_tin'),$data['member_tin_doc']);
+        }else
+        {
+            $data['member_tin_doc']=$data['member_tin_old_doc'];
+        }
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
@@ -361,6 +397,9 @@ class MemberRepository implements MemberInterface
             "spouse_date_of_birth"      =>   $data['spouse_date_of_birth'],
             "spouse_mobile_number"      =>   $data['spouse_mobile_number'],
             "spouse_email"              =>   $data['spouse_email'],
+            "member_nid_file"           =>   $data['member_nid_file'],
+            "member_hsc_doc"            =>   $data['member_hsc_doc'],
+            "member_tin_doc"            =>   $data['member_tin_doc'],
             "updated_at"                =>   Carbon::now(),
             "updated_by"                =>   $data['user_id'],
         );
@@ -502,7 +541,7 @@ class MemberRepository implements MemberInterface
         $hsc                            =$request->file('hsc_doc');
         $data['hsc_doc']                =$hsc;
         $data['member_hsc_doc']         = !empty($hsc)?time().'_HSC.'.$hsc->getClientOriginalExtension():null;
-        $data['member_nid_old_doc']     =isset($request->member_hsc_old_doc)?$request->member_hsc_old_doc:null;
+        $data['member_hsc_old_doc']     =isset($request->member_hsc_old_doc)?$request->member_hsc_old_doc:null;
 
         $tin                            =$request->file('tin_doc');
         $data['tin_doc']                =$tin;

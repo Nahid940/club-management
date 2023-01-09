@@ -80,7 +80,7 @@ class PaymentController extends Controller
             {
                 Payment::where('id',$request->process_payment)->update(['status'=>1]);
                 $payment=Payment::with('member:id,first_name,member_code,email')->findOrFail($request->process_payment);
-                Mail::to('nahid940@gmail.com')->queue(new MemberPaymentMail($payment));
+                Mail::to($payment->member->email)->queue(new MemberPaymentMail($payment));
                 return redirect()->back()->with('message','Payment approved successfully!');
             }else if($request->action_type==2)
             {

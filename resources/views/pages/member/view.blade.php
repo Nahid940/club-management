@@ -28,7 +28,7 @@
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
             @role('member')
-                <a href="{{route('member-profile-update')}}" title="Edit" class="no-print"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
+                <a href="{{route('member-profile-update')}}" title="Edit" class="no-print">-<i class="fas fa-pencil-alt mr-1" aria-hidden="true" style="color: #db0049"></i>Edit</a>
                 <a title="Print" class="no-print" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style="color: #db0049"></i>Print</a>
             @else
                 <a href="{{route('member-edit',$member->id)}}" title="Edit" class="no-print badge badge-warning"><i class="fas fa-pencil-alt mr-1" aria-hidden="true" style=""></i>Edit</a>
@@ -120,21 +120,24 @@
                         @endif
                     </td>
                 </tr>
+                <tr class="no-print">
+                    <td colspan="2"><span class="text-blue text-bold">Attachments</span></td>
+                </tr>
                 @if(isset($member->member_nid_file) && !empty($member->member_nid_file))
-                    <tr>
+                    <tr class="no-print">
                         <td><i class="fa fa-paperclip text-danger"></i> NID Document</td>
                         <td><a href="{{route('member-doc-preview',[$member->member_nid_file,'nid'])}}" target="_blank">Preview</a></td>
                     </tr>
                 @endif
                 @if(isset($member->member_hsc_doc) && !empty($member->member_hsc_doc))
-                    <tr>
-                        <td><i class="fa fa-paperclip text-danger"></i> HSC Document</td>
+                    <tr class="no-print">
+                        <td><i class="fa fa-paperclip text-danger"></i> HSC Certificate</td>
                         <td><a href="{{route('member-doc-preview',[$member->member_hsc_doc,'hsc'])}}" target="_blank">Preview</a></td>
                     </tr>
                 @endif
                 @if(isset($member->member_hsc_doc) && !empty($member->member_tin_doc))
-                    <tr>
-                        <td><i class="fa fa-paperclip text-danger"></i> TIN Document</td>
+                    <tr class="no-print">
+                        <td><i class="fa fa-paperclip text-danger"></i> TIN Certificate</td>
                         <td><a href="{{route('member-doc-preview',[$member->member_tin_doc,'tin'])}}" target="_blank">Preview</a></td>
                     </tr>
                 @endif

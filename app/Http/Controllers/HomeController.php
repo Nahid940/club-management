@@ -22,12 +22,17 @@ class HomeController extends Controller
         $pageTitle="";
         if(Auth::user()->hasRole('member'))
         {
+            $payment_summery=array();
             $member_info=Member::where('user_id',Auth::user()->id)->select('id','first_name','registration_date','member_type','member_photo')->first();
-            $payment_summery=DB::table('payments')->select(DB::raw('MAX(payment_date) as payment_date,SUM(amount) as amount'))
-                ->where('member_id',$member_info->id)
-                ->where('status',1)
-                ->where('payment_type',1)
-                ->first();
+            if(!empty($member_info))
+            {
+                $payment_summery=DB::table('payments')->select(DB::raw('MAX(payment_date) as payment_date,SUM(amount) as amount'))
+                    ->where('member_id',$member_info->id)
+                    ->where('status',1)
+                    ->where('payment_type',1)
+                    ->first();
+            }
+
             $notices=Notice::where('status',1)->orderBy('id', 'desc')->paginate(5);
             return view('pages.home',['title'=>$pageTitle,'notices'=>$notices,'info'=>$member_info,'payment'=>$payment_summery]);
         }else

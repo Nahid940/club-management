@@ -145,8 +145,13 @@
             <div class="card-header">
                 <h3 class="card-title">Update info</h3>
                 <div style="">
-                    <a href="{{route('member-profile')}}" style="position: absolute;right: 55px;" class="btn btn-danger btn-xs" title="Close">Close</a>
-                    <a href="{{route('member-profile-update')}}" style="position: absolute;right: 2px;" class="btn btn-primary btn-xs" title="Reload">Reload</a>
+                    @role('member')
+                        <a href="{{route('member-profile')}}" style="position: absolute;right: 55px;" class="btn btn-danger btn-xs" title="Close">Close</a>
+                        <a href="{{route('member-profile-update')}}" style="position: absolute;right: 2px;" class="btn btn-primary btn-xs" title="Reload">Reload</a>
+                    @else
+                        <a href="{{route('member-read',$member->id)}}" style="position: absolute;right: 55px;" class="btn btn-danger btn-xs" title="Close">Close</a>
+                        <a href="{{route('member-edit',$member->id)}}" style="position: absolute;right: 2px;" class="btn btn-primary btn-xs" title="Reload">Reload</a>
+                    @endrole
                 </div>
             </div>
 
@@ -627,7 +632,36 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="member_nid_old_doc" value="{{$member->member_nid_file}}">
+                        <input type="hidden" name="member_hsc_old_doc" value="{{$member->member_hsc_doc}}">
+                        <input type="hidden" name="member_tin_old_doc" value="{{$member->member_tin_doc}}">
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i>  <span>Attach Your Updated NID (PDF/Image)</span>
+                                    <input type="file" name="nid_doc" class="" id="nid_doc"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated HSC Certificate/Testimonial (PDF/Image)</span>
+                                    <input type="file" name="hsc_doc" class="" id="hsc_doc"/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated eTIN/TIN Certificate (PDF/Image)</span>
+                                    <input type="file" name="tin_doc" class="" id="tin_doc"/>
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
+
                     <!-- ============================================================================================================================ -->
 
                     {{--<div id="step_3" class='hidden'>--}}

@@ -71,53 +71,57 @@
                     @if(session('message'))
                         <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                     @endif
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Transaction ID</th>
-                                <th>Payment Method</th>
-                                <th>Payment Date</th>
-                                <th>Amount</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php $i=1; @endphp
-                            @foreach($payments as $payment)
+                    @if(isset($payments) && $payments->isEmpty())
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{$i++}}</td>
-                                    <td>{{$payment->id}}</td>
-                                    <td>
-                                        @if($payment->payment_method==1)
-                                            <span class="badge badge-info">Pay Order</span>
-                                        @elseif($payment->payment_method==2)
-                                            <span class="badge badge-info">Cash</span>
-                                        @else
-                                            <span class="badge badge-info">Cheque</span>
-                                        @endif
-                                    </td>
-                                    <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
-                                    <td><div align="right">{{$payment->amount}}</div></td>
-                                    <td>
-                                        <button type="button" class="action_btn btn" data-toggle="dropdown">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
-                                                <a href="{{route('member-payment-view',$payment->id)}}" title="View" type="button" class="btn btn-xs btn-success action_button">View </a>
-                                            </li>
-                                            {{--<li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete btn-xs" data-id=""><i class="fas fa-trash"></i> Delete</a></li>--}}
-                                        </ul>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Payment Method</th>
+                                    <th>Payment Date</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php $i=1; @endphp
+                                @foreach($payments as $payment)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td>{{$payment->id}}</td>
+                                        <td>
+                                            @if($payment->payment_method==1)
+                                                <span class="badge badge-info">Pay Order</span>
+                                            @elseif($payment->payment_method==2)
+                                                <span class="badge badge-info">Cash</span>
+                                            @else
+                                                <span class="badge badge-info">Cheque</span>
+                                            @endif
+                                        </td>
+                                        <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
+                                        <td><div align="right">{{$payment->amount}}</div></td>
+                                        <td>
+                                            <button type="button" class="action_btn btn" data-toggle="dropdown">
+                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-item">
+                                                    <a href="{{route('member-payment-view',$payment->id)}}" title="View" type="button" class="btn btn-xs btn-success action_button">View </a>
+                                                </li>
+                                                {{--<li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete btn-xs" data-id=""><i class="fas fa-trash"></i> Delete</a></li>--}}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <!-- /.card-body -->
             </div>
-        {{ $payments->links() }}
+        @if(isset($payments) && $payments->isEmpty())
+            {{ $payments->links() }}
+        @endif
         <!-- /.card -->
         </div>
     </div>
