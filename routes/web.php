@@ -39,12 +39,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::group(['middleware' => ['auth','role:super-admin|member', 'permission:add member|edit member|view member']], function () {
-    Route::get('/members/admission', [MemberController::class, 'admission'])->name('member-admission');
-    Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read');
+Route::group(['middleware' => ['auth','role:super-admin|member']], function () {
+    Route::get('/members/admission', [MemberController::class, 'admission'])->middleware('permission:add member')->name('member-admission');
+    Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read')->middleware('permission:view member');
     Route::get('new/member/{id}', [MemberController::class, 'newApplicants'])->name('new-member-read');
     Route::get('/members/update/{id}', [MemberController::class, 'update'])->name('member-update');
-    Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->name('member-edit');
+    Route::get('/member/edit/{id}', [MemberController::class, 'edit'])->middleware('permission:edit member')->name('member-edit');
     Route::post('/members/save', [MemberController::class, 'save'])->name('member-add');
     Route::get('/members/profile', [MemberController::class, 'profile'])->name('member-profile');
     Route::get('members/info/update', [MemberController::class, 'memberProfileUpdate'])->name('member-profile-update');
@@ -82,38 +82,42 @@ Route::controller(ScheduleBookingController::class)->group(function(){
     Route::get('schedule/calender-schedules',[ScheduleBookingController::class,'getScheduleForCalender'])->name('calender-schedules');
 });
 
-Route::controller(UserController::class)->group(function(){
+Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:add user|delete user']],function(){
+    Route::get('user/index',[UserController::class,'index'])->name('user-index');
     Route::get('user/add',[UserController::class,'add'])->name('user-add');
     Route::post('user/save',[UserController::class,'save'])->name('user-save');
-    Route::match(array('GET', 'POST'), 'user/password/update',[UserController::class,'updatePassword'])->name('password-update');
+    Route::delete('user/delete',[UserController::class,'delete'])->name('user-delete');
+    Route::post('user/status/update',[UserController::class,'statusChange'])->name('user-status');
 });
+Route::match(array('GET', 'POST'), 'user/password/update',[UserController::class,'updatePassword'])->middleware('auth')->name('password-update');
+
 
 Route::controller(EmployeeController::class)->group(function(){
     Route::get('employee/index',[EmployeeController::class,'index'])->name('inployee-index');
 });
 
 Route::controller(PaymentController::class)->group(function(){
-    Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index')->middleware('auth');
-    Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add')->middleware('auth');
-    Route::get('payment/view/{id}',[PaymentController::class,'view'])->name('payment-view')->middleware('auth');
-    Route::get('payment/edit/{id}',[PaymentController::class,'edit'])->name('payment-edit')->middleware('auth');
+    Route::get('payment/index',[PaymentController::class,'index'])->name('payment-index')->middleware('auth','role:super-admin|member|accountant','permission:view payment');
+    Route::get('payment/add',[PaymentController::class,'add'])->name('payment-add')->middleware('auth','role:super-admin|member|accountant','permission:add payment');
+    Route::get('payment/view/{id}',[PaymentController::class,'view'])->name('payment-view')->middleware('auth','role:super-admin|member|accountant','permission:view payment');
+    Route::get('payment/edit/{id}',[PaymentController::class,'edit'])->name('payment-edit')->middleware('auth','role:super-admin|member|accountant','permission:edit payment');
     Route::post('payment/update',[PaymentController::class,'update'])->name('payment-update')->middleware('auth');
     Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
-    Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth');
-    Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth');
+    Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth','role:super-admin|member|accountant','permission:approve payment|decline payment');
+    Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth','role:super-admin|member|accountant','permission:delete payment');;
 
 });
 
 Route::group(['middleware'=>['auth']],function (){
-    Route::get('donation/index',[DonationController::class,'index'])->name('donation-index');
-    Route::get('donation/add',[DonationController::class,'add'])->name('donation-add');
-    Route::get('donation/view/{id}',[DonationController::class,'view'])->name('donation-view');
+    Route::get('donation/index',[DonationController::class,'index'])->name('donation-index')->middleware('role:super-admin|accountant','permission:view donation');
+    Route::get('donation/add',[DonationController::class,'add'])->name('donation-add')->middleware('role:super-admin|accountant','permission:add donation');
+    Route::get('donation/view/{id}',[DonationController::class,'view'])->name('donation-view')->middleware('role:super-admin|accountant','permission:view donation');
     Route::post('donation/add',[DonationController::class,'save'])->name('donation-save');
     Route::post('donor/add',[DonorController::class,'donorAdd'])->name('donor-add');
     Route::post('donor/search',[DonorController::class,'search'])->name('donor-search');
-    Route::post('process/donation',[DonationController::class,'process'])->name('process-donation');
-    Route::post('donation/delete',[DonationController::class,'delete'])->name('donation-delete');
-    Route::get('donation/edit/{id}',[DonationController::class,'edit'])->name('donation-edit');
+    Route::post('process/donation',[DonationController::class,'process'])->name('process-donation')->middleware('role:super-admin|member|accountant','permission:approve donation');
+    Route::post('donation/delete',[DonationController::class,'delete'])->name('donation-delete')->middleware('role:super-admin|member|accountant','permission:delete donation');
+    Route::get('donation/edit/{id}',[DonationController::class,'edit'])->name('donation-edit')->middleware('role:super-admin|member|accountant','permission:edit donation');
     Route::post('donation/update',[DonationController::class,'update'])->name('donation-update');
 
 });
@@ -133,16 +137,16 @@ Route::group(['middleware' => ['auth']],function (){
     Route::delete('classification-delete',[MemberClassificationController::class,'delete'])->name('classification-delete');
 });
 
-Route::group(['middleware' => ['auth']],function (){
+Route::group(['middleware' => ['auth','role:super-admin|admin']],function (){
     Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
     Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
     Route::get('notice/edit/{id}',[NoticeController::class,'edit'])->name('notice-edit');
-    Route::get('notice/view/{id}',[NoticeController::class,'view'])->name('notice-view');
     Route::post('notice/add',[NoticeController::class,'save'])->name('notice-add');
     Route::post('notice/delete',[NoticeController::class,'delete'])->name('notice-delete');
     Route::post('notice/update',[NoticeController::class,'update'])->name('notice-update');
     Route::post('notice/postpone',[NoticeController::class,'postpone'])->name('notice-postpone');
 });
+Route::get('notice/view/{id}',[NoticeController::class,'view'])->middleware('auth')->name('notice-view');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PermissionInterface;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class PermissionRepository implements PermissionInterface
 {
@@ -57,13 +58,12 @@ class PermissionRepository implements PermissionInterface
 
     public function assignPermission(array $permissions,$role_id)
     {
+        $role = Role::find($role_id);
+        $ids=array();
         foreach($permissions as $permission)
         {
-            DB::table('role_has_permissions')
-                ->insert([
-                    'permission_id'=>$permission,
-                    'role_id'=>$role_id,
-                ]);
+            $ids[]=$permission;
         }
+        $role->syncPermissions($ids);
     }
 }

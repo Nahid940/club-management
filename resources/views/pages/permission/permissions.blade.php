@@ -51,48 +51,50 @@
                     @if(session('message'))
                         <div class="alert alert-success alert-dismissible">{{session('message')}}</div>
                     @endif
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Permission</th>
-                                <th>View</th>
-                                <th>Add</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                                <th>Execute</th>
-                            </tr>
-                        </thead>
-                        @php $i=0; @endphp
-                        <tbody>
-                            <form action="{{route('permission-assign')}}" method="POST">
-                                {{csrf_field()}}
-                                <input type="hidden" name="role_id" value="{{$role_id}}"/>
-                                <input type="hidden" name="role_name" value="{{$role_name}}"/>
+                    @role('admin|super-admin')
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
                                 <tr>
-                                    @foreach($permissions as $module_name=>$permission)
-                                        <td colspan="7" ><div align="left"><b>{{ucfirst($module_name)}}</b></div></td>
-                                        @foreach($permission as $prmsn)
-                                        <tr>
-                                            <td><div align="left">{{++$i}}</div></td>
-                                            <td><div align="left">{{ucfirst($prmsn['name'])}}</div></td>
-                                            <td width="40px">@if($prmsn['action']=='view')<input  name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif >@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='add' || $prmsn['action']=='approve')<input name="permissions[]" @if(isset($role_permissions[$prmsn['id']])) checked @endif  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='edit')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
-                                            <td width="40px">@if($prmsn['action']=='delete' || $prmsn['action']=='decline')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        @endforeach
-                                    @endforeach
-                                 </tr>
-                                <tr>
-                                    <td colspan="4" style="border: none">&nbsp;</td>
-                                    <td style="border: none"><a href="" class="btn btn-danger btn-xs">Cancel</a></td>
-                                    <td style="border: none"><button type="submit" href="" class="btn btn-success btn-xs">Save</button></td>
+                                    <th>#</th>
+                                    <th>Permission</th>
+                                    <th>View</th>
+                                    <th>Add</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>Execute</th>
                                 </tr>
-                            </form>
-                        </tbody>
-                    </table>
+                            </thead>
+                            @php $i=0; @endphp
+                            <tbody>
+                                <form action="{{route('permission-assign')}}" method="POST">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="role_id" value="{{$role_id}}"/>
+                                    <input type="hidden" name="role_name" value="{{$role_name}}"/>
+                                    <tr>
+                                        @foreach($permissions as $module_name=>$permission)
+                                            <td colspan="7" style="background-color: #a2ddff"><div align="left"><b>{{ucfirst($module_name)}}</b></div></td>
+                                            @foreach($permission as $prmsn)
+                                            <tr>
+                                                <td><div align="left">{{++$i}}</div></td>
+                                                <td><div align="left">{{ucfirst($prmsn['name'])}}</div></td>
+                                                <td width="40px">@if($prmsn['action']=='view')<input  name="permissions[]"  type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif >@else - @endif</td>
+                                                <td width="40px">@if($prmsn['action']=='add' || $prmsn['action']=='approve')<input name="permissions[]" @if(isset($role_permissions[$prmsn['id']])) checked @endif  type="checkbox" value="{{$prmsn['id']}}">@else - @endif</td>
+                                                <td width="40px">@if($prmsn['action']=='edit')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
+                                                <td width="40px">@if($prmsn['action']=='delete' || $prmsn['action']=='decline')<input  name="permissions[]" type="checkbox" value="{{$prmsn['id']}}" @if(isset($role_permissions[$prmsn['id']])) checked @endif>@else - @endif</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            @endforeach
+                                        @endforeach
+                                     </tr>
+                                    <tr>
+                                        <td colspan="5" style="border: none">&nbsp;</td>
+                                        <td style="border: none"><a href="" class="btn btn-danger btn-xs">Cancel</a></td>
+                                        <td style="border: none"><button type="submit" href="" class="btn btn-success btn-xs">Save</button></td>
+                                    </tr>
+                                </form>
+                            </tbody>
+                        </table>
+                    @endrole
                 </div>
                 <!-- /.card-body -->
             </div>

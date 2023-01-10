@@ -13,12 +13,12 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <a href="#"><b>Hello</b>There</a>
-  </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+      <div class="login-box-msg" style="align-items: center">
+        <img src="{{asset('logo.avif')}}" alt="">
+      </div>
       <p class="login-box-msg">Sign in to start your session</p>
       @if ($errors->any())
             <div class="alert alert-danger">

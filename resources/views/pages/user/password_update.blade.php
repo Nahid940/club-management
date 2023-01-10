@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     @if(session('message'))
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger mt-2">
                             {{session('message')}}
                         </div>
                     @endif

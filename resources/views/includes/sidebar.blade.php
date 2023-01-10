@@ -160,6 +160,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{route('user-index')}}" class="nav-link">
+                    <i class="fa fa-list nav-icon" style="font-size: 10px;color: #ffd511"></i>
+                    <p>User List</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="{{route('role-index')}}" class="nav-link">
                     <i class="fa fa-cogs nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>Manage User Role</p>

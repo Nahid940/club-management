@@ -25,11 +25,15 @@ class User extends Authenticatable
         return $this->hasOne(User_setting::class);
     }
 
+    protected $guarded = ['password'];
     protected $fillable = [
         'name',
         'email',
         'user_type',
         'password',
+        'created_at',
+        'created_by',
+        'status'
     ];
 
     /**
@@ -42,6 +46,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
     /**
      * The attributes that should be cast.
      *
@@ -50,4 +55,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }

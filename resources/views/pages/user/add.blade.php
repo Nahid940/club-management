@@ -21,59 +21,46 @@
                       </ul>
                   </div>
               @endif
+              @if(session('message'))
+                 <div class="alert alert-success alert-dismissible">{{session('message')}}</div>
+              @endif
               <!-- /.card-header -->
               <!-- form start -->
               <form action="{{route('user-save')}}" method="POST">
                 {{ csrf_field() }}
                 <div class="card-body">
                      <div class="row">
-                         <div class="col-md-6">
+                         <div class="col-md-12">
                              <div class="form-group">
-                                 <label for="exampleInputEmail1">First Name <span class="text-danger">*</span></label>
-                                 <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" placeholder="First Name">
-                             </div>
-                         </div>
-                         <div class="col-md-6">
-                             <div class="form-group">
-                                 <label for="exampleInputPassword1">Last Name</label>
-                                 <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Password">
+                                 <label for="name">Name <span class="text-danger">*</span></label>
+                                 <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" id="name" name="name" placeholder="First Name">
                              </div>
                          </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Email <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Password">
-                            </div>
-                        </div>
-                        <div class="col-md-6"">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Username <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Password">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="email" name="email" placeholder="Password">
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="status" value="1">
                   <div class="form-group">
                     <label for="exampleInputPassword1">User role <span class="text-danger">*</span></label>
                       <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                           <option value="" selected="selected">---Select Role---</option>
-                          <option value="1">Super Admin</option>
-                          <option value="2">Admin</option>
-                          <option value="3">Branch</option>
-                          <option value="71">Support Analyst</option>
-                          <option value="73">IT Officer</option>
-                          <option value="74">Field Officer All</option>
-                          <option value="75">Financial Report Reviewer</option>
-                          <option value="76">Accountant (Field) New</option>
+                          <option value="1" {{old ('role_id') == '1' ? 'selected' : ''}}>Super Admin</option>
+                          <option value="2" {{old ('role_id') == '2' ? 'selected' : ''}}>Admin</option>
+                          <option value="4" {{old ('role_id') == '4' ? 'selected' : ''}}>Accountant</option>
                       </select>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Current status <span class="text-danger">*</span></label>
                       <select name="current_status" class="form-control  @error('current_status') is-invalid @enderror">
                         <option value="" selected="selected">--Select--</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
+                        <option value="active" {{old ('current_status') == 'active' ? 'selected' : ''}}>Active</option>
+                        <option value="inactive" {{old ('current_status') == 'inactive' ? 'selected' : ''}}>Inactive</option>
                       </select>
                   </div>
                   <div class="row">

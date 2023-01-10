@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserPasswordUpdateRequest;
 use App\Http\Requests\UserRequest;
 use App\Interfaces\UserInterface;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -20,7 +22,8 @@ class UserController extends Controller
 
     public function index()
     {
-
+        $users=User::select('id','name','email','status','created_at')->where('user_type',1)->paginate(10);
+        return view('pages.user.index',['title'=>"","users"=>$users]);
     }
 
     public function add()
@@ -29,9 +32,11 @@ class UserController extends Controller
         return view('pages.user.add',['title'=>$pageTitle]);
     }
 
-    public function save(UserRequest $reuquest)
+    public function save(UserRequest $request)
     {
-        dd($reuquest);
+        $user=User::create(array_merge($request->all(), [ 'password' => bcrypt($request->input('password')) ]));
+        $user->assignRole($request->role_id);
+        return redirect()->back()->with('message','User added successfully!!');
     }
 
     public function updatePassword(Request $request)
@@ -49,6 +54,26 @@ class UserController extends Controller
         if ($request->isMethod('get'))
         {
             return view('pages.user.password_update',['title'=>$pageTitle]);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        if(!empty($request->user_id)) {
+            User::where('id', $request->user_id)->update(['status' => -2]);//delete
+            return redirect()->back()->with('message','User deleted successfully!!');
+        }
+    }
+
+    public function statusChange(Request $request)
+    {
+        if(!empty($request->status) && $request->status==1) {
+            User::where('id', $request->user_id)->update(['status' => 0]);
+            return redirect()->back()->with('message','User inactivated successfully!!');
+        }else if(!empty($request->status) && $request->status==1)
+        {
+            User::where('id', $request->user_id)->update(['status' => 1]);
+            return redirect()->back()->with('message','User activated successfully!!');
         }
     }
 }

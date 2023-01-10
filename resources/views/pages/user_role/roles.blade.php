@@ -69,8 +69,8 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item"><a  href="{{route('permission-index',[$role->id,$role->name])}}" title="Assign permission" class="btn btn-warning action_button"><i class="fa fa-check"></i> Permission</a></li>
-                                            <li class="dropdown-item"><a type="button" href="" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>
-                                            <li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$role->id}}><i class="fas fa-trash"></i> Delete</a></li>
+                                            {{--<li class="dropdown-item"><a type="button" href="" title="Edit" class="btn btn-info action_button"><i class="fas fa-edit"></i> Edit</a></li>--}}
+                                            {{--<li class="dropdown-item"><a type="button" title="Delete" class="btn btn-danger action_button delete" data-id={{$role->id}}><i class="fas fa-trash"></i> Delete</a></li>--}}
                                         </ul>
                                     </div>
                                 </td>
@@ -84,11 +84,6 @@
         {{ $roles->links() }}
         <!-- /.card -->
         </div>
-        <form action="" method="POST" id="member_del">
-            {{ csrf_field() }}
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="member_id" id="member_id"/>
-        </form>
     </div>
 @stop
 @section('script')
