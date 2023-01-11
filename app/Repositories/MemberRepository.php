@@ -126,8 +126,30 @@ class MemberRepository implements MemberInterface
     }
 
     public function getMembers(array $data){
+        $where=array();
+        if(isset($data['request_data']['name']) && !empty($data['request_data']['name']))
+        {
+            $where[]=['first_name','LIKE','%'.$data['request_data']['name'].'%'];
+        }
+        if(isset($data['request_data']['email']) && !empty($data['request_data']['email']))
+        {
+            $where[]=['email',$data['request_data']['email']];
+        }
+        if(isset($data['request_data']['mobile_number']) && !empty($data['request_data']['mobile_number']))
+        {
+            $where[]=['mobile_number',$data['request_data']['mobile_number']];
+        }
+        if(isset($data['request_data']['member_type']) && !empty($data['request_data']['member_type']))
+        {
+            $where[]=['member_type',$data['request_data']['member_type']];
+        }
+        if(isset($data['request_data']['blood_group']) && !empty($data['request_data']['blood_group']))
+        {
+            $where[]=['blood_group',$data['request_data']['blood_group']];
+        }
         $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
         ->where('status',$data['status'])
+        ->where($where)
         ->orderBy('id','desc')
         ->paginate(15);
         return $members;

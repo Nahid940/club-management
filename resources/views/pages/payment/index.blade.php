@@ -36,16 +36,16 @@
                 <div class="card-body">
                     <form action="">
                         <div class="row search_frm">
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 <input type="text" value="" class="form-control" id="name" name="name" placeholder="Member Name"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 <input type="text" value="" class="form-control" id="email" name="email" placeholder="Email"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 <input type="text" class="form-control" value="" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 <button type="submit" class="btn btn-primary search_btn">Search</button>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                     @if(session('message'))
                         <div class="alert alert-danger alert-dismissible"><i class="fa fa-trash" aria-hidden="true"></i> {{session('message')}}</div>
                     @endif
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -44,16 +44,18 @@
             @endphp
             @foreach($payments as $payment)
                 @foreach($payment['payment'] as $member_payment)
-                    <tr>@if($payment['id']!=$current_id)
-                            <td rowspan="{{count($payment['payment'])}}"><div align="center"><b>{{$payment['name']}}</b></div></td>
-                        @endif
-                        <td><div align="center">{{date('d-m-Y',strtotime($member_payment['payment_date']))}}</div></td>
-                        <td><div align="right">{{number_format($member_payment['amount'],2,'.',',')}}</div></td>
-                    </tr>
-                    @php
-                        $current_id=$payment['id'];
-                        $sub_total+=$member_payment['amount'];
-                    @endphp
+                    @if(isset($payment['id']))
+                        <tr>@if($payment['id']!=$current_id)
+                                <td rowspan="{{count($payment['payment'])}}"><div align="center"><b>{{$payment['name']}}</b></div></td>
+                            @endif
+                            <td><div align="center">{{date('d-m-Y',strtotime($member_payment['payment_date']))}}</div></td>
+                            <td><div align="right">{{number_format($member_payment['amount'],2,'.',',')}}</div></td>
+                        </tr>
+                        @php
+                            $current_id=$payment['id'];
+                            $sub_total+=$member_payment['amount'];
+                        @endphp
+                    @endif
                 @endforeach
                 <tr style="background-color: #d8d8d8;font-weight: bold">
                     <td colspan="2">Sub Total</td>

@@ -36,13 +36,13 @@
                 <div class="card-body">
                     <form action="">
                         <div class="row search_frm">
-                            <div class="col-2">
+                            <div class="col-sm-3">
                                 <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Donor Name"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-3">
                                 <input type="text"  value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-3">
                                 <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}"   id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                             </div>
                             <div class="col-2">
@@ -65,7 +65,7 @@
                     @if(session('message'))
                         <div class="alert alert-danger alert-dismissible"><i class="fa fa-trash" aria-hidden="true"></i> {{session('message')}}</div>
                     @endif
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -174,6 +174,8 @@ $('#save').on('click',function () {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.isConfirmed) {
+                $('#save').attr('disabled','disabled');
+                $('#save_span').html('<i class="fas fa-spinner fa-pulse"></i> Precessing...');
                 $('#member_form').submit();
             }
         })
@@ -261,6 +263,8 @@ $('#update').on('click',function () {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.isConfirmed) {
+                $('#update').attr('disabled','disabled');
+                $('#update_span').html('<i class="fas fa-spinner fa-pulse"></i> Updating...');
                 $('#member_form').submit();
             }
         })

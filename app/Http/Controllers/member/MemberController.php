@@ -28,20 +28,22 @@ class MemberController extends Controller
         $this->memberInfo=$memberInfo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $pageTitle="Member List";
         $data['branch_id']=1;
         $data['status']=1;
+        $data['request_data']=$request->all();
         $members=$this->memberInfo->getMembers($data);
         return view('pages.member.index',['title' => $pageTitle,'members'=>$members]);
     }
 
-    public function newApplications()
+    public function newApplications(Request $request)
     {
         $pageTitle="";
         $data['branch_id']=1;
         $data['status']=-1; //-1 for new application
+        $data['request_data']=$request->all();
         $members=$this->memberInfo->getMembers($data);
         return view('pages.member.new-application',['title' => $pageTitle,'members'=>$members]);
     }

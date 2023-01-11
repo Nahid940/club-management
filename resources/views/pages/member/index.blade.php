@@ -1,6 +1,9 @@
 @extends('main')
 @section('pageHeading'){{$title}}@stop
 @section('style')
+    .table{
+        width:100%
+    }
     .table td, .table th {
         padding: .2rem;
         text-align:center;
@@ -30,25 +33,25 @@
 @stop
 @section('content')
 <div class="row">
-    <div class="col-12">
+    <div class="col-sm-12 col-lg-12">
         <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
                 <form action="">
                     <div class="row search_frm">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                             {{-- <label for="name">Member Name</label> --}}
                             <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                             {{-- <label for="email">Email</label> --}}
                             <input type="text" value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                             {{-- <label for="mobile_number">Mobile Number</label> --}}
                             <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                             {{-- <label>Member Type <span class="txt-info"></span></label> --}}
                             <select class="form-control" id="member_type" name="member_type">
                                 <option value="">--Type Select--</option>
@@ -58,7 +61,7 @@
                                 <option value="4" {{ request()->input('member_type') == 4 ? 'selected' : ''}}>Genera Member</option>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-lg-2 col-sm-12">
                             {{-- <label for="blood_group">Blood Group</label> --}}
                             <select class="form-control" id="blood_group" name="blood_group">
                                 <option value="">--Bloog Group Select--</option>
@@ -90,7 +93,7 @@
                 @if(session('message'))
                     <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                 @endif
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                     <thead>
                         {{-- <tr>
                             <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>

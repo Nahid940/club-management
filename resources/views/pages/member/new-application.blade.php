@@ -33,26 +33,26 @@
 @stop
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12">
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
                     <h5> <i class="fa fa-user-plus text-danger" aria-hidden="true"></i> New Membership Applications</h5>
                     <form action="">
                         <div class="row search_frm">
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 {{-- <label for="name">Member Name</label> --}}
                                 <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 {{-- <label for="email">Email</label> --}}
                                 <input type="text" value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 {{-- <label for="mobile_number">Mobile Number</label> --}}
                                 <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                             </div>
-                            <div class="col-2">
+                            <div class="col-lg-2 col-sm-12">
                                 {{-- <label>Member Type <span class="txt-info"></span></label> --}}
                                 <select class="form-control" id="member_type" name="member_type">
                                     <option value="">--Type Select--</option>
@@ -83,7 +83,7 @@
                         <div class="alert alert-info alert-dismissible"><i class="fa fa-check-square" aria-hidden="true"></i> {{session('message')}}</div>
                     @endif
                     <button class="btn btn-success btn-xs m-1 item_hide" id="approve_all_btn"><i class="fa fa-check-square" aria-hidden="true"></i> Approve All</button>
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>#</th>

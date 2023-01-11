@@ -148,7 +148,7 @@
     </div>
     <!-- /.card -->
     </div>
-    <div class="col-8">
+    <div class="col-md-8">
         <!-- Main content -->
         @if($member->status==1)
             <div class="alert no-print" style="background-color: #c7f7c2;font-size: 14px">

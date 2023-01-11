@@ -16,6 +16,13 @@
     .col-sm-3 {
         max-width: 20%;
     }
+    @media (min-width: 992px){
+        .col-lg-3 {
+        -ms-flex: 0 0 20% !important;
+        flex: 0 0 20% !important;
+        max-width: 20% !important;
+        }
+    }
     label {
         margin-bottom: 0;
         color: #4f4d50;
@@ -83,7 +90,7 @@
 
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         <div class="bs-stepper">
             <div class="bs-stepper-header" role="tablist">
                 <!-- your steps here -->
@@ -106,7 +113,7 @@
 </div>
 @if(session('message'))
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h5><i class="icon fas fa-check"></i> Success!</h5>
@@ -119,7 +126,7 @@
 
 @if(session('message'))
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h5><i class="icon fas fa-check"></i> Success!</h5>
@@ -140,7 +147,7 @@
     </div>
 @endif
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Update info</h3>
@@ -181,7 +188,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6 col-lg-12 col-sm-12">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
                                     <div class="icheck-primary d-inline">
@@ -210,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <div class="form-group">
@@ -219,13 +226,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="name">Member Name <span class="txt-info">*</span></label>
                                     <input type="text" value="{{ $member->first_name }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <!-- textarea -->
                                 <div class="form-group">
                                     <label for="blood_group">Blood Group</label>
@@ -239,13 +246,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="college_roll">College Roll Number <span class="txt-info">*</span></label>
                                     <input type="text" id="college_roll" value="{{ $member->college_roll}}" name="college_roll" class="form-control" placeholder="College Roll Number"/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="date_of_birth">Date of Birth <span class="txt-info">*</span></label>
                                     <input type="date" id="date_of_birth" value="{{ date('Y-m-d',strtotime($member->date_of_birth)) }}" name="date_of_birth" class="form-control"/>
@@ -253,19 +260,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="nid">NID Number <span class="txt-info">*</span></label>
                                     <input type="text" id="nid" name="nid" value="{{ $member->nid}}" class="form-control" placeholder="NID Number" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="passport">Passport Number</label>
                                     <input type="text" id="passport" name="passport" value="{{ $member->passport}}" class="form-control" placeholder="Passport Number" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="marital_status">Marital Status</label>
                                     <select class="form-control" id="marital_status" name="marital_status" require>
@@ -275,13 +282,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="date_of_annniversary">Date of Anniversary</label>
                                     <input type="date" id="date_of_annniversary" value="{{date('Y-m-d',strtotime($member->date_of_annniversary))}}" name="date_of_annniversary" class="form-control"/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="no_of_dependants">No. Of Dependants</label>
                                     <input type="number" id="no_of_dependants" value="{{$member->no_of_dependants}}" name="no_of_dependants" class="form-control"/>
@@ -289,31 +296,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="fathers_name">Fathers Name</label>
                                     <input type="text" class="form-control" value="{{$member->fathers_name}}" id="fathers_name" name="fathers_name" placeholder="Father's Name"/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="mothers_name">Motherss Name</label>
                                     <input type="text" class="form-control" value="{{$member->mothers_name}}" id="mothers_name" name="mothers_name" placeholder="Mother's Name"/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="mobile_number">Mobile Number <span class="txt-info">*</span></label>
                                     <input type="text" class="form-control" value="{{ $member->mobile_number }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control" id="email" value="{{ $member->email }}" name="email" placeholder="Email" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="occupation_type">Occupation Type</label>
                                     <select class="form-control" id="occupation_type" name="occupation_type" require>
@@ -326,7 +333,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     {{--<i class="fa fa-question-circle" aria-hidden="true"></i>--}}
                                     <div class="form_part_heading" for="" style="position:  relative;border-bottom: 1px dashed #ccc;height: 25px">
@@ -358,47 +365,47 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="present_address">Present Address <span class="txt-info">*</span></label>
                                     <input type="text" class="form-control" value="{{ $member->present_address }}" id="present_address" name="present_address" placeholder="Present Address" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="permanent_address">Permanent Address</label>
                                     <input type="text" class="form-control" value="{{ $member->permanent_address }}"  id="permanent_address" name="permanent_address" placeholder="Permanent Address" require/>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="company_name">Company Name</label>
                                 <input type="text" class="form-control" id="company_name" value="{{ $member->company_name }}" name="company_name" placeholder="Company Name"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="designation">Designation</label>
                                 <input type="text" class="form-control" id="designation" value="{{ $member->designation }}"  name="designation" placeholder="Designation"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="office_address">Office Address</label>
                                 <input type="text" class="form-control" id="office_address" value="{{ $member->office_address }}" name="office_address" placeholder="Office Address"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="office_phone">Office Phone</label>
                                 <input type="text" class="form-control" id="office_phone" value="{{ $member->office_phone }}" name="office_phone" placeholder="Office Phone"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="office_mobile">Office Mobile</label>
                                 <input type="text" class="form-control" id="office_mobile" value="{{ $member->office_mobile }}" name="office_mobile" placeholder="Office Mobile"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="office_email">Office Email</label>
                                 <input type="text" class="form-control" id="office_email" value="{{ $member->office_email }}" name="office_email" placeholder="Email"/>
                             </div>
                         </div>
                         <div class="row mt-1">
-                            <div class="col-sm-6">
+                            <div class="col-md-6 col-lg-6 col-sm-12">
                                 <label for="all_correspondence">All Correspondence: </label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input" id="present_addr" name="all_correspondence" {{ $member->all_correspondence==1?"checked":"" }} type="checkbox" value="1">
@@ -413,7 +420,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
                                 <label for="should_be_sent_to" style="align-items: center">Should be sent to: </label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input" id="should_be_sent_to" {{ $member->should_be_sent_to==1?"checked":"" }} name="should_be_sent_to" type="checkbox" value="1">
@@ -424,7 +431,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="">Have you ever been declined membership of this club?</label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input ever_declined1" id="ever_declined" {{ $member->ever_declined==1?"checked":"" }} name="ever_declined" type="checkbox" value="1">
@@ -439,14 +446,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="details_of_decline">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_decline" value="{{$member->details_of_decline}}" name="details_of_decline" placeholder="Details"/>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="">Have your membership application ever been rejected by other club/inst.?</label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input application_rejected1" id="application_rejected1" {{ $member->application_rejected==1?"checked":"" }} name="application_rejected" type="checkbox" value="1">
@@ -461,14 +468,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="details_of_reject">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_reject" name="details_of_reject" value="{{$member->details_of_reject}}"  placeholder="Details"/>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="">Ever punished for criminal ofence?</label>
                                 <div class="icheck-primary d-inline">
                                     <input class="form-check-input criminal_ofence1" id="criminal_ofence1" {{ $member->criminal_ofence==1?"checked":"" }} name="criminal_ofence" type="checkbox" value="1">
@@ -483,13 +490,13 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="details_of_criminal_ofence">If yes, furnish details</label>
                                 <input type="text" class="form-control" id="details_of_criminal_ofence" value="{{$member->details_of_criminal_ofence}}" name="details_of_criminal_ofence" placeholder="Details"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-4 col-lg-4">
                                 <label for="car_owned">Car owned?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
@@ -506,11 +513,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-4 col-lg-4">
                                 <label for="car_reg_no">Car registration number</label>
                                 <input type="text" class="form-control" id="car_reg_no" name="car_reg_no" value="{{$member->car_reg_no}}" placeholder="Reg. No"/>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-4 col-lg-4">
                                 <label for="car_owned">Car ownership type?</label>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
@@ -598,14 +605,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form_part_heading" style="position:relative;border-bottom: 1px dashed #ccc;height: 25px">
-                            <span>Dependants List <i class="fa fa-question-circle" aria-hidden="true"></i></span>
-                            <a class="btn btn-danger btn-xs add_more_dep_info" style="right: 0;position: absolute">Add More</a>
-                        </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form_part_heading" for="">Dependant Details</div>
+                                <a class="btn btn-danger btn-xs add_more_dep_info" style="right: 0;position: absolute">Add More</a>
                                 <div class="form-group">
-                                    <table id="" class="table  table-borderless">
+                                    <table id="" class="table  table-borderless table-responsive-sm">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -694,7 +699,7 @@
                     <div class="" style="position: relative;width:100%;height: 50px;">
                         <button type="button" class="btn btn-info hidden btn-xs" id="prev" style="position: absolute; left: 0;"> Previous</button>
                         <button type="button" class="btn btn-success btn-xs" id="next" style="position: absolute; right: 0;">Next </button>
-                        <button type="button" class="btn btn-success hidden btn-xs" id="update" style="position: absolute; right: 50%;"><i class="nav-icon fas fa-save"></i> Update</button>
+                        <button type="button" class="btn btn-success hidden btn-xs" id="update" style="position: absolute; right: 50%;"><span id="update_span"><i class="nav-icon fas fa-save"></i> Update</span></button>
                     </div>
                 </form>
             </div>
