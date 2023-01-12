@@ -51,7 +51,7 @@
                       <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                           <option value="" selected="selected">---Select Role---</option>
                           <option value="1" {{old ('role_id') == '1' ? 'selected' : ''}}>Super Admin</option>
-                          <option value="2" {{old ('role_id') == '2' ? 'selected' : ''}}>Admin</option>
+                          <option value="3" {{old ('role_id') == '3' ? 'selected' : ''}}>Admin</option>
                           <option value="4" {{old ('role_id') == '4' ? 'selected' : ''}}>Accountant</option>
                       </select>
                   </div>

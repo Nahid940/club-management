@@ -188,19 +188,19 @@ class MemberController extends Controller
     {
         if($request->type=='nid')
         {
-            if(File::exists("storage/member_nid/".$request->nid))
+            if(File::exists("public/storage/member_nid/".$request->nid))
             {
-                return response()->file("storage/member_nid/".$request->nid);
+                return response()->file("public/storage/member_nid/".$request->nid);
             }
         }elseif ($request->type=='hsc')
         {
-            if(File::exists("storage/member_hsc/".$request->nid)) {
-                return response()->file("storage/member_hsc/" . $request->nid);
+            if(File::exists("public/storage/member_hsc/".$request->nid)) {
+                return response()->file("public/storage/member_hsc/" . $request->nid);
             }
         }elseif ($request->type=='tin')
         {
-            if(File::exists("storage/member_tin/".$request->nid)) {
-                return response()->file("storage/member_tin/" . $request->nid);
+            if(File::exists("public/storage/member_tin/".$request->nid)) {
+                return response()->file("public/storage/member_tin/" . $request->nid);
             }
         }
     }

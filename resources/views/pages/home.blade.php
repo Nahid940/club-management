@@ -297,7 +297,7 @@
                                     <div class="iLmjWS">Post Notice</div>
                                 </div>
                                 <div class="ilqBSQ">
-                                    <a href="{{route('notice-add')}}" class="esp_icons" style="color: #c31015"><i class="fa fa-tools" aria-hidden="true"></i></a>
+                                    <a href="{{route('password-update')}}" class="esp_icons" style="color: #c31015"><i class="fa fa-tools" aria-hidden="true"></i></a>
                                     <div class="iLmjWS">Password Update</div>
                                 </div>
                                 <div class="ilqBSQ">

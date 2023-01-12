@@ -36,7 +36,7 @@
                 <a data-toggle="modal" data-target="#modal-default" class="badge badge-danger no-print" style="cursor: pointer"><i class="fa fa-id-card-alt"></i> Add Classification</a>
             @endrole
             <div class="text-center">
-                <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
+                <img style="width: 140px" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="">
             </div>
             <h3 class="profile-username text-center">{{$member->first_name}}</h3>
         </div>

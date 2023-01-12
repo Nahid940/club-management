@@ -32,7 +32,7 @@
                         <a title="Print" class="no-print badge badge-primary" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style=""></i>Print</a>
                     @endrole
                     <div class="text-center">
-                        <img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="">
+                        <img style="width: 140px" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="">
                     </div>
                     <h3 class="profile-username text-center">{{$member->first_name}}</h3>
                 </div>

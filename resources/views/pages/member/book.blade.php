@@ -54,7 +54,7 @@
                         @php $i=1; @endphp
                             @foreach ($members as $member)
                                 <tr>
-                                    <td rowspan="7" class="bordernone"><img style="width: 140px" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt=""></td>
+                                    <td rowspan="7" class="bordernone"><img style="width: 140px" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt=""></td>
                                     <td class="bordernone"><div align="left" class="text-bold">Membership ID</div></td>
                                     <td class="bordernone">:</td>
                                     <td class="bordernone"><div align="left" class="text-bold">P645645</div></td>
