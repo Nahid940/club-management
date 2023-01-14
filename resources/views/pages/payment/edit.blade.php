@@ -85,8 +85,50 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="month">Month <span class="text-danger">*</span></label>
+                                    <select name="month" id="month" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        <option value="1" {{$payment->payment_month==1?"selected":""}}>January</option>
+                                        <option value="2" {{$payment->payment_month==2?"selected":""}} >February</option>
+                                        <option value="3" {{$payment->payment_month==3?"selected":""}} >March</option>
+                                        <option value="4" {{$payment->payment_month==4?"selected":""}} >April</option>
+                                        <option value="5" {{$payment->payment_month==5?"selected":""}} >May</option>
+                                        <option value="6" {{$payment->payment_month==6?"selected":""}} >June</option>
+                                        <option value="7" {{$payment->payment_month==7?"selected":""}} >July</option>
+                                        <option value="8" {{$payment->payment_month==8?"selected":""}} >August</option>
+                                        <option value="9" {{$payment->payment_month==9?"selected":""}} >September</option>
+                                        <option value="10" {{$payment->payment_month==10?"selected":""}}>October</option>
+                                        <option value="11" {{$payment->payment_month==11?"selected":""}}>November</option>
+                                        <option value="12" {{$payment->payment_month==12?"selected":""}}>December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="year">Year <span class="text-danger">*</span></label>
+                                    <select name="year" id="year" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        @for($i=2021;$i<=2025;$i++)
+                                            <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="amount" value="{{$payment->amount}}" id="amount" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group clearfix">
+                                    <label for="" class="mem_type">Payment Type: <span class="text-danger">*</span></label>
+                                    <select name="payment_type" id="" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($payment_types as $payment_type)
+                                            <option value="{{$payment_type->id}}" {{$payment->payment_type==$payment_type->id?"selected":""}}>{{$payment_type->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -212,6 +212,7 @@ class MemberRepository implements MemberInterface
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
             "last_name"                 =>   $data['name'],
+            "member_code"               =>   $data['member_code'],
             "member_photo"              =>   $data['member_photo_file'],
             "member_type"               =>   $data['member_type'],
             "blood_group"               =>   $data['blood_group'],
@@ -380,6 +381,7 @@ class MemberRepository implements MemberInterface
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             "first_name"                =>   $data['name'],
+            "member_code"               =>   $data['member_code'],
             "last_name"                 =>   $data['name'],
             "member_photo"              =>   $data['member_photo_file'],
             "member_type"               =>   $data['member_type'],
@@ -499,6 +501,7 @@ class MemberRepository implements MemberInterface
         $validated = $request->validated();
         $data['registration_date']      =$validated['registration_date'];
         $data['name']                   =$validated['name'];
+        $data['member_code']            =$validated['member_code'];
         $data['member_type']            =$validated['member_type'];
         $data['blood_group']            =$request->blood_group;
         $data['college_roll']           =$request->college_roll;

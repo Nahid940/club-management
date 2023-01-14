@@ -63,6 +63,10 @@
                     <td>Name</td>
                     <td>{{$member->first_name}} </td>
                 </tr>
+                <tr>
+                    <td>Code</td>
+                    <td><b>{{$member->member_code}}</b> </td>
+                </tr>
                 {{--<tr>--}}
                     {{--<td>Last Name</td>--}}
                     {{--<td>{{$member->first_name}} </td>--}}

@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>Transaction Email</title>
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -280,7 +280,7 @@
     </style>
 </head>
 <body>
-<span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+<span class="preheader">Payment Confirmation!!</span>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
     <tr>
         <td>&nbsp;</td>
@@ -295,8 +295,17 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hello {{$payment->first_name}}</p>
-                                        <p>Congratulations! Your payment has been approved.</p>
+                                        @if(isset($email_config->email_addressing) && !empty($email_config->email_addressing))
+                                            <p>{{$email_config->email_addressing}} {{$payment->member->first_name}}</p>
+                                        @else
+                                            <p>{{$email_config->email_addressing}}  {{$payment->member->first_name}}</p>
+                                        @endif
+                                        @if(isset($email_config->email_greeting) && !empty($email_config->email_greeting))
+                                            <p>{{$email_config->email_greeting}} Your payment has been approved.</p>
+                                        @else
+                                            <p>Congratulations! Your payment has been approved.</p>
+                                        @endif
+
                                         <p>Thank you for your payment.</p>
                                         <p style="color:#c1344d;font-weight: bold;">Please check the details bellow</p>
                                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
@@ -309,11 +318,6 @@
                                                             <td> Name </td>
                                                             <td> : </td>
                                                             <td> {{$payment->member->first_name}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td> Email </td>
-                                                            <td> : </td>
-                                                            <td> {{$payment->member->email}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td> Payment Amount </td>
@@ -353,9 +357,14 @@
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                <p>House #54//A, Road # 16 Block # A, Banani, Dhaka- 1213<br>
-                                Tel: +8802-55035842, +8802-55035843<br>
-                                Email: notredamiansclub@gmail.com, idclubnitredamians@gmail.com</p>
+                                @if(isset($email_config->email_footer) && !empty($email_config->email_footer))
+                                    {!! $email_config->email_footer !!}
+                                @else
+                                    <p>House #54/A, Road # 16 Block # A, Banani, Dhaka- 1213<br>
+                                        Tel: +8802-55035842, +8802-55035843<br>
+                                        Email: notredamiansclub@gmail.com, idclubnitredamians@gmail.com</p>
+                                @endif
+
                             </td>
                         </tr>
                     </table>

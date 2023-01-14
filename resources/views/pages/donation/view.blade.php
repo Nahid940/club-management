@@ -38,12 +38,11 @@
                                         <small class="float-right">Date: {{date('d-m-Y',strtotime($payment->payment_date))}}</small>
                                     </h4>
                                 </div>
-
                             </div>
 
                             <div class="row invoice-info">
                                 <div class="col-sm-4 invoice-col">
-                                    Member Details
+                                    Donor Details
                                     <address>
                                         <strong>Name: {{$payment->donor->name}}</strong><br>
                                         <br>
@@ -57,7 +56,7 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Donation No.:</b> 4F3S8J<br>
+                                    <b>Payment No.:</b> #{{$payment->id}}<br>
                                     <b>Donation Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
@@ -68,6 +67,10 @@
                                         @endif
                                     </b>
                                     </br>
+                                    <b>Month: {{date('F',strtotime($payment->payment_month))}}</b>
+                                    <br>
+                                    <b>Year: {{date('Y',strtotime($payment->payment_year))}}</b>
+                                    <br>
                                     <b>Donation Status:
                                         @if($payment->status==1)
                                             <i class="fa fa-check text-success" aria-hidden="true"></i> Approved

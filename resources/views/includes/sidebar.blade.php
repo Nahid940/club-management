@@ -194,6 +194,12 @@
                     <p>List</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('payment-types')}}" class="nav-link">
+                    <i class="fa  fa-list-alt nav-icon" style="font-size: 10px;color: #94ff08"></i>
+                    <p>Payment Types</p>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -207,7 +213,7 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('donation-add')}}" class="nav-link">
-                    <i class="fa  fa-plus nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <i class="fa  fa-plus nav-icon" style="font-size: 10px;color: #fff60e"></i>
                     <p>Add New Donation</p>
                   </a>
                 </li>
@@ -230,7 +236,7 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('payments-report-index')}}" class="nav-link">
-                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ff0080"></i>
                     <p>Payment Report</p>
                   </a>
                 </li>

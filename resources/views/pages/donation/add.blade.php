@@ -87,10 +87,42 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="month">Month <span class="text-danger">*</span></label>
+                                    <select name="month" id="month" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="year">Year <span class="text-danger">*</span></label>
+                                    <select name="year" id="year" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        @for($i=2021;$i<=2025;$i++)
+                                            <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="amount" id="amount" required>
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>

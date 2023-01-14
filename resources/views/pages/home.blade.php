@@ -301,7 +301,7 @@
                                     <div class="iLmjWS">Password Update</div>
                                 </div>
                                 <div class="ilqBSQ">
-                                    <a href="{{route('member-index')}}" class="esp_icons" style="color: #c3365f"><i class="fa fa-mail-bulk" aria-hidden="true"></i></a>
+                                    <a href="{{route('email-config')}}" class="esp_icons" style="color: #c3365f"><i class="fa fa-mail-bulk" aria-hidden="true"></i></a>
                                     <div class="iLmjWS">Email Config</div>
                                 </div>
                                 <div class="ilqBSQ">

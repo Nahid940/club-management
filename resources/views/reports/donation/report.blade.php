@@ -14,6 +14,7 @@
 <a title="Print" class="no-print badge badge-primary m-2" style="cursor: pointer" onclick="window.print()"><i class="fas fa-print mr-1" aria-hidden="true" style=""></i>Print</a>
 <div class="mb-2">
     <table id="heading">
+        @include('reports.report_header')
         <thead>
             <th colspan="2" style="border: none"><div class="text-lg" align="center">Donation Report</div></th>
         </thead>

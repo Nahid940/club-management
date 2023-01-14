@@ -17,6 +17,8 @@ use App\Http\Requests\MemberAdmissionRequest;
 use App\Http\Requests\MemberDeleteRequest;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Facades\Excel;
+use Shuchkin\SimpleXLSX;
 
 class MemberController extends Controller
 {
@@ -203,5 +205,22 @@ class MemberController extends Controller
                 return response()->file("public/storage/member_tin/" . $request->nid);
             }
         }
+    }
+
+
+    public function import()
+    {
+        $xlsx = SimpleXLSX::parse('storage/members.xlsx');
+
+        $header_values = $rows = [];
+        foreach ( $xlsx->rows() as $k => $r ) {
+            if ( $k === 0 ) {
+                $header_values = $r;
+                continue;
+            }
+            $rows[] = array_combine( $header_values, $r );
+        }
+
+        echo "<pre>";print_r( $rows );echo "</pre>";
     }
 }

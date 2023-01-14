@@ -21,4 +21,14 @@ class Payment extends Model
     {
         return $this->belongsTo(Donor::class,'member_id','id');
     }
+
+    public function paymentType()
+    {
+        return $this->hasOne(PaymentType::class,'id','payment_type');
+    }
+
+    public function scopeInfo($query)
+    {
+        return $query->with('member:id,first_name,member_code,email,member_type,mobile_number', 'paymentType');
+    }
 }

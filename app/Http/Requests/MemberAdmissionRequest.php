@@ -26,6 +26,7 @@ class MemberAdmissionRequest extends FormRequest
         return [
             'registration_date'=>'required',
             'name'=>'required',
+            'member_code'=>'nullable|unique:members',
             'member_type'=>'required',
             'nid'=>'required|unique:members',
             'email'=>'required',
@@ -33,6 +34,7 @@ class MemberAdmissionRequest extends FormRequest
             'date_of_birth'=>'required',
             'mobile_number'=>'required',
             'tc_acceptance'=>'required',
+            'passport'=>'max:28',
             'member_photo' => 'required|image|mimes:jpg,jpeg,png,svg|max:90',
             'nid_doc' => 'mimes:pdf|max:120',
             'hsc_doc' => 'mimes:pdf|max:120',

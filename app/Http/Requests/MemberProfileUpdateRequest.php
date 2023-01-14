@@ -26,11 +26,13 @@ class MemberProfileUpdateRequest extends FormRequest
         return [
             'registration_date'=>'required',
             'name'=>'required',
+            'member_code'=>'nullable|unique:members|max:20',
             'member_type'=>'required',
-            'nid'=>'required',
+            'nid'=>'required|max:25',
             'present_address'=>'required',
-            'date_of_birth'=>'required',
-            'mobile_number'=>'required',
+            'date_of_birth'=>'required|date',
+            'mobile_number'=>'required|max:16',
+            'passport'=>'max:28',
             'member_photo' => 'image|mimes:jpg,jpeg,png,svg|max:90',
         ];
     }

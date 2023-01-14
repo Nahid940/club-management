@@ -188,7 +188,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 col-lg-12 col-sm-12">
+                            <div class="col-md-8">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
                                     <div class="icheck-primary d-inline">
@@ -217,6 +217,16 @@
                                     </div>
                                 </div>
                             </div>
+                            @role('member')
+                            <input type="hidden" name="member_code" value=""/>
+                            @else
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="member_code" class="lbl_reg_date">Member Code <span class="txt-info">*</span></label>
+                                        <input type="text" placeholder="Member Code" id="member_code" value="{{ $member->member_code }}"  name="member_code" class="form-control"/>
+                                    </div>
+                                </div>
+                            @endrole
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <!-- text input -->
                                 <div class="form-group">
@@ -645,6 +655,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i>  <span>Attach Your Updated NID (PDF/Image)</span>
                                     <input type="file" name="nid_doc" class="" id="nid_doc"/>
+                                    <span id="nid_file_name_tag" class="text-success"></span>
                                 </label>
                             </div>
                         </div>
@@ -653,6 +664,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated HSC Certificate/Testimonial (PDF/Image)</span>
                                     <input type="file" name="hsc_doc" class="" id="hsc_doc"/>
+                                    <span id="hsc_file_name_tag" class="text-success"></span>
                                 </label>
                             </div>
                         </div>
@@ -661,6 +673,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated eTIN/TIN Certificate (PDF/Image)</span>
                                     <input type="file" name="tin_doc" class="" id="tin_doc"/>
+                                    <span id="tin_file_name_tag" class="text-success"></span>
                                 </label>
                             </div>
                         </div>

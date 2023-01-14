@@ -18,6 +18,7 @@ use App\Http\Controllers\DonorController;
 use App\Http\Controllers\MemberClassificationController;
 use App\Http\Controllers\report\PaymentReportController;
 use App\Http\Controllers\report\DonationReportController;
+use App\Http\Controllers\EmailConfigController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -105,6 +106,11 @@ Route::controller(PaymentController::class)->group(function(){
     Route::post('payment/add',[PaymentController::class,'save'])->name('payment-add')->middleware('auth');
     Route::post('process/payment',[PaymentController::class,'process'])->name('process-payment')->middleware('auth','role:super-admin|member|accountant','permission:approve payment|decline payment');
     Route::post('payment/delete',[PaymentController::class,'delete'])->name('payment-delete')->middleware('auth','role:super-admin|member|accountant','permission:delete payment');;
+    Route::get('payment/types',[PaymentController::class,'paymentTypes'])->name('payment-types')->middleware('auth');
+    Route::delete('payment/type/delete',[PaymentController::class,'typeDelete'])->name('payment-type-delete')->middleware('auth');
+    Route::post('payment/type/status',[PaymentController::class,'typeStatus'])->name('payment-type-status')->middleware('auth');
+    Route::get('payment/type/add',[PaymentController::class,'typeAdd'])->name('payment-type-add')->middleware('auth');
+    Route::post('payment/type/add',[PaymentController::class,'typeSave'])->name('payment-type-save')->middleware('auth');
 
 });
 
@@ -179,5 +185,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('donation/report', [DonationReportController::class, 'index'])->name('donation-report-index');
     Route::post('donation/report', [DonationReportController::class, 'report'])->name('donation-report');
 });
+
+
+Route::get('import-members',[MemberController::class, 'import'])->name('import-members');
+Route::get('email-config',[EmailConfigController::class, 'config'])->name('email-config')->middleware('auth');
+Route::post('email-config',[EmailConfigController::class, 'save'])->name('email-config')->middleware('auth');
 
 require __DIR__.'/auth.php';

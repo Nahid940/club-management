@@ -56,8 +56,8 @@ class DonationController extends Controller
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
-            "payment_month"=>date('m',strtotime($request->date)),
-            "payment_year"=>date('Y',strtotime($request->date)),
+            "payment_month"=>$request->month,
+            "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
             "created_by"=>Auth::user()->id
         ]);

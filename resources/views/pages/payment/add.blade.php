@@ -46,6 +46,11 @@
                     <a href="{{route('home')}}" class="btn btn-danger btn-xs float-right"> <i class="fa fa-times"></i></a>
                     <a href="{{route('payment-index')}}" class="btn btn-success btn-xs float-right mr-1"> <i class="fa fa-list"></i> Payment List</a>
                 </div>
+                @if(session('message'))
+                    <div class="alert alert-success mt-1 mb-1">
+                        {{session('message')}}
+                    </div>
+                @endif
                 <form action="{{route('payment-add')}}" method="POST" id="form_submit">
                     {{csrf_field()}}
                     <div class="card-body">
@@ -59,14 +64,10 @@
                                     </ul>
                                 </div>
                             @endif
-                            @if(session('message'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <h5><i class="icon fas fa-check"></i> Success!</h5>
-                                    {{session('message')}}
-                                </div>
-                            @endif
                             <div class="col-md-12">
+                                @if(session('id'))
+                                    <a href="{{route('payment-view',session('id'))}}" class="btn btn-xs btn-warning float-right mb-1">View Payment Details</a>
+                                @endif
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
                                     <input autocomplete="off" type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search" required>
@@ -84,8 +85,50 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="month">Month <span class="text-danger">*</span></label>
+                                    <select name="month" id="month" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="year">Year <span class="text-danger">*</span></label>
+                                    <select name="year" id="year" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        @for($i=2021;$i<=2025;$i++)
+                                            <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="amount" id="amount" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group clearfix">
+                                    <label for="" class="mem_type">Payment Type: <span class="text-danger">*</span></label>
+                                    <select name="payment_type" id="" class="form-control" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($payment_types as $payment_type)
+                                            <option value="{{$payment_type->id}}">{{$payment_type->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -25,10 +25,10 @@ class DonationRequest extends FormRequest
     {
         return [
             'member_id'=>'required|numeric',
-            'date'=>'required',
-            'amount'=>'required',
+            'date'=>'required|date',
+            'amount'=>'required|max:10',
             'payment_method'=>'required',
-            'payment_ref_no'=>'required',
+            'payment_ref_no'=>'required|max:25',
         ];
     }
 

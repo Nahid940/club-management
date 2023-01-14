@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Payment No.:</b> 4F3S8J<br>
+                                    <b>Payment No.:</b> #{{$payment->id}}<br>
                                     <b>Payment Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
@@ -80,6 +80,12 @@
                                         @endif
                                     </b>
                                     </br>
+                                    <b>Month: {{date('F',strtotime($payment->payment_month))}}</b>
+                                    <br>
+                                    <b>Year: {{date('Y',strtotime($payment->payment_year))}}</b>
+                                    <br>
+                                    <b>Type: {{isset($payment->paymentType->name)?$payment->paymentType->name:""}}</b>
+                                    <br>
                                     <b>Payment Status:
                                         @if($payment->status==1)
                                             <i class="fa fa-check text-success" aria-hidden="true"></i> Approved

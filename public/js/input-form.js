@@ -32,19 +32,27 @@ $('.criminal_ofence1').on('click',function(){
 })
 $('.criminal_ofence2').on('click',function(){
     $('.criminal_ofence1').prop('checked',false);
-})
+});
 
 $('.car_owned1').on('click',function(){
     $('.car_owned2').prop('checked',false);
     $('#car_reg_no').removeAttr('readonly')
-})
+
+    $('#car_ownership_type1').attr('disabled',false);
+    $('#car_ownership_type2').attr('disabled',false);
+    $('#car_ownership_type3').attr('disabled',false);
+});
 $('.car_owned2').on('click',function(){
     $('.car_owned1').prop('checked',false);
 
-    $('#car_reg_no').attr('readonly','readonly')
+    $('#car_reg_no').attr('readonly','readonly');
     $('#car_ownership_type1').prop('checked',false);
     $('#car_ownership_type2').prop('checked',false);
     $('#car_ownership_type3').prop('checked',false);
+
+    $('#car_ownership_type1').attr('disabled',true);
+    $('#car_ownership_type2').attr('disabled',true);
+    $('#car_ownership_type3').attr('disabled',true);
 })
 
 
@@ -534,3 +542,22 @@ $(document).on('click','.current_dep_del',function () {
         }
     });
 });
+
+
+$('#nid_doc').change(function(e){
+    var file = e.target.files[0].name;
+    $('#nid_file_name_tag').text(" | "+file+" Selected");
+});
+
+$('#hsc_doc').change(function(e){
+    var file = e.target.files[0].name;
+    $('#hsc_file_name_tag').text(" | "+file+" Selected");
+});
+
+$('#tin_doc').change(function(e){
+    var file = e.target.files[0].name;
+    $('#tin_file_name_tag').text(" | "+file+" Selected" );
+});
+
+
+
