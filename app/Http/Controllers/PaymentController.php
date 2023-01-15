@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PaymentRequest;
 use App\Mail\MemberPaymentMail;
+use App\Models\DonationPurpose;
 use App\Models\EmailConfig;
 use App\Models\Payment;
 use App\Models\PaymentType;
@@ -48,8 +49,9 @@ class PaymentController extends Controller
 
     public function add()
     {   $title="";
-        $payment_types=PaymentType::select('id','name')->get();
-        return view('pages.payment.add')->with(['title'=>$title,"payment_types"=>$payment_types]);
+        $payment_types=PaymentType::select('id','name')->where('status',1)->get();
+        $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
+        return view('pages.payment.add')->with(['title'=>$title,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
     }
 
     public function save(PaymentRequest $request)
@@ -64,6 +66,7 @@ class PaymentController extends Controller
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "purpose_id"=>$request->purpose_id,
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
@@ -165,6 +168,9 @@ class PaymentController extends Controller
 
     public function typeSave(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|max:60',
+        ]);
         PaymentType::create($request->all());
         return redirect()->back()->with('message','Type added successfully!!');
     }

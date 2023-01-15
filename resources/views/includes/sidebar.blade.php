@@ -227,6 +227,29 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cogs" style="color: #7cbdff"></i>
+                <p>
+                  Donation Purpose
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('purpose-add')}}" class="nav-link">
+                    <i class="fa  fa-plus-circle nav-icon" style="font-size: 10px;color: #fff60e"></i>
+                    <p>Add New Donation Purpose</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('purpose-index')}}" class="nav-link">
+                    <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #ff7000"></i>
+                    <p>Purpose List</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fa fa-chart-pie" style="color: #7cbdff"></i>
                 <p>
                   Reports

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\report;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\report\PaymentReportInterface;
+use App\Models\DonationPurpose;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,8 @@ class PaymentReportController extends Controller
 
     public function index()
     {
-        return view('reports.payment.payment-report-index',['title'=>""]);
+        $purposes=DonationPurpose::select('id','purpose')->where('status',1)->get();
+        return view('reports.payment.payment-report-index',['title'=>"","purposes"=>$purposes]);
     }
 
     public function report(Request $request)
@@ -28,8 +30,13 @@ class PaymentReportController extends Controller
         $payments_data=$this->reportRepo->report($request);
         $date_from=$request->date_from;
         $date_to=$request->date_to;
+        $purpose=null;
+        if(!empty($request->purpose))
+        {
+            $purpose=DonationPurpose::select('id','purpose')->where('id',$request->purpose)->first();
+        }
         return response()->json([
-            'html' => view('reports.payment.payment-report',["payments"=>$payments_data,'date_from'=>$date_from,'date_to'=>$date_to])->render()
+            'html' => view('reports.payment.payment-report',["payments"=>$payments_data,'date_from'=>$date_from,'date_to'=>$date_to,'purpose'=>$purpose])->render()
         ]);
     }
 }

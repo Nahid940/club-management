@@ -75,6 +75,15 @@
                                     <option value="3">Cheque</option>
                                 </select>
                             </div>
+                            <div class="col-md-2 col-sm-12">
+                                <label for="payment_method">Purpose</label>
+                                <select class="form-control" id="purpose" name="purpose">
+                                    <option value="">--Select--</option>
+                                    @foreach($purposes as $purpose)
+                                        <option value="{{$purpose->id}}">{{$purpose->purpose}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="col-2" style="margin-top: 19px;font-size: inherit">
                                 <button type="button" class="btn btn-primary btn-xs" id="show-payment-report">View Report</button>
                             </div>

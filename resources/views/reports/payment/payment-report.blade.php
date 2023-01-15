@@ -26,6 +26,11 @@
             @endif
             <td style="border: none">Print Date : <b>{{date('d-m-Y')}}</b></td>
         </tr>
+        @if(isset($purpose))
+            <tr>
+                <td style="border: none">Purpose : {{$purpose->purpose}}</td>
+            </tr>
+        @endif
     </table>
 </div>
 <div class="report_body">

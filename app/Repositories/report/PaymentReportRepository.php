@@ -35,8 +35,15 @@ class PaymentReportRepository implements PaymentReportInterface
             $where[]=['payment_method','=',$request->payment_method];
         }
 
+        if(!empty($request->purpose))
+        {
+            $where[]=['purpose_id','=',$request->purpose];
+        }else
+        {
+            $where[]=['payment_type','=',1];
+        }
+
         $payments=Payment::where($where)
-            ->where('payment_type',1)
             ->where('status',1)
             ->select('id','member_id','payment_date','amount')
             ->get();

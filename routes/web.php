@@ -19,6 +19,7 @@ use App\Http\Controllers\MemberClassificationController;
 use App\Http\Controllers\report\PaymentReportController;
 use App\Http\Controllers\report\DonationReportController;
 use App\Http\Controllers\EmailConfigController;
+use App\Http\Controllers\DonationPurposeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -143,6 +144,16 @@ Route::group(['middleware' => ['auth']],function (){
     Route::delete('classification-delete',[MemberClassificationController::class,'delete'])->name('classification-delete');
 });
 
+Route::group(['middleware' => ['auth']],function (){
+    Route::get('purpose/index',[DonationPurposeController::class,'index'])->name('purpose-index');
+    Route::get('purpose/add',[DonationPurposeController::class,'add'])->name('purpose-add');
+    Route::post('purpose/add',[DonationPurposeController::class,'save'])->name('purpose-add');
+    Route::delete('purpose/delete',[DonationPurposeController::class,'delete'])->name('purpose-delete');
+    Route::get('purpose-update/{id}',[DonationPurposeController::class,'edit'])->name('purpose-edit');
+    Route::post('purpose/update',[DonationPurposeController::class,'update'])->name('purpose-update');
+});
+
+
 Route::group(['middleware' => ['auth','role:super-admin|admin']],function (){
     Route::get('notice/list',[NoticeController::class,'index'])->name('notice-index');
     Route::get('notice/add',[NoticeController::class,'add'])->name('notice-add');
@@ -152,6 +163,8 @@ Route::group(['middleware' => ['auth','role:super-admin|admin']],function (){
     Route::post('notice/update',[NoticeController::class,'update'])->name('notice-update');
     Route::post('notice/postpone',[NoticeController::class,'postpone'])->name('notice-postpone');
 });
+
+
 Route::get('notice/view/{id}',[NoticeController::class,'view'])->middleware('auth')->name('notice-view');
 
 Route::get('/dashboard', function () {

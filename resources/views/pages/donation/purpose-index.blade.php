@@ -45,36 +45,35 @@
                         <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                     @endif
                     <table id="example2" class="table table-bordered table-hover">
-                        <h5><i class="fa fa-dollar-sign text-cyan" aria-hidden="true"></i> Payment Types</h5>
-                        <a href="{{route('payment-type-add')}}" class="btn btn-xs btn-success float-right mb-1"><i class="fa fa-plus"></i> Add New</a>
-                        <a href="{{route('payment-types')}}" class="btn btn-xs btn-warning float-right mb-1 mr-1"><i class="fa fa-recycle"></i> Refresh </a>
+                        <h5><i class="fa fa-cogs text-cyan" aria-hidden="true"></i> Donation Purposes</h5>
+                        <a href="{{route('purpose-add')}}" class="btn btn-xs btn-success float-right mb-1"><i class="fa fa-plus"></i> Add New</a>
+                        <a href="{{route('purpose-index')}}" class="btn btn-xs btn-warning float-right mb-1 mr-1"><i class="fa fa-recycle"></i> Refresh </a>
                         <thead>
-                        {{-- <tr>
-                            <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>
-                        </tr> --}}
-                        <tr>
-                            <th>#</th>
-                            <th><div align="left">Name</div></th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th><div align="left">Purpose Title</div></th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @php $i=0; @endphp
-                        @foreach ($types as $type)
-
-                            <tr @if($type->status==0) style="background-color: #ffb1ba"@endif>
+                        @foreach ($purposes as $purpose)
+                            <tr @if($purpose->status==0) style="background-color: #ffb1ba"@endif>
                                 <td>{{++$i}}</td>
-                                <td><div align="left"><b>{{ucfirst($type->name)}}</b></div></td>
+                                <td><div align="left"><b>{{ucfirst($purpose->purpose)}}</b></div></td>
+                                <td>{{date('d-m-Y',strtotime($purpose->created_at))}}</td>
                                 <td>
-                                    @if($type->status==1)
+                                    @if($purpose->status==1)
                                         <i class="fa fa-check text-green" title="Active"></i>
-                                    @elseif($type->status==0)
+                                    @elseif($purpose->status==0)
                                         <i class="fa fa-times text-danger" title="Inactive"></i>
                                     @endif
                                 </td>
                                 <td>
-                                    <a data-id="{{$type->id}}" class="del_btn"><i class="fa fa-trash text-danger" title="Delete"></i></a>
+                                    <a data-id="{{$purpose->id}}" style="cursor: pointer" class="del_btn"><i class="fa fa-trash text-danger" title="Delete"></i></a>
+                                    <a data-id="{{$purpose->id}}" href="{{route('purpose-edit',[$purpose->id])}}" style="cursor: pointer"><i class="fa fa-pen text-success" title="Edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -83,20 +82,15 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-        {{ $types->links() }}
+        {{ $purposes->links() }}
         <!-- /.card -->
         </div>
     </div>
 
-    <form action="{{route('payment-type-delete')}}" method="POST" id="usr_del">
+    <form action="{{route('purpose-delete')}}" method="POST" id="usr_del">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="delete" />
         <input type="hidden" name="id" id="del_user_id"/>
-    </form>
-    <form action="{{route('payment-type-status')}}" method="POST" id="usr_sts">
-        {{ csrf_field() }}
-        <input type="hidden" name="status" id="status">
-        <input type="hidden" name="id" id="sts_user_id"/>
     </form>
 @stop
 @section('script')
@@ -105,7 +99,7 @@
     $('#del_user_id').val(id)
     Swal.fire({
     title: 'Are you sure?',
-    text: "Type will be dumped!!",
+    text: "Purpose will be deleted!!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
