@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PaymentExport;
 use App\Http\Requests\PaymentRequest;
 use App\Mail\MemberPaymentMail;
 use App\Models\DonationPurpose;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
@@ -32,6 +34,15 @@ class PaymentController extends Controller
         {
             $where[] =['phone','=',$request->mobile_number];
         }
+
+        if($request->has('member_code') && !empty($request->member_code))
+        {
+            $where[] =['member_code','=',$request->member_code];
+        }
+        if($request->has('purpose') && !empty($request->purpose))
+        {
+            $where[] =['purpose_id','=',$request->purpose];
+        }
         $payments=Payment::with('member:id,first_name,member_code,email')
             ->orderBy('id','desc')
             ->where('status','!=','-2')
@@ -39,7 +50,8 @@ class PaymentController extends Controller
                 $query->where($where);
             })
             ->paginate(15);
-        return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments]);
+        $purposes=DonationPurpose::select('id','purpose')->where('status',1)->get();
+        return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments,'purposes'=>$purposes]);
     }
     public function view($id){
         $title="";
@@ -103,9 +115,10 @@ class PaymentController extends Controller
     public function edit($id)
     {
         $title="";
+        $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
         $payment_types=PaymentType::select('id','name')->get();
         $payment=Payment::with('member:id,first_name,member_code,email,member_type,mobile_number')->findOrFail($id);
-        return view('pages.payment.edit')->with(['title'=>$title,'payment'=>$payment,"payment_types"=>$payment_types]);
+        return view('pages.payment.edit')->with(['title'=>$title,'payment'=>$payment,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
     }
 
     public function update(PaymentRequest $request)
@@ -118,6 +131,7 @@ class PaymentController extends Controller
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "purpose_id"=>$request->purpose_id,
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "updated_at"=>Carbon::now(),
@@ -173,5 +187,10 @@ class PaymentController extends Controller
         ]);
         PaymentType::create($request->all());
         return redirect()->back()->with('message','Type added successfully!!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PaymentExport(),"payment.xlsx");
     }
 }

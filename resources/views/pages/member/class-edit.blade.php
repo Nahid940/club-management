@@ -70,8 +70,8 @@
                             <input type="hidden" value="{{$class->id}}" name="id">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="date">Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" id="name"  value="{{$class->name}}" required>
+                                    <label for="date">Classification Title <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="name" id="name"  value="{{$class->name}}" placeholder="Classification Title" required>
                                 </div>
                             </div>
                         </div>

@@ -9,5 +9,5 @@ class DonationPurpose extends Model
 {
     use HasFactory;
 
-    protected $fillable=['purpose','created_at','created_by'];
+    protected $fillable=['purpose','donation_for','created_at','created_by'];
 }

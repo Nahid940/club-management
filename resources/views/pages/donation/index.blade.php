@@ -36,14 +36,22 @@
                 <div class="card-body">
                     <form action="">
                         <div class="row search_frm">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Donor Name"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <input type="text"  value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}"   id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control" id="purpose" name="purpose">
+                                    <option value="">--Select Purpose--</option>
+                                    @foreach($purposes as $purpose)
+                                        <option value="{{$purpose->id}}" {{request()->input('purpose')==$purpose->id?"selected":""}}>{{$purpose->purpose}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-2">
                                 <button type="submit" class="btn btn-primary search_btn">Search</button>
@@ -78,7 +86,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @php $i=1; @endphp
+                        @php
+                            $i = $payments->perPage() * ($payments->currentPage() - 1) + 1;
+                        @endphp
                             @foreach($payments as $payment)
                                 <tr>
                                     <td>{{$i++}}</td>

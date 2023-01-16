@@ -37,13 +37,24 @@
                     <form action="">
                         <div class="row search_frm">
                             <div class="col-lg-2 col-sm-12">
-                                <input type="text" value="" class="form-control" id="name" name="name" placeholder="Member Name"/>
+                                <input type="text" value="{{ request()->input('name') }}" class="form-control" id="name" name="name" placeholder="Member Name"/>
                             </div>
                             <div class="col-lg-2 col-sm-12">
-                                <input type="text" value="" class="form-control" id="email" name="email" placeholder="Email"/>
+                                <input type="text" value="{{ request()->input('member_code') }}" class="form-control" id="member_code" name="member_code" placeholder="Member Code"/>
                             </div>
                             <div class="col-lg-2 col-sm-12">
-                                <input type="text" class="form-control" value="" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                                <input type="text" value="{{ request()->input('email') }}" class="form-control" id="email" name="email" placeholder="Email"/>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}"  id="mobile_number" name="mobile_number" placeholder="Mobile Number"/>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
+                                <select class="form-control" id="purpose" name="purpose">
+                                    <option value="">--Select Purpose--</option>
+                                    @foreach($purposes as $purpose)
+                                        <option value="{{$purpose->id}}" {{request()->input('purpose')==$purpose->id?"selected":""}}>{{$purpose->purpose}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-lg-2 col-sm-12">
                                 <button type="submit" class="btn btn-primary search_btn">Search</button>
@@ -70,7 +81,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Member Name</th>
-                                <th>Member Reg. No</th>
+                                <th>Member Code</th>
                                 <th>Payment Date</th>
                                 <th>Payment Method</th>
                                 <th>Amount</th>
@@ -79,7 +90,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @php $i=1; @endphp
+                        @php
+                            $i = $payments->perPage() * ($payments->currentPage() - 1) + 1;
+                        @endphp
                             @foreach($payments as $payment)
                                 <tr>
                                     <td>{{$i++}}</td>

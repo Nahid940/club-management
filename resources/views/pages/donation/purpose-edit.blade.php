@@ -38,6 +38,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Donation For <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('donation_for') is-invalid @enderror" value="{{ $purpose->donation_for}}" id="donation_for" name="donation_for" placeholder="Donation for Person/Organization/Others" required>
+                                </div>
+                            </div>
+                        </div>
                         <!-- /.card-body -->
                         <div class="card-footer float-right">
                             <button type="submit" class="btn btn-success btn-xs"><b>Update</b></button>

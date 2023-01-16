@@ -56,7 +56,7 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Payment No.:</b> #{{$payment->id}}<br>
+                                    <b>Donation No.:</b> #{{$payment->id}}<br>
                                     <b>Donation Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
@@ -78,7 +78,14 @@
                                             <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> Unapproved
                                         @else
                                             <i class="fa fa-times text-danger" aria-hidden="true"></i> Declined
-                                        @endif</b>
+                                        @endif
+                                    </b>
+                                    <br>
+                                    @if(!empty($payment->purpose->purpose))
+                                        <b>Purpose : {{$payment->purpose->purpose}}</b>
+                                        <br>
+                                        <b>Donation for : {{$payment->purpose->donation_for}}</b>
+                                    @endif
                                 </div>
                             </div>
 

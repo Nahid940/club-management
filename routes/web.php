@@ -112,6 +112,7 @@ Route::controller(PaymentController::class)->group(function(){
     Route::post('payment/type/status',[PaymentController::class,'typeStatus'])->name('payment-type-status')->middleware('auth');
     Route::get('payment/type/add',[PaymentController::class,'typeAdd'])->name('payment-type-add')->middleware('auth');
     Route::post('payment/type/add',[PaymentController::class,'typeSave'])->name('payment-type-save')->middleware('auth');
+    Route::get('payment/export',[PaymentController::class,'export'])->name('payment-export')->middleware('auth');
 
 });
 

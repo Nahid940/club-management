@@ -12,7 +12,7 @@ class DonationPurposeController extends Controller
 
     public function index()
     {
-        $purposes=DonationPurpose::select('id','purpose','created_at','status')->where('status',1)->orderBy('id','desc')->paginate(10);
+        $purposes=DonationPurpose::select('id','purpose','donation_for','created_at','status')->where('status',1)->orderBy('id','desc')->paginate(10);
         return view('pages.donation.purpose-index',["title"=>"","purposes"=>$purposes]);
     }
 
@@ -32,18 +32,20 @@ class DonationPurposeController extends Controller
     {
         $request->validate([
             "purpose"=>"required|max:45",
+            "donation_for"=>"required|max:80",
             "id"=>"required"
         ]);
-        $purpose=DonationPurpose::where('id',$request->id)->update(['purpose'=>$request->purpose,'updated_by'=>Auth::user()->id]);
+        $purpose=DonationPurpose::where('id',$request->id)->update(['purpose'=>$request->purpose,'donation_for'=>$request->donation_for,'updated_by'=>Auth::user()->id]);
         return redirect()->back()->with('message','Purpose Updated Successfully!');
     }
 
     public function save(Request $request)
     {
         $request->validate([
-            "purpose"=>"required|max:50"
+            "purpose"=>"required|max:50",
+            "donation_for"=>"required|max:80"
         ]);
-        DonationPurpose::create(['purpose'=>$request->purpose,'created_by'=>Auth::user()->id]);
+        DonationPurpose::create(['purpose'=>$request->purpose,'donation_for'=>$request->donation_for,'created_by'=>Auth::user()->id]);
         return redirect()->back()->with('message','Purpose Added Successfully!');
     }
 

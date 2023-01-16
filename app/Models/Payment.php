@@ -27,8 +27,13 @@ class Payment extends Model
         return $this->hasOne(PaymentType::class,'id','payment_type');
     }
 
+    public function purpose()
+    {
+        return $this->hasOne(DonationPurpose::class,'id','purpose_id');
+    }
+
     public function scopeInfo($query)
     {
-        return $query->with('member:id,first_name,member_code,email,member_type,mobile_number', 'paymentType');
+        return $query->with('member:id,first_name,member_code,email,member_type,mobile_number', 'paymentType','purpose');
     }
 }

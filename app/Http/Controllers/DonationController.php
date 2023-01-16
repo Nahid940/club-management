@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DonationRequest;
+use App\Models\DonationPurpose;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,6 +29,11 @@ class DonationController extends Controller
         {
             $where[] =['phone','=',$request->mobile_number];
         }
+        if($request->has('purpose') && !empty($request->purpose))
+        {
+            $where[] =['purpose_id','=',$request->purpose];
+        }
+        $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
         $payments=Payment::with('donor:id,name,email')
             ->orderBy('id','desc')
             ->where('status','!=','-2')
@@ -36,12 +42,13 @@ class DonationController extends Controller
                 $query->where($where);
             })
             ->paginate(15);
-        return view('pages.donation.index')->with(['title'=>$title,'payments'=>$payments]);
+        return view('pages.donation.index')->with(['title'=>$title,'payments'=>$payments,"purposes"=>$donation_purpose]);
     }
 
     public function add()
     {
-        return view('pages.donation.add',["title"=>""]);
+        $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
+        return view('pages.donation.add',["title"=>"","donation_purposes"=>$donation_purpose]);
     }
 
     public function save(DonationRequest $request)
@@ -56,6 +63,7 @@ class DonationController extends Controller
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "purpose_id"=>$request->purpose_id,
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
@@ -66,7 +74,7 @@ class DonationController extends Controller
 
     public function view($id){
         $title="";
-        $payment=Payment::with('donor:id,name,email,phone')
+        $payment=Payment::info()
             ->where('payment_type',2)
             ->findOrFail($id);
         return view('pages.donation.view',["payment"=>$payment,"title"=>$title]);
@@ -84,8 +92,9 @@ class DonationController extends Controller
     public function edit($id)
     {
         $title="";
+        $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
         $payment=Payment::with('donor:id,name,email,phone')->findOrFail($id);
-        return view('pages.donation.edit')->with(['title'=>$title,'payment'=>$payment]);
+        return view('pages.donation.edit')->with(['title'=>$title,'payment'=>$payment,"donation_purposes"=>$donation_purpose]);
     }
 
     public function update(DonationRequest $request)
@@ -98,6 +107,7 @@ class DonationController extends Controller
             "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "purpose_id"=>$request->purpose_id,
             "payment_month"=>date('m',strtotime($request->date)),
             "payment_year"=>date('Y',strtotime($request->date)),
             "updated_at"=>Carbon::now(),

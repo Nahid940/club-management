@@ -122,7 +122,21 @@
                                     <input type="number" class="form-control" name="amount" id="amount" required>
                                 </div>
                             </div>
-
+                                <span>
+                                <a class="mb-1 text-danger add_purpose ml-1" style="cursor: pointer"><i class="fa fa-hand-point-up"></i> Add Donation Purpose</a>
+                                <a class="mb-1 text-danger close_purpose hidden_area ml-1" style="cursor: pointer"><i class="fa fa-times"></i> Close</a>
+                            </span>
+                            <div class="col-md-12 hidden_area" id="purpose_div">
+                                <div class="form-group clearfix">
+                                    <label for="" class="mem_type">Donation Purpose: </label>
+                                    <select name="purpose_id" id="" class="form-control">
+                                        <option value="">--Select--</option>
+                                        @foreach($donation_purposes as $donation_purpose)
+                                            <option value="{{$donation_purpose->id}}">{{$donation_purpose->purpose}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
@@ -278,6 +292,18 @@
             }
         })
     })
+
+    $('.add_purpose').on('click',function(){
+    $('#purpose_div').removeClass('hidden_area')
+    $('.close_purpose').removeClass('hidden_area')
+    $('.add_purpose').addClass('hidden_area')
+    });
+
+    $('.close_purpose').on('click',function(){
+    $('#purpose_div').addClass('hidden_area')
+    $('.close_purpose').addClass('hidden_area')
+    $('.add_purpose').removeClass('hidden_area')
+    });
 
 
 @stop

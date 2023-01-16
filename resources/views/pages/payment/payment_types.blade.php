@@ -45,7 +45,7 @@
                         <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                     @endif
                     <table id="example2" class="table table-bordered table-hover">
-                        <h5><i class="fa fa-dollar-sign text-cyan" aria-hidden="true"></i> Payment Types</h5>
+                        <h5><i class="fa fa-list text-cyan" aria-hidden="true"></i> Payment Types</h5>
                         <a href="{{route('payment-type-add')}}" class="btn btn-xs btn-success float-right mb-1"><i class="fa fa-plus"></i> Add New</a>
                         <a href="{{route('payment-types')}}" class="btn btn-xs btn-warning float-right mb-1 mr-1"><i class="fa fa-recycle"></i> Refresh </a>
                         <thead>

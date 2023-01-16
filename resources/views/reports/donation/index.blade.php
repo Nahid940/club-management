@@ -59,12 +59,14 @@
                         <div class="row search_frm">
 
                             <div class="col-md-2 col-sm-12">
-                                <label for="">Date From</label>
-                                <input type="date" class="form-control" value="{{ request()->input('date_from') }}" id="mobile_number" name="date_from"/>
+                                <label for="">Date From <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" value="{{ request()->input('date_from') }}" id="date_from" name="date_from"/>
+                                <span id="date_from_error" class="text-danger"></span>
                             </div>
                             <div class="col-md-2 col-sm-12">
-                                <label for="">Date To</label>
-                                <input type="date" class="form-control" value="{{ request()->input('date_to') }}" id="mobile_number" name="date_to" />
+                                <label for="">Date To <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" value="{{ request()->input('date_to') }}" id="date_to" name="date_to" />
+                                <span class="text-danger" id="date_to_error"></span>
                             </div>
                             <div class="col-md-2 col-sm-12">
                                  <label for="payment_method">Payment Method</label>

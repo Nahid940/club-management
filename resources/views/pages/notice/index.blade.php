@@ -37,7 +37,7 @@
                     <form action="">
                         <div class="row search_frm">
                             <div class="col-2">
-                                <input type="text" value="" class="form-control" id="name" name="title" placeholder="Title"/>
+                                <input type="text" value="{{ request()->input('title') }}"  class="form-control" id="name" name="title" placeholder="Title"/>
                             </div>
                             <div class="col-2">
                                 <button type="submit" class="btn btn-primary search_btn">Search</button>

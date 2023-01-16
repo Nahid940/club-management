@@ -52,6 +52,7 @@
                             <tr>
                                 <th>#</th>
                                 <th><div align="left">Purpose Title</div></th>
+                                <th><div align="left">Donation For</div></th>
                                 <th>Created At</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -63,6 +64,7 @@
                             <tr @if($purpose->status==0) style="background-color: #ffb1ba"@endif>
                                 <td>{{++$i}}</td>
                                 <td><div align="left"><b>{{ucfirst($purpose->purpose)}}</b></div></td>
+                                <td><div align="left"><b>{{ucfirst($purpose->donation_for)}}</b></div></td>
                                 <td>{{date('d-m-Y',strtotime($purpose->created_at))}}</td>
                                 <td>
                                     @if($purpose->status==1)

@@ -94,6 +94,12 @@
                                         @else
                                             <i class="fa fa-times text-danger" aria-hidden="true"></i> Declined
                                         @endif</b>
+                                    <br>
+                                    @if(!empty($payment->purpose->purpose))
+                                        <b>Purpose : {{$payment->purpose->purpose}}</b>
+                                        <br>
+                                        <b>Donation for : {{$payment->purpose->donation_for}}</b>
+                                    @endif
                                 </div>
                             </div>
 
