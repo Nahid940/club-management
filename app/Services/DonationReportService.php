@@ -38,7 +38,7 @@ class DonationReportService
         }
 
         $payments=Payment::where($where)
-            ->where('payment_type',2)
+            ->where('is_payment','=','0')
             ->where('status',1)
             ->select('id','member_id','payment_date','amount')
             ->get();

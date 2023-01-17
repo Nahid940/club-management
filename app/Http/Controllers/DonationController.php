@@ -37,7 +37,7 @@ class DonationController extends Controller
         $payments=Payment::with('donor:id,name,email')
             ->orderBy('id','desc')
             ->where('status','!=','-2')
-            ->where('payment_type',2)
+            ->where('is_payment','=','0')
             ->whereHas('donor', function ($query) use ($where){
                 $query->where($where);
             })
@@ -67,7 +67,8 @@ class DonationController extends Controller
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
-            "created_by"=>Auth::user()->id
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>0
         ]);
         return redirect()->back()->with('message','Donation saved successfully!');
     }

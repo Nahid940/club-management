@@ -28,6 +28,7 @@ class DonationRequest extends FormRequest
             'date'=>'required|date',
             'amount'=>'required|numeric|digits_between:2,10',
             'payment_method'=>'required',
+            'month'=>'required',
             'payment_ref_no'=>'required|max:25',
         ];
     }

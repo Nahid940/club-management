@@ -31,6 +31,7 @@ class MemberPaymentController extends Controller
         }
         $where[]=['member_id',$member_id->id];
         $where[]=['payment_type',1];
+        $where[]=['is_payment',1];
         if(!empty($member_id))
         {
             $payments=Payment::where($where)->orderBy('id','desc')->paginate(20);

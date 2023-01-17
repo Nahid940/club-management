@@ -46,6 +46,7 @@ class PaymentController extends Controller
         $payments=Payment::with('member:id,first_name,member_code,email')
             ->orderBy('id','desc')
             ->where('status','!=','-2')
+            ->where('is_payment','=','1')
             ->whereHas('member', function ($query) use ($where){
                 $query->where($where);
             })
@@ -82,7 +83,8 @@ class PaymentController extends Controller
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
-            "created_by"=>Auth::user()->id
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>1
         ]);
         return redirect()->back()->with(['message'=>'Payment saved successfully!',"id"=>$id]);
     }
@@ -191,6 +193,20 @@ class PaymentController extends Controller
 
     public function export()
     {
-        return Excel::download(new PaymentExport(),"payment.xlsx");
+        $payments=Payment::info()->where('status',1)->where('is_payment','=','1')->orderBy('id','desc')->get();
+        $data=array();
+        foreach ($payments as $payment)
+        {
+            $data[$payment->id]['name']=isset($payment->member->first_name)?$payment->member->first_name:"";
+            $data[$payment->id]['member_code']=isset($payment->member->member_code)?$payment->member->member_code:"";
+            $data[$payment->id]['amount']=$payment->amount;
+            $data[$payment->id]['payment_date']=$payment->payment_date;
+            $data[$payment->id]['payment_month']=date('F',strtotime($payment->payment_month));
+            $data[$payment->id]['payment_year']=$payment->payment_year;
+            $data[$payment->id]['purpose']=isset($payment->purpose->purpose)?$payment->purpose->purpose:"";
+            $data[$payment->id]['donation_for']=isset($payment->purpose->donation_for)?$payment->purpose->donation_for:"";
+        }
+        $payments=$data;
+        return Excel::download(new PaymentExport($payments),"payment.xlsx");
     }
 }

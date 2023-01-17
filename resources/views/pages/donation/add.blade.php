@@ -82,7 +82,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="date">Date <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" name="date" id="date" required>
+                                    <input type="date" class="form-control" name="date"  value="{{ old('date') }}" id="date" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -90,18 +90,18 @@
                                     <label for="month">Month <span class="text-danger">*</span></label>
                                     <select name="month" id="month" class="form-control" required>
                                         <option value="">--Select--</option>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
+                                        <option value="1" {{ old('month')==1?"selected":"" }}>January</option>
+                                        <option value="2" {{ old('month')==2?"selected":"" }}>February</option>
+                                        <option value="3" {{ old('month')==3?"selected":"" }}>March</option>
+                                        <option value="4" {{ old('month')==4?"selected":"" }}>April</option>
+                                        <option value="5" {{ old('month')==5?"selected":"" }}>May</option>
+                                        <option value="6" {{ old('month')==6?"selected":"" }}>June</option>
+                                        <option value="7" {{ old('month')==7?"selected":"" }}>July</option>
+                                        <option value="8" {{ old('month')==8?"selected":"" }}>August</option>
+                                        <option value="9" {{ old('month')==9?"selected":"" }}>September</option>
+                                        <option value="10" {{ old('month')==10?"selected":"" }}>October</option>
+                                        <option value="11" {{ old('month')==11?"selected":"" }}>November</option>
+                                        <option value="12" {{ old('month')==12?"selected":"" }}>December</option>
                                     </select>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="amount" id="amount" required>
+                                    <input type="number" class="form-control" name="amount" value="{{ old('amount') }}" id="amount" required>
                                 </div>
                             </div>
                                 <span>
@@ -132,7 +132,7 @@
                                     <select name="purpose_id" id="" class="form-control">
                                         <option value="">--Select--</option>
                                         @foreach($donation_purposes as $donation_purpose)
-                                            <option value="{{$donation_purpose->id}}">{{$donation_purpose->purpose}}</option>
+                                            <option value="{{$donation_purpose->id}}" {{old('purpose_id')==$donation_purpose->id?"selected":""}}>{{$donation_purpose->purpose}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -141,19 +141,19 @@
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" class="member_type"  id="mem1" value="1">
+                                        <input type="checkbox" name="payment_method" {{ old('payment_method')==1?"checked":"" }} class="member_type"  id="mem1" value="1">
                                         <label for="mem1">
                                             Pay Order
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" class="member_type"  id="mem2" value="2">
+                                        <input type="checkbox" name="payment_method" {{ old('payment_method')==2?"checked":"" }} class="member_type"  id="mem2" value="2">
                                         <label for="mem2">
                                             Cash
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" class="member_type"  id="mem3" value="3">
+                                        <input type="checkbox" name="payment_method" {{ old('payment_method')==3?"checked":"" }} class="member_type"  id="mem3" value="3">
                                         <label for="mem3">
                                             Cheque
                                         </label>
@@ -163,13 +163,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
+                                    <input type="text" class="form-control" name="payment_ref_no" value="{{ old('payment_ref_no') }}" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="remarks">Remarks</label>
-                                    <input type="text" class="form-control" name="remarks" id="remarks" placeholder="Remarks">
+                                    <input type="text" class="form-control" name="remarks" value="{{ old('remarks') }}" id="remarks" placeholder="Remarks">
                                 </div>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="name"> Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Donor Name" name="name" id="name">
+                                    <input type="text" class="form-control"  placeholder="Donor Name" name="name" id="name">
                                 </div>
                             </div>
                             <div class="col-6">
