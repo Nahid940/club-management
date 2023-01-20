@@ -57,7 +57,7 @@
                                         <div class="widget-user-header bg-gradient-gray">
                                             <div class="widget-user-image">
                                                 @if(!empty($info->member_photo))
-                                                    <img style="width: 50px;border-radius: 10px" src="{{asset('storage/member_photo/'.$info->member_photo)}}" alt=""></div>
+                                                    <img style="width: 50px;border-radius: 10px" src="{{asset('public/storage/member_photo/'.$info->member_photo)}}" alt=""></div>
                                             @else
                                                 <img style="width: 50px;border-radius: 10px" src="{{asset('img/user.jpeg')}}" alt=""></div>
                                         @endif

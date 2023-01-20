@@ -71,7 +71,7 @@
                     @if(session('message'))
                         <div class="alert alert-danger alert-dismissible">{{session('message')}}</div>
                     @endif
-                    @if(isset($payments) && $payments->isEmpty())
+                    @if(isset($payments) && !$payments->isEmpty())
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

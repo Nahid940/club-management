@@ -10,7 +10,7 @@
             <!-- general form elements -->
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Configure Email</h3>
+                    <h3 class="card-title"><i class="nav-icon fas fa-mail-bulk"></i> Configure Email</h3>
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -101,7 +101,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="email_footer">Email Footer<span class="text-danger">*</span></label>
-                                    <textarea type="text" class="form-control" id="email_footer" name="email_footer">{{ isset($configs->email_footer) ? $configs->email_footer:""}}</textarea>
+                                    <textarea  type="text" class="form-control" style="height: 100px" id="email_footer" name="email_footer">{{ isset($configs->email_footer) ? $configs->email_footer:""}}</textarea>
                                 </div>
                             </div>
                         </div>

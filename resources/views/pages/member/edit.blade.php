@@ -179,7 +179,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="frame">
-                                    <img style="width: 100%" src="{{asset('storage/member_photo/'.$member->member_photo)}}" alt="" id="sample_img">
+                                    <img style="width: 100%" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="" id="sample_img">
                                 </div>
                                 <label class="custom-file-upload">
                                     <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>
@@ -377,14 +377,14 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label for="present_address">Present Address <span class="txt-info">*</span></label>
-                                    <input type="text" class="form-control" value="{{ $member->present_address }}" id="present_address" name="present_address" placeholder="Present Address" require/>
+                                    <label for="present_addr1">Present Address <span class="txt-info">*</span></label>
+                                    <input type="text" class="form-control" value="{{ $member->present_address }}" id="present_addr1" name="present_address" placeholder="Present Address" require/>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label for="permanent_address">Permanent Address</label>
-                                    <input type="text" class="form-control" value="{{ $member->permanent_address }}"  id="permanent_address" name="permanent_address" placeholder="Permanent Address" require/>
+                                    <label for=" prmnt_addr2">Permanent Address</label>
+                                    <input type="text" class="form-control" value="{{ $member->permanent_address }}"  id="prmnt_addr2" name="permanent_address" placeholder="Permanent Address" require/>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 col-lg-3">
@@ -617,8 +617,9 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="form_part_heading" for="">Dependant Details</div>
-                                <a class="btn btn-danger btn-xs add_more_dep_info" style="right: 0;position: absolute">Add More</a>
+                                <div class="form_part_heading" for="">Dependant Details
+                                    <a class="btn btn-danger btn-xs add_more_dep_info mb-3" style="right: 0;position: absolute">Add More</a>
+                                </div>
                                 <div class="form-group">
                                     <table id="" class="table  table-borderless table-responsive-sm">
                                         <thead>
@@ -655,7 +656,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i>  <span>Attach Your Updated NID (PDF/Image)</span>
                                     <input type="file" name="nid_doc" class="" id="nid_doc"/>
-                                    <span id="nid_file_name_tag" class="text-success"></span>
+                                    <span id="nid_file_name_tag" class="text-success">{{$member->member_nid_file}}</span>
                                 </label>
                             </div>
                         </div>
@@ -664,7 +665,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated HSC Certificate/Testimonial (PDF/Image)</span>
                                     <input type="file" name="hsc_doc" class="" id="hsc_doc"/>
-                                    <span id="hsc_file_name_tag" class="text-success"></span>
+                                    <span id="hsc_file_name_tag" class="text-success">{{$member->member_hsc_doc}}</span>
                                 </label>
                             </div>
                         </div>
@@ -673,7 +674,7 @@
                                 <label class="custom-file-upload">
                                     <i class="fa fa-paperclip text-danger"></i> <span>Attach Your Updated eTIN/TIN Certificate (PDF/Image)</span>
                                     <input type="file" name="tin_doc" class="" id="tin_doc"/>
-                                    <span id="tin_file_name_tag" class="text-success"></span>
+                                    <span id="tin_file_name_tag" class="text-success">{{$member->member_tin_doc}}</span>
                                 </label>
                             </div>
                         </div>

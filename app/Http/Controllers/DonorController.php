@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class DonorController extends Controller
 {
     //
+
+    public function index()
+    {
+        $donors=Donor::where('status',1)->paginate(10);
+        return view('pages.donation.donors',["title"=>"","donors"=>$donors]);
+    }
+
     public function search(Request $request)
     {
         if(empty($request->value)) return false;
@@ -34,4 +41,43 @@ class DonorController extends Controller
         ])->id;
         return json_encode(['id'=>$id]);
     }
+
+
+    public function delete(Request $request)
+    {
+        if(!empty($request->donor_id)) {
+            Donor::where('id', $request->donor_id)->update(['status' => -2]);//delete
+        }
+        return redirect()->back()->with('message','Donor data moved to trash!');
+    }
+
+    public function edit($id)
+    {
+        $donor=Donor::findOrFail($id);
+        return view('pages.donation.donor-edit',["title"=>"","donor"=>$donor]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            "name"=>"required",
+            "phone"=>"required",
+            "email"=>"required",
+        ]);
+        Donor::where('id',$request->id)->update([
+            "name"=>$request->name,
+            "email"=>$request->email,
+            "phone"=>$request->phone,
+            "origin"=>$request->origin,
+            "donor_type"=>$request->donor_type,
+            "reference_person_phone"=>$request->reference_person_phone,
+            "reference_person_name"=>$request->reference_person_name,
+            "address"=>$request->address,
+            "updated_at"=>Carbon::now(),
+            "updated_by"=>Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with('message','Donor data updated successfully!');
+    }
+
 }

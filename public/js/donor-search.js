@@ -61,15 +61,15 @@ $('#mem3').on('click',function(){
 $('#save_donor').on('click',function (event) {
     if($('#name').val()=="")
     {
-        alert("Name id required!")
+        alert("Name is required!")
     }
     else if($('#email').val()=="")
     {
-        alert("Email id required!")
+        alert("Email is required!")
     }
     else if($('#phone').val()=="")
     {
-        alert("Phone id required!")
+        alert("Phone is required!")
     }else
     {
         event.preventDefault();

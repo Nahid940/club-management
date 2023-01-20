@@ -89,6 +89,7 @@
                                 <th>#</th>
                                 <th><input type="checkbox" id="check_all"></th>
                                 <th>Name</th>
+                                <th>Member Code</th>
                                 <th>Member Type</th>
                                 <th>Mobile</th>
                                 <th>Email</th>
@@ -106,6 +107,7 @@
                                         <td>{{$i}}</td>
                                         <td><input type="checkbox" name="id[]" value="{{$member->id}}" id="id_sl{{$i}}"></td>
                                         <td>{{$member->first_name}}</td>
+                                        <td>{{$member->member_code}}</td>
                                         <td>
                                             @if($member->member_type==1)
                                                 Donor Member

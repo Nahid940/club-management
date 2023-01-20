@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\EmailConfig;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,9 +17,10 @@ class MemberMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    protected $member;
+    public function __construct($member)
     {
-        //
+        $this->member=$member;
     }
 
     /**
@@ -28,18 +30,7 @@ class MemberMail extends Mailable
      */
     public function build()
     {
-        $senderEmail = "nahid940@gmail.com";
-        $senderMessage = "Hello I am from SES";
-        $senderName = "Nahid";
-        $data = [
-            'senderEmail' => $senderEmail,
-            'senderMessage' => $senderMessage,
-            'senderName' => $senderName,
-        ];
-        return $this
-            ->from(config('mail.contact.address'))
-            ->replyTo($senderEmail, $senderName)
-            ->view('pages.email.new_member_email')
-            ->with($data);
+        $email_config=EmailConfig::select('email_greeting','email_footer','email_addressing')->first();
+        return $this->from('cnbl940@cnbl.com.bd')->view('pages.member.approve-email',['member'=>$this->member,'email_config'=>$email_config]);
     }
 }

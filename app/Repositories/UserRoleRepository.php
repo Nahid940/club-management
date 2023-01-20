@@ -18,7 +18,7 @@ class UserRoleRepository implements UserRole
 
     public function getRoles(array $cond)
     {
-        $roles=DB::table('roles')->paginate(10);
+        $roles=DB::table('roles')->where('name','!=','super-admin')->paginate(10);
         return $roles;
     }
 

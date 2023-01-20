@@ -146,35 +146,6 @@
             {{--</li>--}}
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-users" style="color: #7cbdff"></i>
-                <p>
-                  User Management
-                  <i class="fas fa-angle-left right "></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('user-add')}}" class="nav-link">
-                    <i class="fa fa-plus-square nav-icon" style="font-size: 10px;color: #ff0b4f"></i>
-                    <p>Add new</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('user-index')}}" class="nav-link">
-                    <i class="fa fa-list nav-icon" style="font-size: 10px;color: #ffd511"></i>
-                    <p>User List</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('role-index')}}" class="nav-link">
-                    <i class="fa fa-cogs nav-icon" style="font-size: 10px;color: #00dcff"></i>
-                    <p>Manage User Role</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-credit-card" style="color: #7cbdff"></i>
                 <p>
                   Payment
@@ -221,6 +192,12 @@
                   <a href="{{route('donation-index')}}" class="nav-link">
                     <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>List</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('donor-index')}}" class="nav-link">
+                    <i class="fa  fa-users nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>Donors</p>
                   </a>
                 </li>
               </ul>
@@ -290,6 +267,35 @@
                   <a href="{{route('notice-index')}}" class="nav-link">
                     <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>Notice List</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users" style="color: #7cbdff"></i>
+                <p>
+                  User Management
+                  <i class="fas fa-angle-left right "></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('user-add')}}" class="nav-link">
+                    <i class="fa fa-plus-square nav-icon" style="font-size: 10px;color: #ff0b4f"></i>
+                    <p>Add new</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('user-index')}}" class="nav-link">
+                    <i class="fa fa-list nav-icon" style="font-size: 10px;color: #ffd511"></i>
+                    <p>User List</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('role-index')}}" class="nav-link">
+                    <i class="fa fa-cogs nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <p>Manage User Role</p>
                   </a>
                 </li>
               </ul>

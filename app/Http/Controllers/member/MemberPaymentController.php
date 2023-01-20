@@ -30,7 +30,6 @@ class MemberPaymentController extends Controller
             return view('pages.payment.member-payment-index',["title"=>""]);
         }
         $where[]=['member_id',$member_id->id];
-        $where[]=['payment_type',1];
         $where[]=['is_payment',1];
         if(!empty($member_id))
         {

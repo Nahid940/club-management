@@ -147,7 +147,11 @@ class MemberRepository implements MemberInterface
         {
             $where[]=['blood_group',$data['request_data']['blood_group']];
         }
-        $members=DB::table('members')->select("id","first_name","last_name","registration_date","member_type","mobile_number","email","blood_group")
+        if(isset($data['request_data']['member_code']) && !empty($data['request_data']['member_code']))
+        {
+            $where[]=['member_code',$data['request_data']['member_code']];
+        }
+        $members=DB::table('members')->select("id","first_name","last_name","member_code","registration_date","member_type","mobile_number","email","blood_group")
         ->where('status',$data['status'])
         ->where($where)
         ->orderBy('id','desc')

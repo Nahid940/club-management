@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-lg-2 col-sm-12">
                             {{-- <label for="mobile_number">Mobile Number</label> --}}
-                            <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                            <input type="text" class="form-control" value="{{ request()->input('member_code') }}" id="member_code" name="member_code" placeholder="Member Code" require/>
                         </div>
                         <div class="col-lg-2 col-sm-12">
                             {{-- <label>Member Type <span class="txt-info"></span></label> --}}
@@ -101,6 +101,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Member Code</th>
                             <th>Member Type</th>
                             <th>Mobile</th>
                             <th>Email</th>
@@ -115,6 +116,7 @@
                             <tr>
                                 <td>{{$i++}}</td>
                                 <td>{{$member->first_name}}</td>
+                                <td>{{$member->member_code}}</td>
                                 <td>
                                     @if($member->member_type==1)
                                         Donor Member

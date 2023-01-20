@@ -88,7 +88,7 @@
                                      </tr>
                                     <tr>
                                         <td colspan="5" style="border: none">&nbsp;</td>
-                                        <td style="border: none"><a href="" class="btn btn-danger btn-xs">Cancel</a></td>
+                                        <td style="border: none"><a href="{{route('home')}}" class="btn btn-danger btn-xs">Cancel</a></td>
                                         <td style="border: none"><button type="submit" href="" class="btn btn-success btn-xs">Save</button></td>
                                     </tr>
                                 </form>

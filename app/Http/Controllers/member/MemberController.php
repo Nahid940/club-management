@@ -4,6 +4,7 @@ namespace App\Http\Controllers\member;
 
 use App\Http\Requests\MemberProfileUpdateRequest;
 use App\Mail\MemberMail;
+use App\Models\EmailConfig;
 use App\Models\Member;
 use App\Models\MemberClassification;
 use Illuminate\Http\Request;
@@ -169,7 +170,13 @@ class MemberController extends Controller
 
     public function approve(Request $request)
     {
+        $email_config=EmailConfig::select('send_application_approval_email')->first();
         $this->memberInfo->approve($request->id);
+        if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
+        {
+            $memberInfo=Member::where('id',$request->id)->select('first_name','member_code','email','member_type','registration_date')->first();
+            Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
+        }
         return redirect()->back()->with(['message' => "Membership application approved!"]);
     }
 

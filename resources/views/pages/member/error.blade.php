@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card" style="background-color: #e4ff078f">
+            <div class="card" style="background-color: rgba(133,159,255,0.99)">
                 <div class="card-header">
                     <h3 class="card-title">Warning!</h3>
                     <div class="card-tools">

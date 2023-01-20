@@ -147,7 +147,7 @@
                 </div>
             @elseif($member->status==-1)
                 <div class="alert no-print">
-                    <button class="btn btn-success btn-xs" id="approve" data-id="{{$member->id}}"><i class="fa fa-check" aria-hidden="true"></i> Approve</button>
+                    <button class="btn btn-success btn-xs" id="approve" data-id="{{$member->id}}"><i class="fa fa-check" aria-hidden="true"></i> <span id="approve_span">Approve</span></button>
                     <button class="btn btn-danger btn-xs" id="decline" data-id="{{$member->id}}"><i class="fa fa-times" aria-hidden="true"></i> Decline</button>
                 </div>
                 <form action="{{route('member-approve')}}" id="member-approve" method="post">
@@ -418,6 +418,7 @@
         confirmButtonText: 'Yes!'
         }).then((result) => {
             if (result.isConfirmed) {
+                $('#approve_span').html('<i class="fas fa-spinner fa-pulse"></i> Precessing...');;
                 $('#member-approve').submit();
             }
         })

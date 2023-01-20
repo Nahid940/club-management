@@ -127,6 +127,10 @@ Route::group(['middleware'=>['auth']],function (){
     Route::post('donation/delete',[DonationController::class,'delete'])->name('donation-delete')->middleware('role:super-admin|member|accountant','permission:delete donation');
     Route::get('donation/edit/{id}',[DonationController::class,'edit'])->name('donation-edit')->middleware('role:super-admin|member|accountant','permission:edit donation');
     Route::post('donation/update',[DonationController::class,'update'])->name('donation-update');
+    Route::get('donor/index',[DonorController::class,'index'])->name('donor-index');
+    Route::delete('donor/delete',[DonorController::class,'delete'])->name('donor-delete');
+    Route::get('donor/edit/{id}',[DonorController::class,'edit'])->name('donor-edit');
+    Route::post('donor/update',[DonorController::class,'update'])->name('donor-update');
 
 });
 

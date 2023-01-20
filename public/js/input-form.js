@@ -12,11 +12,11 @@ $('.application_rejected2').on('click',function(){
     $('.application_rejected1').prop('checked',false);
 })
 
-$('#present_addr').on('click',function(){
-    $('#prmnt_addr').prop('checked',false);
+$('#present_addr1').on('click',function(){
+    $('#prmnt_addr2').prop('checked',false);
 })
-$('#prmnt_addr').on('click',function(){
-    $('#present_addr').prop('checked',false);
+$('#prmnt_addr2').on('click',function(){
+    $('#present_addr1').prop('checked',false);
 })
 
 $('#criminal_ofence1').on('click',function(){
