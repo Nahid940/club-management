@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::group(['middleware' => ['auth','role:super-admin|member']], function () {
+Route::group(['middleware' => ['auth','role:super-admin|admin|member']], function () {
     Route::get('/members/admission', [MemberController::class, 'admission'])->middleware('permission:add member')->name('member-admission');
     Route::get('/member/{id}', [MemberController::class, 'read'])->name('member-read')->middleware('permission:view member');
     Route::get('new/member/{id}', [MemberController::class, 'newApplicants'])->name('new-member-read');
@@ -113,6 +113,7 @@ Route::controller(PaymentController::class)->group(function(){
     Route::get('payment/type/add',[PaymentController::class,'typeAdd'])->name('payment-type-add')->middleware('auth');
     Route::post('payment/type/add',[PaymentController::class,'typeSave'])->name('payment-type-save')->middleware('auth');
     Route::get('payment/export',[PaymentController::class,'export'])->name('payment-export')->middleware('auth');
+    Route::post('payment/export',[PaymentController::class,'getExportFile'])->name('payment-export')->middleware('auth');
 
 });
 
@@ -208,5 +209,11 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('import-members',[MemberController::class, 'import'])->name('import-members');
 Route::get('email-config',[EmailConfigController::class, 'config'])->name('email-config')->middleware('auth');
 Route::post('email-config',[EmailConfigController::class, 'save'])->name('email-config')->middleware('auth');
+
+
+Route::get('cache-clear',function (){
+    \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');
+    return "Cache Cleared";
+});
 
 require __DIR__.'/auth.php';

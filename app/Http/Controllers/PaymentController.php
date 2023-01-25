@@ -193,7 +193,30 @@ class PaymentController extends Controller
 
     public function export()
     {
-        $payments=Payment::info()->where('status',1)->where('is_payment','=','1')->orderBy('id','desc')->get();
+        $types=PaymentType::where('status',1)->get();
+        return view('pages.payment.export',["title"=>"","payment_types"=>$types]);
+    }
+
+    public function getExportFile(Request $request)
+    {
+        $request->validate([
+            "date_from"=>"required",
+            "date_to"=>"required",
+            "payment_type"=>"required"
+        ]);
+        if($request->has('date_from') && !empty($request->date_from))
+        {
+            $where[] =['payment_date','>=',$request->date_from];
+        }
+        if($request->has('date_to') && !empty($request->date_to))
+        {
+            $where[] =['payment_date','<=',$request->date_to];
+        }
+        if($request->has('payment_type') && !empty($request->payment_type) && $request->payment_type>0)
+        {
+            $where[] =['payment_type','=',$request->payment_type];
+        }
+        $payments=Payment::info()->where('status',1)->where('is_payment','=','1')->where($where)->orderBy('id','desc')->get();
         $data=array();
         foreach ($payments as $payment)
         {
@@ -207,6 +230,10 @@ class PaymentController extends Controller
             $data[$payment->id]['donation_for']=isset($payment->purpose->donation_for)?$payment->purpose->donation_for:"";
         }
         $payments=$data;
+        if(empty($data))
+        {
+            return redirect()->back()->with('message','No Data Found To Export!!');
+        }
         return Excel::download(new PaymentExport($payments),"payment.xlsx");
     }
 }
