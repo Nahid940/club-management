@@ -7,6 +7,8 @@ use App\Mail\MemberMail;
 use App\Models\EmailConfig;
 use App\Models\Member;
 use App\Models\MemberClassification;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -171,10 +173,27 @@ class MemberController extends Controller
     public function approve(Request $request)
     {
         $email_config=EmailConfig::select('send_application_approval_email')->first();
+        $memberInfo=Member::where('id',$request->id)->select('first_name','member_code','email','member_type','registration_date','user_id')->first();
+        if(empty($memberInfo->user_id))
+        {
+            $exist_email=User::where('email',$memberInfo->email)->count();
+            if($exist_email>0)
+            {
+                return redirect()->back()->with('warning','Email already exist!!');
+            }
+            $user=User::create([
+                'name'=>$memberInfo->first_name,
+                'email'=>$memberInfo->email,
+                'user_type'=>3,
+                'password' => bcrypt($request->input('password')),
+                'created_at'=>Carbon::now()
+            ]);
+            $user->assignRole(2);
+            Member::where('id',$request->id)->update(['user_id'=>$user->id]);
+        }
         $this->memberInfo->approve($request->id);
         if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
         {
-            $memberInfo=Member::where('id',$request->id)->select('first_name','member_code','email','member_type','registration_date')->first();
             Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
         }
         return redirect()->back()->with(['message' => "Membership application approved!"]);
