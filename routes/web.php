@@ -132,6 +132,8 @@ Route::group(['middleware'=>['auth']],function (){
     Route::delete('donor/delete',[DonorController::class,'delete'])->name('donor-delete');
     Route::get('donor/edit/{id}',[DonorController::class,'edit'])->name('donor-edit');
     Route::post('donor/update',[DonorController::class,'update'])->name('donor-update');
+    Route::get('donor/add',[DonorController::class,'addDonor'])->name('add-donor');
+    Route::post('donor/add',[DonorController::class,'donorSave'])->name('add-donor');
 
 });
 
