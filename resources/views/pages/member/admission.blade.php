@@ -80,7 +80,7 @@
     .custom-file-upload {
         border: 1px solid #ccc;
         display: inline-block;
-        padding: 4px 11px;
+        padding: 1% 1.6%;
         cursor: pointer;
         color: #0067d2
     }

@@ -78,7 +78,7 @@
     .custom-file-upload {
         border: 1px solid #ccc;
         display: inline-block;
-        padding: 4px 11px;
+        padding: 1% 3.3%;
         cursor: pointer;
         color: #0067d2
     }
@@ -182,7 +182,7 @@
                                     <img style="width: 100%" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="" id="sample_img">
                                 </div>
                                 <label class="custom-file-upload">
-                                    <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>
+                                    <span style="font-size: 10px">Click here to upload<br>your photo</span> <span class="txt-info">*</span>
                                     <input type="file" name="member_photo" class="" id="imgInp"/>
                                 </label>
                             </div>
