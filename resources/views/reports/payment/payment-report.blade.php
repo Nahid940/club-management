@@ -39,6 +39,7 @@
             <tr>
                 <th><div align="center">Member Name</div></th>
                 <th><div align="center">Payment Date</div></th>
+                <th><div align="center">Payment Type</div></th>
                 <th><div align="right">Amount</div></th>
             </tr>
         </thead>
@@ -55,6 +56,7 @@
                                 <td rowspan="{{count($payment['payment'])}}"><div align="center"><b>{{$payment['name']}}</b></div></td>
                             @endif
                             <td><div align="center">{{date('d-m-Y',strtotime($member_payment['payment_date']))}}</div></td>
+                            <td><div align="center">{{$member_payment['payment_type']}}</div></td>
                             <td><div align="right">{{number_format($member_payment['amount'],2,'.',',')}}</div></td>
                         </tr>
                         @php
@@ -64,13 +66,13 @@
                     @endif
                 @endforeach
                 <tr style="background-color: #d8d8d8;font-weight: bold">
-                    <td colspan="2">Sub Total</td>
+                    <td colspan="3">Sub Total</td>
                     <td><div align="right">{{number_format($sub_total,2,'.',',')}}</div></td>
                 </tr>
                 @php $grand_total+=$sub_total @endphp
             @endforeach
             <tr style="background-color: #d8d8d8;font-weight: bold">
-                <td colspan="2">Grand Total</td>
+                <td colspan="3">Grand Total</td>
                 <td><div align="right">{{number_format($grand_total,2,'.',',')}}</div></td>
             </tr>
         </tbody>

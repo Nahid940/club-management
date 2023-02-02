@@ -24,9 +24,13 @@ class DonorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'phone'=>'required',
-            'email'=>'required'
+            "name"=>"required|max:70",
+            "email"=>"max:50",
+            "phone"=>"max:20",
+            "donor_type"=>"max:20",
+            "reference_person_phone"=>"max:30",
+            "reference_person_name"=>"max:30",
+            "address"=>"max:70"
         ];
     }
 }

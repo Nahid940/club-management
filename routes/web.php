@@ -122,7 +122,7 @@ Route::group(['middleware'=>['auth']],function (){
     Route::get('donation/add',[DonationController::class,'add'])->name('donation-add')->middleware('role:super-admin|accountant','permission:add donation');
     Route::get('donation/view/{id}',[DonationController::class,'view'])->name('donation-view')->middleware('role:super-admin|accountant','permission:view donation');
     Route::post('donation/add',[DonationController::class,'save'])->name('donation-save');
-    Route::post('donor/add',[DonorController::class,'donorAdd'])->name('donor-add');
+    Route::post('donor/add-ajax',[DonorController::class,'donorAdd'])->name('donor-add');
     Route::post('donor/search',[DonorController::class,'search'])->name('donor-search');
     Route::post('process/donation',[DonationController::class,'process'])->name('process-donation')->middleware('role:super-admin|member|accountant','permission:approve donation');
     Route::post('donation/delete',[DonationController::class,'delete'])->name('donation-delete')->middleware('role:super-admin|member|accountant','permission:delete donation');

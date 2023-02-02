@@ -59,6 +59,16 @@
                         <div class="row search_frm">
 
                             <div class="col-md-2 col-sm-12">
+                                <label for="date_from">Member</label>
+
+                                <select name="member" id="member" class="form-control">
+                                    <option value="">--Select--</option>
+                                    @foreach($members as $member)
+                                        <option value="{{$member->id}}">{{isset($member->member_code) && !empty($member->member_code)?$member->first_name."-".$member->member_code:$member->first_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
                                 <label for="date_from">Date From <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" value="{{ request()->input('date_from') }}" id="date_from" name="date_from" required/>
                                 <span id="date_from_error" class="text-danger"></span>
@@ -88,6 +98,7 @@
                             </div>
                             <div class="col-2" style="margin-top: 19px;font-size: inherit">
                                 <button type="button" class="btn btn-primary btn-xs" id="show-payment-report">View Report</button>
+                                <a href="" class="btn btn-warning btn-xs" id="show-payment-report">Reset</a>
                             </div>
                         </div>
                     </form>

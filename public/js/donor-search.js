@@ -79,7 +79,7 @@ $('#save_donor').on('click',function (event) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: "/donor/add",
+            url: "/donor/add-ajax",
             data: form.serialize(),
             success: function(data)
             {

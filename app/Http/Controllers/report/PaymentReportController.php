@@ -5,6 +5,7 @@ namespace App\Http\Controllers\report;
 use App\Http\Controllers\Controller;
 use App\Interfaces\report\PaymentReportInterface;
 use App\Models\DonationPurpose;
+use App\Models\Member;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
@@ -21,8 +22,9 @@ class PaymentReportController extends Controller
 
     public function index()
     {
+        $members=Member::select('id','first_name','member_code')->where('status',1)->get();
         $purposes=DonationPurpose::select('id','purpose')->where('status',1)->get();
-        return view('reports.payment.payment-report-index',['title'=>"","purposes"=>$purposes]);
+        return view('reports.payment.payment-report-index',['title'=>"","purposes"=>$purposes,'members'=>$members]);
     }
 
     public function report(Request $request)
