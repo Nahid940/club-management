@@ -113,17 +113,19 @@ $('#save').on('click',function () {
     {
         Swal.fire("Member name required!!");
         $('.lbl_mmbr_name').css('color','red');
-    }else if($('#college_roll').val()=="")
-    {
-        Swal.fire("College roll required!!");
-        $('.lbl_college_roll').css('color','red');
-    }else if($('#date_of_birth').val()=="")
+    }
+    // else if($('#college_roll').val()=="")
+    // {
+    //     Swal.fire("College roll required!!");
+    //     $('.lbl_college_roll').css('color','red');
+    // }
+    else if($('#date_of_birth').val()=="")
     {
         Swal.fire("Date of Birth required!!");
         $('.lbl_dob').css('color','red');
-    }else if($('#nid').val()=="")
+    }else if($('#nid').val()=="" && $('#passport').val()=="" )
     {
-        Swal.fire("NID required!!");
+        Swal.fire("NID or Passport is required!!");
         $('.lbl_nid').css('color','red');
     }else if($('#fathers_name').val()=="")
     {
@@ -208,17 +210,19 @@ $('#update').on('click',function () {
     {
         Swal.fire("Member name required!!");
         $('.lbl_mmbr_name').css('color','red');
-    }else if($('#college_roll').val()=="")
-    {
-        Swal.fire("College roll required!!");
-        $('.lbl_college_roll').css('color','red');
-    }else if($('#date_of_birth').val()=="")
+    }
+    // else if($('#college_roll').val()=="")
+    // {
+    //     Swal.fire("College roll required!!");
+    //     $('.lbl_college_roll').css('color','red');
+    // }
+    else if($('#date_of_birth').val()=="")
     {
         Swal.fire("Date of Birth required!!");
         $('.lbl_dob').css('color','red');
-    }else if($('#nid').val()=="")
+    }else if($('#nid').val()=="" && $('#passport').val()=="" )
     {
-        Swal.fire("NID required!!");
+        Swal.fire("NID or Passport is required!!");
         $('.lbl_nid').css('color','red');
     }else if($('#fathers_name').val()=="")
     {
@@ -305,19 +309,24 @@ $("#next").click(function(){
     {
         Swal.fire("Member name required!!");
         $('.lbl_mmbr_name').css('color','red');
-    }else if($('#college_roll').val()=="")
-    {
-        Swal.fire("College roll required!!");
-        $('.lbl_college_roll').css('color','red');
-    }else if($('#date_of_birth').val()=="")
+    }
+    // else if($('#college_roll').val()=="")
+    // {
+    //     Swal.fire("College roll required!!");
+    //     $('.lbl_college_roll').css('color','red');
+    // }
+    else if($('#date_of_birth').val()=="")
     {
         Swal.fire("Date of Birth required!!");
         $('.lbl_dob').css('color','red');
-    }else if($('#nid').val()=="")
+    }
+    else if($('#nid').val()=="" && $('#passport').val()=="" )
     {
-        Swal.fire("NID required!!");
+        Swal.fire("NID or Passport is required!!");
         $('.lbl_nid').css('color','red');
-    }else if($('#fathers_name').val()=="")
+        $('.lbl_passport').css('color','red');
+    }
+    else if($('#fathers_name').val()=="")
     {
         Swal.fire("Father's name required!!");
         $('.lbl_fathers_name').css('color','red');

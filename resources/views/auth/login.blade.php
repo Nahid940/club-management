@@ -49,24 +49,24 @@
         </div>
         <div class="row">
           <!-- /.col -->
-          <div class="col-8">
-            <a href="{{route('register')}}" style="color: #ff5235;font-weight:bold;font-size:18px" class="">Create new account</a>
-          </div>
-          <div class="col-4">
+          {{--<div class="col-8">--}}
+            {{--<a href="{{route('register')}}" style="color: #ff5235;font-weight:bold;font-size:18px" class="">Create new account</a>--}}
+          {{--</div>--}}
+          <div class="col-4 offset-4">
             <button type="submit" class="btn btn-success btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
-        </div>
+        {{--<div class="row">--}}
+          {{--<div class="col-8">--}}
+            {{--<div class="icheck-primary">--}}
+              {{--<input type="checkbox" id="remember">--}}
+              {{--<label for="remember">--}}
+                {{--Remember Me--}}
+              {{--</label>--}}
+            {{--</div>--}}
+          {{--</div>--}}
+        {{--</div>--}}
       </form>
       {{-- <p class="mb-1">
         <a href="forgot-password.html">I forgot my password</a>

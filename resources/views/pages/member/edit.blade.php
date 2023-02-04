@@ -222,8 +222,8 @@
                             @else
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="member_code" class="lbl_reg_date">Member Code <span class="txt-info">*</span></label>
-                                        <input type="text" placeholder="Member Code" id="member_code" value="{{ $member->member_code }}"  name="member_code" class="form-control"/>
+                                        <label for="member_code" class="lbl_reg_date">Member ID <span class="txt-info">*</span></label>
+                                        <input type="text" placeholder="Member ID" id="member_code" value="{{ $member->member_code }}"  name="member_code" class="form-control"/>
                                     </div>
                                 </div>
                             @endrole
@@ -258,7 +258,7 @@
                             </div>
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
-                                    <label for="college_roll">College Roll Number <span class="txt-info">*</span></label>
+                                    <label for="college_roll">College Roll Number </label>
                                     <input type="text" id="college_roll" value="{{ $member->college_roll}}" name="college_roll" class="form-control" placeholder="College Roll Number"/>
                                 </div>
                             </div>
@@ -272,14 +272,14 @@
                         <div class="row">
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
-                                    <label for="nid">NID Number <span class="txt-info">*</span></label>
-                                    <input type="text" id="nid" name="nid" value="{{ $member->nid}}" class="form-control" placeholder="NID Number" require/>
+                                    <label for="nid">NID Number </label>
+                                    <input type="text" id="nid" name="nid" value="{{ $member->nid}}" class="form-control" placeholder="NID Number"/>
                                 </div>
                             </div>
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
-                                    <label for="passport">Passport Number</label>
-                                    <input type="text" id="passport" name="passport" value="{{ $member->passport}}" class="form-control" placeholder="Passport Number" require/>
+                                    <label for="passport" class="lbl_passport">Passport Number</label>
+                                    <input type="text" id="passport" name="passport" value="{{ $member->passport}}" class="form-control" placeholder="Passport Number"/>
                                 </div>
                             </div>
                             <div class="col-md-3 col-lg-3 col-sm-12">
@@ -314,7 +314,7 @@
                             </div>
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
-                                    <label for="mothers_name">Motherss Name</label>
+                                    <label for="mothers_name">Mothers Name</label>
                                     <input type="text" class="form-control" value="{{$member->mothers_name}}" id="mothers_name" name="mothers_name" placeholder="Mother's Name"/>
                                 </div>
                             </div>
