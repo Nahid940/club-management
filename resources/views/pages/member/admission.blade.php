@@ -331,7 +331,7 @@
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="occupation_type">Occupation Type</label>
-                                    <select class="form-control" id="occupation_type" name="occupation_type" require>
+                                    <select class="form-control" id="occupation_type" name="occupation_type">
                                         <option value="">--Select--</option>
                                         <option value="1" {{old ('occupation_type') == '1' ? 'selected' : ''}}>Service</option>
                                         <option value="2" {{old ('occupation_type') == '1' ? 'selected' : ''}}>Self Employed</option>
@@ -342,7 +342,7 @@
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="passing_year" class="lbl_passing_year">Passing Year </label>
-                                    <input type="text" id="passing_year" value="{{ old('passing_year') }}" name="passing_year" class="form-control" placeholder="Passing Year"/>
+                                    <input type="text" id="passing_year" value="{{ old('member_passing_year') }}" name="member_passing_year" class="form-control" placeholder="Passing Year"/>
                                 </div>
                             </div>
                         </div>

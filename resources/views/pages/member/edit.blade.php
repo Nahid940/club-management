@@ -355,7 +355,7 @@
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label for="passing_year" class="lbl_passing_year">Passing Year </label>
-                                    <input type="text" id="passing_year" value="{{ $member->passing_year }}" name="passing_year" class="form-control" placeholder="Passing Year"/>
+                                    <input type="text" id="passing_year" value="{{ $member->passing_year }}" name="member_passing_year" class="form-control" placeholder="Passing Year"/>
                                 </div>
                             </div>
                         </div>

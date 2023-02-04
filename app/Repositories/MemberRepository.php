@@ -171,7 +171,7 @@ class MemberRepository implements MemberInterface
 
         $image=$data['image'];
         $input['file'] =$data['member_photo'];
-        $data['member_photo_file']= $data['college_roll']."_".$input['file'];
+        $data['member_photo_file']= $data['member_code']."_".$input['file'];
         $destinationPath = public_path('/storage/member_photo');
         $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
         $imgFile->resize(150, 150, function ($constraint) {
@@ -183,7 +183,7 @@ class MemberRepository implements MemberInterface
         {
             $nid=$data['nid_doc'];
             $input['file'] =$data['member_nid_doc'];
-            $data['member_nid_file']= $data['college_roll']."_".$input['file'];
+            $data['member_nid_file']= $data['member_code']."_".$input['file'];
             $nid->move(public_path('/storage/member_nid'),$data['member_nid_file']);
         }else
         {
@@ -194,7 +194,7 @@ class MemberRepository implements MemberInterface
         {
             $hsc=$data['hsc_doc'];
             $input['file'] =$data['member_hsc_doc'];
-            $data['member_hsc_doc']= $data['college_roll']."_".$input['file'];
+            $data['member_hsc_doc']= $data['member_code']."_".$input['file'];
             $hsc->move(public_path('/storage/member_hsc'),$data['member_hsc_doc']);
         }else
         {
@@ -205,7 +205,7 @@ class MemberRepository implements MemberInterface
         {
             $tin=$data['tin_doc'];
             $input['file'] =$data['member_tin_doc'];
-            $data['member_tin_doc']= $data['college_roll']."_".$input['file'];
+            $data['member_tin_doc']= $data['member_code']."_".$input['file'];
             $tin->move(public_path('/storage/member_tin'),$data['member_tin_doc']);
         }else
         {
@@ -214,6 +214,7 @@ class MemberRepository implements MemberInterface
 
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
+            'passing_year'              =>   $data['passing_year'],
             "first_name"                =>   $data['name'],
             "last_name"                 =>   $data['name'],
             "member_code"               =>   $data['member_code'],
@@ -231,6 +232,7 @@ class MemberRepository implements MemberInterface
             "mothers_name"              =>   $data['mothers_name'],
             "mobile_number"             =>   $data['mobile_number'],
             "email"                     =>   $data['email'],
+            "occupation"                =>   $data['occupation'],
             "occupation_type"           =>   $data['occupation_type'],
             "present_address"           =>   $data['present_address'],
             "permanent_address"         =>   $data['permanent_address'],
@@ -334,7 +336,7 @@ class MemberRepository implements MemberInterface
             Storage::disk('local')->delete('public/member_photo/'. $data['member_old_photo']);
             $image=$data['image'];
             $input['file'] =$data['member_photo'];
-            $data['member_photo_file']= $data['college_roll']."_".$input['file'];
+            $data['member_photo_file']= $data['member_code']."_".$input['file'];
             $destinationPath = public_path('/storage/member_photo');
             $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
             $imgFile->resize(150, 150, function ($constraint) {
@@ -351,7 +353,7 @@ class MemberRepository implements MemberInterface
             Storage::disk('local')->delete('public/member_nid/'. $data['member_nid_old_doc']);
             $nid=$data['nid_doc'];
             $input['file'] =$data['member_nid_doc'];
-            $data['member_nid_file']= $data['college_roll']."_".$input['file'];
+            $data['member_nid_file']= $data['member_code']."_".$input['file'];
             $nid->move(public_path('/storage/member_nid'),$data['member_nid_file']);
         }else
         {
@@ -363,7 +365,7 @@ class MemberRepository implements MemberInterface
             Storage::disk('local')->delete('public/member_hsc/'. $data['member_hsc_old_doc']);
             $hsc=$data['hsc_doc'];
             $input['file'] =$data['member_hsc_doc'];
-            $data['member_hsc_doc']= $data['college_roll']."_".$input['file'];
+            $data['member_hsc_doc']= $data['member_code']."_".$input['file'];
             $hsc->move(public_path('/storage/member_hsc'),$data['member_hsc_doc']);
         }else
         {
@@ -375,7 +377,7 @@ class MemberRepository implements MemberInterface
             Storage::disk('local')->delete('public/member_tin/'. $data['member_tin_old_doc']);
             $tin=$data['tin_doc'];
             $input['file'] =$data['member_tin_doc'];
-            $data['member_tin_doc']= $data['college_roll']."_".$input['file'];
+            $data['member_tin_doc']= $data['member_code']."_".$input['file'];
             $tin->move(public_path('/storage/member_tin'),$data['member_tin_doc']);
         }else
         {
@@ -384,6 +386,7 @@ class MemberRepository implements MemberInterface
 
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
+            'passing_year'              =>   $data['passing_year'],
             "first_name"                =>   $data['name'],
             "member_code"               =>   $data['member_code'],
             "last_name"                 =>   $data['name'],
@@ -401,6 +404,7 @@ class MemberRepository implements MemberInterface
             "mothers_name"              =>   $data['mothers_name'],
             "mobile_number"             =>   $data['mobile_number'],
             "email"                     =>   $data['email'],
+            "occupation"                =>   $data['occupation'],
             "occupation_type"           =>   $data['occupation_type'],
             "present_address"           =>   $data['present_address'],
             "permanent_address"         =>   $data['permanent_address'],
@@ -504,6 +508,7 @@ class MemberRepository implements MemberInterface
     {
         $validated = $request->validated();
         $data['registration_date']      =$validated['registration_date'];
+        $data['passing_year']           =$request->member_passing_year;
         $data['name']                   =$validated['name'];
         $data['member_code']            =$validated['member_code'];
         $data['member_type']            =$validated['member_type'];
@@ -518,10 +523,10 @@ class MemberRepository implements MemberInterface
         $data['fathers_name']           =$request->fathers_name;
         $data['mothers_name']           =$request->mothers_name;
         $data['mobile_number']          =$validated['mobile_number'];
-        $data['email']                  =$request->email;
+        $data['email']                  =strtolower($request->email);
+        $data["occupation"]             =$request->occupation;
         $data['occupation_type']        =$request->occupation_type;
         $data['institution_name']       =$request->institution_name;
-        $data['passing_year']           =$request->passing_year;
         $data['degree']                 =$request->degree;
         $data['present_address']        =$validated['present_address'];
         $data['permanent_address']      =$request->permanent_address;

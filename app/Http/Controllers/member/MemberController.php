@@ -7,6 +7,7 @@ use App\Mail\MemberMail;
 use App\Models\EmailConfig;
 use App\Models\Member;
 use App\Models\MemberClassification;
+use App\Models\Occupation;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,7 +51,8 @@ class MemberController extends Controller
         $data['status']=-1; //-1 for new application
         $data['request_data']=$request->all();
         $members=$this->memberInfo->getMembers($data);
-        return view('pages.member.new-application',['title' => $pageTitle,'members'=>$members]);
+        $occupations=Occupation::select('id','occupation')->get();
+        return view('pages.member.new-application',['title' => $pageTitle,'members'=>$members,"occupations"=>$occupations]);
     }
 
     public function read($id)
@@ -88,7 +90,8 @@ class MemberController extends Controller
     public function edit($id)
     {
         $member=$this->memberInfo->getMember($id);
-        return view('pages.member.edit',['title' => "",'member'=>$member]);
+        $occupations=Occupation::select('id','occupation')->get();
+        return view('pages.member.edit',['title' => "",'member'=>$member,"occupations"=>$occupations]);
     }
 
     public function memberProfileUpdate()
@@ -125,13 +128,14 @@ class MemberController extends Controller
         $user=Auth::user();
         $is_member=$user->hasRole('member');
         $is_already_applied=isAlreadyApplied($user->id);
+        $occupations=Occupation::select('id','occupation')->get();
         if($is_member && $is_already_applied)
         {
             return view('pages.member.error',['title' => ""]);
         }else
         {
             $today=date('Y-m-d');
-            return view('pages.member.admission',['title' => "",'today'=>$today]);
+            return view('pages.member.admission',['title' => "",'today'=>$today,"occupations"=>$occupations]);
         }
     }
 
@@ -190,6 +194,14 @@ class MemberController extends Controller
             ]);
             $user->assignRole(2);
             Member::where('id',$request->id)->update(['user_id'=>$user->id]);
+
+            $this->memberInfo->approve($request->id);
+            if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
+            {
+                $memberInfo->send_credentials=1;
+                Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
+            }
+            return redirect()->back()->with(['message' => "Membership application approved!"]);
         }
         $this->memberInfo->approve($request->id);
         if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
