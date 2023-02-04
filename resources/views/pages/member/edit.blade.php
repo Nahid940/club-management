@@ -330,6 +330,17 @@
                                     <input type="text" class="form-control" id="email" value="{{ $member->email }}" name="email" placeholder="Email" require/>
                                 </div>
                             </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label for="occupation_type">Occupation</label>
+                                    <select class="form-control" id="occupation" name="occupation">
+                                        <option value="">--Select--</option>
+                                        @foreach($occupations as $occupation)
+                                            <option {{$member->occupation==$occupation->id?"selected":""}} value="{{$occupation->id}}">{{$occupation->occupation}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-3 col-lg-3 col-sm-12">
                                 <div class="form-group">
                                     <label for="occupation_type">Occupation Type</label>
@@ -339,6 +350,12 @@
                                         <option value="2"{{$member->occupation_type==2?"selected":""}}> Self Employed</option>
                                         <option value="3"{{$member->occupation_type==3?"selected":""}}> Retired</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label for="passing_year" class="lbl_passing_year">Passing Year </label>
+                                    <input type="text" id="passing_year" value="{{ $member->passing_year }}" name="passing_year" class="form-control" placeholder="Passing Year"/>
                                 </div>
                             </div>
                         </div>

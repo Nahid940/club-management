@@ -20,6 +20,7 @@ use App\Http\Controllers\report\PaymentReportController;
 use App\Http\Controllers\report\DonationReportController;
 use App\Http\Controllers\EmailConfigController;
 use App\Http\Controllers\DonationPurposeController;
+use App\Http\Controllers\OccupationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -211,6 +212,17 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('import-members',[MemberController::class, 'import'])->name('import-members');
 Route::get('email-config',[EmailConfigController::class, 'config'])->name('email-config')->middleware('auth');
 Route::post('email-config',[EmailConfigController::class, 'save'])->name('email-config')->middleware('auth');
+
+
+
+Route::group(['middleware' => ['auth']],function (){
+    Route::get('occupation-index',[OccupationController::class,'index'])->name('occupation-index');
+    Route::get('occupation-add',[OccupationController::class,'add'])->name('occupation-add');
+    Route::get('occupation-edit/{id}',[OccupationController::class,'edit'])->name('occupation-edit');
+    Route::post('occupation-update',[OccupationController::class,'update'])->name('occupation-update');
+    Route::post('occupation-add',[OccupationController::class,'save'])->name('occupation-add');
+    Route::delete('occupation-delete',[OccupationController::class,'delete'])->name('occupation-delete');
+});
 
 
 Route::get('cache-clear',function (){

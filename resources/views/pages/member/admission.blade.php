@@ -319,6 +319,17 @@
                             </div>
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
+                                    <label for="occupation_type">Occupation</label>
+                                    <select class="form-control" id="occupation" name="occupation">
+                                        <option value="">--Select--</option>
+                                        @foreach($occupations as $occupation)
+                                            <option value="{{$occupation->id}}">{{$occupation->occupation}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group">
                                     <label for="occupation_type">Occupation Type</label>
                                     <select class="form-control" id="occupation_type" name="occupation_type" require>
                                         <option value="">--Select--</option>
@@ -326,6 +337,12 @@
                                         <option value="2" {{old ('occupation_type') == '1' ? 'selected' : ''}}>Self Employed</option>
                                         <option value="3" {{old ('occupation_type') == '1' ? 'selected' : ''}}>Retired</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label for="passing_year" class="lbl_passing_year">Passing Year </label>
+                                    <input type="text" id="passing_year" value="{{ old('passing_year') }}" name="passing_year" class="form-control" placeholder="Passing Year"/>
                                 </div>
                             </div>
                         </div>
