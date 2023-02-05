@@ -87,6 +87,37 @@
     input[type="file"] {
         display: none;
     }
+
+
+    .suggestion-area1, .suggestion-area2 {
+    position: absolute;
+    width: 98%;
+    background-color: #fff;
+    z-index: 11;
+    display: block;
+    height: auto;
+    margin-top:-6px
+    }
+    .search-item{
+    border-bottom:1px solid #fff;
+    }
+    .suggestion-area1 .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
+    background-color: #0b64d4;
+    color:#fff;
+    padding: 5px;
+    list-style: none;
+    overflow: hidden;
+    }
+    .search-content{
+    color:#fff
+    }
+    .search-item:hover{
+    background-color: #1975e6;
+    cursor:pointer
+    }
+    .hidden_area{
+    display:none
+    }
 @stop
 
 @section('content')
@@ -176,30 +207,32 @@
                             <div class="col-md-8">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{old ('member_type') == 1 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem1" value="1">
-                                        <label for="mem1">
-                                            Donor Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{old ('member_type') == 2 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem2" value="2">
-                                        <label for="mem2">
-                                            Life Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{old ('member_type') == 3 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem3" value="4">
-                                        <label for="mem3">
-                                            NRB Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{old ('member_type') == 4 ? 'checked' : ''}}  name="member_type" class="member_type"  id="mem4" value="4">
-                                        <label for="mem4">
-                                            General Member
-                                        </label>
-                                    </div>
+                                    @foreach($membership_types as $membership_type)
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox" {{old ('member_type') == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
+                                            <label for="mem{{$membership_type->id}}">
+                                                {{$membership_type->type_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                    {{--<div class="icheck-primary d-inline">--}}
+                                        {{--<input type="checkbox" {{old ('member_type') == 2 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem2" value="2">--}}
+                                        {{--<label for="mem2">--}}
+                                            {{--Life Member--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="icheck-primary d-inline">--}}
+                                        {{--<input type="checkbox" {{old ('member_type') == 3 ? 'checked' : ''}}   name="member_type" class="member_type"  id="mem3" value="4">--}}
+                                        {{--<label for="mem3">--}}
+                                            {{--NRB Member--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="icheck-primary d-inline">--}}
+                                        {{--<input type="checkbox" {{old ('member_type') == 4 ? 'checked' : ''}}  name="member_type" class="member_type"  id="mem4" value="4">--}}
+                                        {{--<label for="mem4">--}}
+                                            {{--General Member--}}
+                                        {{--</label>--}}
+                                    {{--</div>--}}
                                 </div>
                             </div>
                             @role('member')
@@ -346,10 +379,64 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id="payment_info_row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form_part_heading">Payment Information<span></span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="admission_fee" class="lbl_passing_year">Membership Fee </label>
+                                    <input type="text" id="admission_fee" value="{{ old('admission_fee') }}" name="admission_fee" class="form-control" placeholder="Admission Fee"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="amount" class="lbl_passing_year">Payment Amount <span class="txt-info">*</span></label>
+                                    <input type="text" id="amount" value="{{ old('amount') }}" name="amount" class="form-control" placeholder="Payment Amount"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group clearfix">
+                                    <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="member_type"  id="payment1" value="1">
+                                        <label for="payment1">
+                                            Pay Order
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="member_type"  id="payment2" value="2">
+                                        <label for="payment2">
+                                            Cash
+                                        </label>
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="member_type"  id="payment3" value="3">
+                                        <label for="payment3">
+                                            Cheque
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="payment_ref_no" class="lbl_passing_year">Payment Reference No.</label>
+                                    <input type="text" id="payment_ref_no" value="{{ old('payment_ref_no') }}" name="payment_ref_no" class="form-control" placeholder="Reference"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="remarks" class="lbl_passing_year">Payment Remarks</label>
+                                    <input type="text" id="remarks" value="{{ old('remarks') }}" name="remarks" class="form-control" placeholder="Remarks"/>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <div class="form_part_heading" for="">Educational Background <span><i class="fa fa-question-circle" aria-hidden="true"></i></span></div>
+                                    <div class="form_part_heading" for="">Educational Background <span></span></div>
                                     <table id="" class="table  table-borderless">
                                         <thead>
                                             <tr>
@@ -681,6 +768,27 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="">
+                                    <label for="">Proposed By<span class="text-danger">*</span></label>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Proposed By Member ID" id="member_search1" required>
+                                    <input type="hidden" id="proposed_by" name="proposed_by">
+                                </div>
+                                <div class="suggestion-area1 hidden_area">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" style="">
+                                    <label for="">Seconded By<span class="text-danger">*</span></label>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Seconded Member ID" id="member_search2" required>
+                                    <input type="hidden" id="seconded_by" name="seconded_by">
+                                </div>
+                                <div class="suggestion-area2 hidden_area">
+
+                                </div>
+                            </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -803,8 +911,26 @@
 @stop
 @section('script_link')
     <script src="{{asset('js/input-form.js')}}"></script>
+    <script src="{{asset('js/member-search.js')}}"></script>
 @stop
 @section('script')
 
+    $("body").on("click", ".listitem1", function () {
+        let name=$(this).data('name');
+        let id=$(this).data('id');
+        $('#member_search1').val(name);
+        $('#proposed_by').val(id);
+        $('.suggestion-area1').addClass('hidden_area');
+        $('.suggestion-area1').html();
+    });
+
+    $("body").on("click", ".listitem2", function () {
+    let name=$(this).data('name');
+    let id=$(this).data('id');
+    $('#member_search2').val(name);
+    $('#seconded').val(id);
+    $('.suggestion-area2').addClass('hidden_area');
+    $('.suggestion-area2').html();
+    });
 
 @stop

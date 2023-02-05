@@ -7,6 +7,7 @@ use App\Mail\MemberMail;
 use App\Models\EmailConfig;
 use App\Models\Member;
 use App\Models\MemberClassification;
+use App\Models\MembershipType;
 use App\Models\Occupation;
 use App\Models\User;
 use Carbon\Carbon;
@@ -91,7 +92,12 @@ class MemberController extends Controller
     {
         $member=$this->memberInfo->getMember($id);
         $occupations=Occupation::select('id','occupation')->get();
-        return view('pages.member.edit',['title' => "",'member'=>$member,"occupations"=>$occupations]);
+        $membership_types=MembershipType::select('membership_types.id','type_name','short_form','admission_fee','monthly_fee')
+            ->leftJoin('membership_fees', function ($join) {
+                $join->on('membership_type_id', '=', 'membership_types.id')
+                    ->where('membership_fees.status', '=', 1);
+            })->get();
+        return view('pages.member.edit',['title' => "",'member'=>$member,"occupations"=>$occupations,"membership_types"=>$membership_types]);
     }
 
     public function memberProfileUpdate()
@@ -129,13 +135,18 @@ class MemberController extends Controller
         $is_member=$user->hasRole('member');
         $is_already_applied=isAlreadyApplied($user->id);
         $occupations=Occupation::select('id','occupation')->get();
+        $membership_types=MembershipType::select('membership_types.id','type_name','short_form','admission_fee','monthly_fee')
+            ->leftJoin('membership_fees', function ($join) {
+                $join->on('membership_type_id', '=', 'membership_types.id')
+                    ->where('membership_fees.status', '=', 1);
+            })->get();
         if($is_member && $is_already_applied)
         {
             return view('pages.member.error',['title' => ""]);
         }else
         {
             $today=date('Y-m-d');
-            return view('pages.member.admission',['title' => "",'today'=>$today,"occupations"=>$occupations]);
+            return view('pages.member.admission',['title' => "",'today'=>$today,"occupations"=>$occupations,'membership_types'=>$membership_types]);
         }
     }
 
@@ -220,7 +231,7 @@ class MemberController extends Controller
     public function search(Request $request)
     {
         if(empty($request->value)) return false;
-        $members=Member::where('first_name','LIKE',"%$request->value%")->where('status',1)->select('id','first_name','email')->get();
+        $members=Member::where('member_code','LIKE',"%$request->value%")->where('status',1)->select('id','first_name','member_code')->get();
         return json_encode(["members"=>$members]);
     }
 

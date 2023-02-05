@@ -2,6 +2,7 @@
 namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
+use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -260,48 +261,78 @@ class MemberRepository implements MemberInterface
             "member_nid_file"           =>   $data['member_nid_file'],
             "member_hsc_doc"            =>   $data['member_hsc_doc'],
             "member_tin_doc"            =>   $data['member_tin_doc'],
+            "admission_fee"             =>   $data['admission_fee'],
             "user_id"                   =>   $data['user_id'],
+            "proposed_by"               =>   $data['proposed_by'],
+            "seconded_by"               =>   $data['seconded_by'],
             "created_at"                =>   Carbon::now(),
             "entry_by"                  =>   $user->id,
         );
-        $id=DB::table('members')->insertGetId($member_basic_data);
 
-        for ($i=0;$i<sizeof($data['institution_name']);$i++)
-        {
-            if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
-                DB::table('member_educations')->insert([
-                    'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
-                    'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
-                    'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
-                    'member_id' => $id
-                ]);
-            }
-        }
 
-        for ($i=0;$i<sizeof($data['club_name']);$i++)
-        {
-            if(isset($data['club_name'][$i]) && !empty(isset($data['club_name'][$i]))) {
-                DB::table('club_memberships')->insert([
-                    'member_id' => $id,
-                    'club_name' => isset($data['club_name'][$i]) ? $data['club_name'][$i] : "",
-                    'membership_no' => isset($data['membership_no'][$i]) ? $data['membership_no'][$i] : 0,
-                    'membership_type' => isset($data['membership_type'][$i]) ? $data['membership_type'][$i] : "",
-                ]);
-            }
-        }
+        try {
+            DB::beginTransaction();
+                $id=DB::table('members')->insertGetId($member_basic_data);
 
-        for ($i=0;$i<sizeof($data['dep_name']);$i++)
-        {
-            if(isset($data['dep_name'][$i]) && !empty(isset($data['dep_name'][$i]))) {
-                DB::table('member_dependant_lists')->insert([
-                    'member_id' => $id,
-                    'dep_name' => isset($data['dep_name'][$i]) ? $data['dep_name'][$i] : "",
-                    'dep_dob' => isset($data['dep_dob'][$i]) ? $data['dep_dob'][$i] : 0,
-                    'dep_blood_group' => isset($data['dep_blood_group'][$i]) ? $data['dep_blood_group'][$i] : "",
-                    'dep_occupation' => isset($data['dep_occupation'][$i]) ? $data['dep_occupation'][$i] : "",
-                    'dep_nid' => isset($data['dep_nid'][$i]) ? $data['dep_nid'][$i] : "",
+                for ($i=0;$i<sizeof($data['institution_name']);$i++)
+                {
+                    if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
+                        DB::table('member_educations')->insert([
+                            'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
+                            'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+                            'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
+                            'member_id' => $id
+                        ]);
+                    }
+                }
+
+                for ($i=0;$i<sizeof($data['club_name']);$i++)
+                {
+                    if(isset($data['club_name'][$i]) && !empty(isset($data['club_name'][$i]))) {
+                        DB::table('club_memberships')->insert([
+                            'member_id' => $id,
+                            'club_name' => isset($data['club_name'][$i]) ? $data['club_name'][$i] : "",
+                            'membership_no' => isset($data['membership_no'][$i]) ? $data['membership_no'][$i] : 0,
+                            'membership_type' => isset($data['membership_type'][$i]) ? $data['membership_type'][$i] : "",
+                        ]);
+                    }
+                }
+
+                for ($i=0;$i<sizeof($data['dep_name']);$i++)
+                {
+                    if(isset($data['dep_name'][$i]) && !empty(isset($data['dep_name'][$i]))) {
+                        DB::table('member_dependant_lists')->insert([
+                            'member_id' => $id,
+                            'dep_name' => isset($data['dep_name'][$i]) ? $data['dep_name'][$i] : "",
+                            'dep_dob' => isset($data['dep_dob'][$i]) ? $data['dep_dob'][$i] : 0,
+                            'dep_blood_group' => isset($data['dep_blood_group'][$i]) ? $data['dep_blood_group'][$i] : "",
+                            'dep_occupation' => isset($data['dep_occupation'][$i]) ? $data['dep_occupation'][$i] : "",
+                            'dep_nid' => isset($data['dep_nid'][$i]) ? $data['dep_nid'][$i] : "",
+                        ]);
+                    }
+                }
+
+                Payment::create([
+                    "member_id"=>$id,
+                    "payment_type"=>0, //0 for admission type payment
+                    "payment_date"=>$data['registration_date'],
+                    "amount"=>$data['amount'],
+                    "currency_rate"=>1,
+                    "currency"=>"BDT",
+                    "payment_method"=>$data['payment_method'],
+                    "payment_ref_no"=>$data['payment_ref_no'],
+                    "remarks"=>$data['remarks'],
+                    "purpose_id"=>null,
+                    "payment_month"=>date('m',strtotime($data['registration_date'])),
+                    "payment_year"=>date('Y',strtotime($data['registration_date'])),
+                    "created_at"=>Carbon::now(),
+                    "created_by"=>Auth::user()->id,
+                    "is_payment"=>1
                 ]);
-            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('message',$e->getMessage());
         }
         return $id;
         // "club_name"=>$data['club_name'],
@@ -406,6 +437,14 @@ class MemberRepository implements MemberInterface
             "email"                     =>   $data['email'],
             "occupation"                =>   $data['occupation'],
             "occupation_type"           =>   $data['occupation_type'],
+
+            "admission_fee"             =>  $data['admission_fee'],
+            "amount"                    =>  $data['amount'],
+            "payment_method"            =>  $data['payment_method'],
+            "payment_ref_no"            =>  $data['payment_ref_no'],
+            "remarks"                   =>  $data['remarks'],
+
+
             "present_address"           =>   $data['present_address'],
             "permanent_address"         =>   $data['permanent_address'],
             "company_name"              =>   $data['company_name'],
@@ -432,6 +471,8 @@ class MemberRepository implements MemberInterface
             "member_nid_file"           =>   $data['member_nid_file'],
             "member_hsc_doc"            =>   $data['member_hsc_doc'],
             "member_tin_doc"            =>   $data['member_tin_doc'],
+            "proposed_by"               =>   $data['proposed_by'],
+            "seconded_by"               =>   $data['seconded_by'],
             "updated_at"                =>   Carbon::now(),
             "updated_by"                =>   $data['user_id'],
         );
@@ -526,6 +567,14 @@ class MemberRepository implements MemberInterface
         $data['email']                  =strtolower($request->email);
         $data["occupation"]             =$request->occupation;
         $data['occupation_type']        =$request->occupation_type;
+
+        $data['admission_fee']          =$request->admission_fee;
+        $data['amount']                 =$request->amount;
+        $data['payment_method']         =$request->payment_method;
+        $data['payment_ref_no']         =$request->payment_ref_no;
+        $data['remarks']                =$request->remarks;
+
+
         $data['institution_name']       =$request->institution_name;
         $data['degree']                 =$request->degree;
         $data['present_address']        =$validated['present_address'];
@@ -561,6 +610,9 @@ class MemberRepository implements MemberInterface
         $data['dep_nid']                =$request->dep_nid;
         $data['branch_name']            =$request->branch_name;
         $data['acc_no']                 =$request->acc_no;
+
+        $data["proposed_by"]            =$request->proposed_by;
+        $data["seconded_by"]            =$request->seconded_by;
 
         $image                          =$request->file('member_photo');
         $data['image']                  =$image;

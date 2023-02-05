@@ -191,30 +191,14 @@
                             <div class="col-md-8">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{ $member->member_type=='Donor Member'?"checked":"" }}    name="member_type" class="member_type"  id="mem1" value="1">
-                                        <label for="mem1">
-                                            Donor Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{ $member->member_type=='Life Member'?"checked":"" }}    name="member_type" class="member_type"  id="mem2" value="2">
-                                        <label for="mem2">
-                                            Life Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{ $member->member_type=='NRB Member'?"checked":"" }}    name="member_type" class="member_type"  id="mem3" value="3">
-                                        <label for="mem3">
-                                            NRB Member
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" {{ $member->member_type=='General Member'?"checked":"" }}   name="member_type" class="member_type"  id="mem4" value="4">
-                                        <label for="mem4">
-                                            General Member
-                                        </label>
-                                    </div>
+                                    @foreach($membership_types as $membership_type)
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox" {{old ('member_type') == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
+                                            <label for="mem{{$membership_type->id}}">
+                                                {{$membership_type->type_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                             @role('member')
