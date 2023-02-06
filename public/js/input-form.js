@@ -75,23 +75,39 @@ $('#mem1').on('click',function(){
     $('#mem2').prop('checked',false);
     $('#mem3').prop('checked',false);
     $('#mem4').prop('checked',false);
+    $('#mem5').prop('checked',false);
+    $('#admission_fee').val($(this).data('admission-fee'))
 })
 
 $('#mem2').on('click',function(){
     $('#mem1').prop('checked',false);
     $('#mem3').prop('checked',false);
     $('#mem4').prop('checked',false);
+    $('#mem5').prop('checked',false);
+    $('#admission_fee').val($(this).data('admission-fee'))
 })
 
 $('#mem3').on('click',function(){
     $('#mem1').prop('checked',false);
     $('#mem2').prop('checked',false);
     $('#mem4').prop('checked',false);
+    $('#mem5').prop('checked',false);
+    $('#admission_fee').val($(this).data('admission-fee'))
 })
 $('#mem4').on('click',function(){
     $('#mem1').prop('checked',false);
     $('#mem2').prop('checked',false);
     $('#mem3').prop('checked',false);
+    $('#mem5').prop('checked',false);
+    $('#admission_fee').val($(this).data('admission-fee'))
+});
+
+$('#mem5').on('click',function(){
+    $('#mem1').prop('checked',false);
+    $('#mem2').prop('checked',false);
+    $('#mem3').prop('checked',false);
+    $('#mem4').prop('checked',false);
+    $('#admission_fee').val($(this).data('admission-fee'))
 })
 
 
@@ -292,11 +308,22 @@ imgInp.onchange = evt => {
 
 
 let step=0;
+var size;
 $("#next").click(function(){
-    if(!$('.member_type').is(":checked"))
+
+    var fileUpload = document.getElementById("imgInp");
+    if(fileUpload.files[0]==undefined)
+    {
+        Swal.fire('Member photo required!');
+    }
+    else if(parseFloat(fileUpload.files[0].size / 1024).toFixed(2)>100)
+    {
+        Swal.fire('Photo size must be less than 100 kb!');
+    }
+    else if(!$('.member_type').is(":checked"))
     {
         $('.mem_type').css('color','red');
-        Swal.fire('Type of membership required!',);
+        Swal.fire('Type of membership required!');
     }else if($('#registration_date').val()=="")
     {
         Swal.fire("Registration date required!!");
@@ -310,6 +337,8 @@ $("#next").click(function(){
         Swal.fire("Member name required!!");
         $('.lbl_mmbr_name').css('color','red');
     }
+
+
     // else if($('#college_roll').val()=="")
     // {
     //     Swal.fire("College roll required!!");
@@ -342,7 +371,17 @@ $("#next").click(function(){
     {
         Swal.fire("Email required!!")
         $('.lbl_email').css('color','red');
-    }else if($('#present_address').val()=="")
+    }else if(($(".member_type:checked").data('short-name')=='UM' || $(".member_type:checked").data('short-name')=='GM') && $('#amount').val()=='')
+    {
+        Swal.fire("Payment amount required!!")
+        $('.lbl_payment_amount').css('color','red');
+    }
+    else if(($(".member_type:checked").data('short-name')=='UM' || $(".member_type:checked").data('short-name')=='GM') && $('.payment_method:checked').val()==null)
+    {
+        Swal.fire("Payment method required!!")
+        $('.lbl_payment_method').css('color','red');
+    }
+    else if($('#present_address').val()=="")
     {
         Swal.fire("Present address required!!")
         $('.lbl_present_address').css('color','red');
@@ -569,4 +608,17 @@ $('#tin_doc').change(function(e){
 });
 
 
+$('#payment1').on('click',function(){
+    $('#payment2').prop('checked',false);
+    $('#payment3').prop('checked',false);
+});
 
+$('#payment2').on('click',function(){
+    $('#payment1').prop('checked',false);
+    $('#payment3').prop('checked',false);
+});
+
+$('#payment3').on('click',function(){
+    $('#payment2').prop('checked',false);
+    $('#payment1').prop('checked',false);
+});

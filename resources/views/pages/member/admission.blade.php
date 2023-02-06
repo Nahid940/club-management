@@ -209,7 +209,7 @@
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
                                     @foreach($membership_types as $membership_type)
                                         <div class="icheck-primary d-inline">
-                                            <input type="checkbox" {{old ('member_type') == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
+                                            <input type="checkbox" {{old ('member_type') == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}" data-short-name="{{$membership_type->short_form}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
                                             <label for="mem{{$membership_type->id}}">
                                                 {{$membership_type->type_name}}
                                             </label>
@@ -393,27 +393,27 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="amount" class="lbl_passing_year">Payment Amount <span class="txt-info">*</span></label>
-                                    <input type="text" id="amount" value="{{ old('amount') }}" name="amount" class="form-control" placeholder="Payment Amount"/>
+                                    <label for="amount" class="lbl_payment_amount">Payment Amount <span class="txt-info">*</span></label>
+                                    <input type="number" id="amount" value="{{ old('amount') }}" name="amount" class="form-control" placeholder="Payment Amount"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
-                                    <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
+                                    <label for="" class="lbl_payment_method">Payment Method: <span class="text-danger">*</span></label>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="member_type"  id="payment1" value="1">
+                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="payment_method"  id="payment1" value="1">
                                         <label for="payment1">
                                             Pay Order
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="member_type"  id="payment2" value="2">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="payment_method"  id="payment2" value="2">
                                         <label for="payment2">
                                             Cash
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="member_type"  id="payment3" value="3">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="payment_method"  id="payment3" value="3">
                                         <label for="payment3">
                                             Cheque
                                         </label>
@@ -770,7 +770,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="">
-                                    <label for="">Proposed By<span class="text-danger">*</span></label>
+                                    <label for="">Proposed By<span class="text-danger"></span></label>
                                     <input autocomplete="off" type="text" class="form-control" placeholder="Type Proposed By Member ID" id="member_search1" required>
                                     <input type="hidden" id="proposed_by" name="proposed_by">
                                 </div>
@@ -781,7 +781,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group" style="">
-                                    <label for="">Seconded By<span class="text-danger">*</span></label>
+                                    <label for="">Seconded By<span class="text-danger"></span></label>
                                     <input autocomplete="off" type="text" class="form-control" placeholder="Type Seconded Member ID" id="member_search2" required>
                                     <input type="hidden" id="seconded_by" name="seconded_by">
                                 </div>
@@ -925,12 +925,12 @@
     });
 
     $("body").on("click", ".listitem2", function () {
-    let name=$(this).data('name');
-    let id=$(this).data('id');
-    $('#member_search2').val(name);
-    $('#seconded').val(id);
-    $('.suggestion-area2').addClass('hidden_area');
-    $('.suggestion-area2').html();
+        let name=$(this).data('name');
+        let id=$(this).data('id');
+        $('#member_search2').val(name);
+        $('#seconded').val(id);
+        $('.suggestion-area2').addClass('hidden_area');
+        $('.suggestion-area2').html();
     });
 
 @stop
