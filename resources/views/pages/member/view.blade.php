@@ -64,7 +64,7 @@
                     <td>{{$member->first_name}} </td>
                 </tr>
                 <tr>
-                    <td>Code</td>
+                    <td>Member ID</td>
                     <td><b>{{$member->member_code}}</b> </td>
                 </tr>
                 {{--<tr>--}}
@@ -123,6 +123,14 @@
                             Retired
                         @endif
                     </td>
+                </tr>
+                <tr>
+                    <td>Proposed By</td>
+                    <td>{{$member->proposed_member}}</td>
+                </tr>
+                <tr>
+                    <td>Seconded By</td>
+                    <td>{{$member->seconded_member}}</td>
                 </tr>
                 <tr class="no-print">
                     <td colspan="2"><span class="text-blue text-bold">Attachments</span></td>

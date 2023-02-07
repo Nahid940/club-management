@@ -85,6 +85,37 @@
     input[type="file"] {
         display: none;
     }
+
+
+    .suggestion-area1, .suggestion-area2 {
+    position: absolute;
+    width: 98%;
+    background-color: #fff;
+    z-index: 11;
+    display: block;
+    height: auto;
+    margin-top:-6px
+    }
+    .search-item{
+    border-bottom:1px solid #fff;
+    }
+    .suggestion-area1 .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
+    background-color: #0b64d4;
+    color:#fff;
+    padding: 5px;
+    list-style: none;
+    overflow: hidden;
+    }
+    .search-content{
+    color:#fff
+    }
+    .search-item:hover{
+    background-color: #1975e6;
+    cursor:pointer
+    }
+    .hidden_area{
+    display:none
+    }
 @stop
 @section('content')
 
@@ -182,18 +213,19 @@
                                     <img style="width: 100%" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="" id="sample_img">
                                 </div>
                                 <label class="custom-file-upload">
-                                    <span style="font-size: 10px">Click here to upload<br>your photo</span> <span class="txt-info">*</span>
+                                    <span style="font-size: 10px">Click here to update<br> photo</span> <span class="txt-info">*</span>
                                     <input type="file" name="member_photo" class="" id="imgInp"/>
                                 </label>
                             </div>
                         </div>
+                        <input type="hidden" id="edit" value="1">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Type of Membership: <span class="txt-info">*</span></label>
                                     @foreach($membership_types as $membership_type)
                                         <div class="icheck-primary d-inline">
-                                            <input type="checkbox" {{old ('member_type') == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
+                                            <input type="checkbox" {{$member->member_type_dropdown == $membership_type->id ? 'checked' : ''}}   name="member_type" class="member_type" data-admission-fee="{{$membership_type->admission_fee}}" data-monthly-fee="{{$membership_type->monthly_fee}}"  id="mem{{$membership_type->id}}" value="{{$membership_type->id}}">
                                             <label for="mem{{$membership_type->id}}">
                                                 {{$membership_type->type_name}}
                                             </label>
@@ -648,6 +680,27 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="">
+                                    <label for="">Proposed By<span class="text-danger"></span></label>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Proposed By Member ID" id="member_search1" required>
+                                    <input type="hidden" id="proposed_by" value="{{$member->proposed_by}}" name="proposed_by">
+                                </div>
+                                <div class="suggestion-area1 hidden_area">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group" style="">
+                                    <label for="">Seconded By<span class="text-danger"></span></label>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Seconded Member ID" id="member_search2" required>
+                                    <input type="hidden" id="seconded_by" value="{{$member->seconded_by}}" name="seconded_by">
+                                </div>
+                                <div class="suggestion-area2 hidden_area">
+
+                                </div>
+                            </div>
                         </div>
                         <input type="hidden" name="member_nid_old_doc" value="{{$member->member_nid_file}}">
                         <input type="hidden" name="member_hsc_old_doc" value="{{$member->member_hsc_doc}}">
@@ -725,4 +778,27 @@
 @stop
 @section('script_link')
     <script src="{{asset('js/input-form.js')}}"></script>
+    <script src="{{asset('js/member-search.js')}}"></script>
+@stop
+
+@section('script')
+
+    $("body").on("click", ".listitem1", function () {
+    let name=$(this).data('name');
+    let id=$(this).data('id');
+    $('#member_search1').val(name);
+    $('#proposed_by').val(id);
+    $('.suggestion-area1').addClass('hidden_area');
+    $('.suggestion-area1').html();
+    });
+
+    $("body").on("click", ".listitem2", function () {
+    let name=$(this).data('name');
+    let id=$(this).data('id');
+    $('#member_search2').val(name);
+    $('#seconded_by').val(id);
+    $('.suggestion-area2').addClass('hidden_area');
+    $('.suggestion-area2').html();
+    });
+
 @stop

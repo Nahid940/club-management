@@ -200,8 +200,8 @@
                                     <img id="sample_img" src="{{asset('img/user.jpeg')}}" alt="your image" />
                                 </div>
                                 <label class="custom-file-upload">
-                                    <span>Click here to upload<br>your photo</span> <span class="txt-info">*</span>
-                                    <input type="file" name="member_photo" class="" id="imgInp"/>
+                                    <span>Click here to upload<br> photo</span> <span class="txt-info">*</span>
+                                    <input type="file" name="member_photo" class="" id="imgInp" value="{{old('member_photo')}}"/>
                                 </label>
                             </div>
                             <div class="col-md-8">
@@ -240,7 +240,7 @@
                             @else
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="member_code" class="lbl_reg_date">Member ID <span class="txt-info">*</span></label>
+                                        <label for="member_code" class="lbl_member_id">Member ID <span class="txt-info">*</span></label>
                                         <input type="text" placeholder="Member ID" id="member_code" value="{{ old('member_code') }}"  name="member_code" class="form-control"/>
                                     </div>
                                 </div>
@@ -352,7 +352,7 @@
                             </div>
                             <div class="col-sm-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label for="occupation_type">Occupation</label>
+                                    <label for="occupation" class="lbl_occupation">Occupation <span class="txt-info">*</span></label>
                                     <select class="form-control" id="occupation" name="occupation">
                                         <option value="">--Select--</option>
                                         @foreach($occupations as $occupation)
@@ -393,13 +393,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="amount" class="lbl_payment_amount">Payment Amount <span class="txt-info">*</span></label>
+                                    <label for="amount" class="lbl_payment_amount">Payment Amount <span class="txt-info required"></span></label>
                                     <input type="number" id="amount" value="{{ old('amount') }}" name="amount" class="form-control" placeholder="Payment Amount"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
-                                    <label for="" class="lbl_payment_method">Payment Method: <span class="text-danger">*</span></label>
+                                    <label for="" class="lbl_payment_method">Payment Method: <span class="text-danger required"></span></label>
                                     <div class="icheck-primary d-inline">
                                         <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="payment_method"  id="payment1" value="1">
                                         <label for="payment1">
@@ -541,13 +541,13 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="ever_declined">Have you ever been declined membership of this club?: </label>
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input ever_declined1" id="ever_declined1" {{old ('ever_declined') == '2' ? 'checked' : ''}}  name="ever_declined" type="checkbox" value="1">
+                                    <input class="form-check-input ever_declined1 membership_decline" id="ever_declined1" {{old ('ever_declined') == '2' ? 'checked' : ''}}  name="ever_declined" type="checkbox" value="1">
                                     <label for="ever_declined1">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input ever_declined2" id="ever_declined2" {{old ('ever_declined') == '0' ? 'checked' : ''}}  name="ever_declined" type="checkbox" value="0">
+                                    <input class="form-check-input ever_declined2 membership_decline" id="ever_declined2" {{old ('ever_declined') == '0' ? 'checked' : ''}}  name="ever_declined" type="checkbox" value="0">
                                     <label for="ever_declined2">
                                         No
                                     </label>
@@ -563,13 +563,13 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="application_rejected">Have your membership application ever been rejected by other club/inst.?: </label>
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input application_rejected1" {{old ('application_rejected') == '1' ? 'checked' : ''}} id="application_rejected1" name="application_rejected" type="checkbox" value="1">
+                                    <input class="form-check-input application_rejected1 application_rejected" {{old ('application_rejected') == '1' ? 'checked' : ''}} id="application_rejected1" name="application_rejected" type="checkbox" value="1">
                                     <label for="application_rejected1">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input application_rejected2" {{old ('application_rejected') == '0' ? 'checked' : ''}}  id="application_rejected2"  name="application_rejected" type="checkbox" value="0">
+                                    <input class="form-check-input application_rejected2 application_rejected" {{old ('application_rejected') == '0' ? 'checked' : ''}}  id="application_rejected2"  name="application_rejected" type="checkbox" value="0">
                                     <label for="application_rejected2">
                                         No
                                     </label>
@@ -585,14 +585,14 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label for="criminal_ofence">Ever punished for criminal ofence?</label>
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input criminal_ofence1" {{old ('criminal_ofence') == '1' ? 'checked' : ''}}  id="criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
+                                    <input class="form-check-input criminal_ofence1 criminal_ofence" {{old ('criminal_ofence') == '1' ? 'checked' : ''}}  id="criminal_ofence1" name="criminal_ofence" type="checkbox" value="1">
                                     <label for="criminal_ofence1">
                                         Yes
                                     </label>
                                 </div>
 
                                 <div class="icheck-primary d-inline">
-                                    <input class="form-check-input criminal_ofence2" {{old ('criminal_ofence') == '0' ? 'checked' : ''}}  id="criminal_ofence2" name="criminal_ofence" type="checkbox" value="0">
+                                    <input class="form-check-input criminal_ofence2 criminal_ofence" {{old ('criminal_ofence') == '0' ? 'checked' : ''}}  id="criminal_ofence2" name="criminal_ofence" type="checkbox" value="0">
                                     <label for="criminal_ofence2">
                                         No
                                     </label>
@@ -928,7 +928,7 @@
         let name=$(this).data('name');
         let id=$(this).data('id');
         $('#member_search2').val(name);
-        $('#seconded').val(id);
+        $('#seconded_by').val(id);
         $('.suggestion-area2').addClass('hidden_area');
         $('.suggestion-area2').html();
     });
