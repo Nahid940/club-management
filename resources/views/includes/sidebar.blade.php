@@ -74,6 +74,24 @@
                 </li>
               </ul>
             </li>
+          @elserole('billing-manager')
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book" style="color: #7cbdff"></i>
+                <p>
+                  Billing
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('member-book')}}" class="nav-link">
+                    <i class="fa fa-book-open nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
+                    <p>Book</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           @else
             <li class="nav-item {{request()->routeIs('member*')?'menu-open ':''}}">
               <a href="#" class="nav-link">
@@ -108,6 +126,12 @@
                         <p>Membership Classification</p>
                     </a>
                  </li>
+                <li class="nav-item">
+                  <a href="{{route('occupation-index')}}" class="nav-link">
+                    <i class="fa fa-list nav-icon" style="font-size: 10px;color: #ff2450"></i>
+                    <p>Member Occupations</p>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -195,6 +219,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{route('add-donor')}}" class="nav-link">
+                    <i class="fa  fa-user-alt nav-icon" style="font-size: 10px;color: #ff7000"></i>
+                    <p>Add Donor</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="{{route('donor-index')}}" class="nav-link">
                     <i class="fa  fa-users nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>Donors</p>
@@ -236,16 +266,64 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('payments-report-index')}}" class="nav-link">
-                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ff0080"></i>
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                     <p>Payment Report</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('donation-report-index')}}" class="nav-link">
-                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #00dcff"></i>
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                     <p>Donation Report</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('batch-wise-report-index')}}" class="nav-link">
+                      <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                      <p>Batch-wise report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('donation-report-index')}}" class="nav-link">
+                        <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                        <p>Profession-wise report</p>
+                    </a>
+                 </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>Blood group-wise report</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>DOB-wise report</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>Membership-wise due report</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>Membership-wise full-payment report</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>Membership fee due report</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                          <p>Monthly payment due report</p>
+                      </a>
+                  </li>
               </ul>
             </li>
             <li class="nav-item">
@@ -267,6 +345,23 @@
                   <a href="{{route('notice-index')}}" class="nav-link">
                     <i class="fa  fa-list nav-icon" style="font-size: 10px;color: #00dcff"></i>
                     <p>Notice List</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-mail-bulk" style="color: #7cbdff"></i>
+                <p>
+                  Email Config
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('email-config')}}" class="nav-link">
+                    <i class="fa fa-cogs nav-icon" style="font-size: 10px;color: #ff1826"></i>
+                    <p>Configure Email</p>
                   </a>
                 </li>
               </ul>

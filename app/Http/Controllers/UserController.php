@@ -34,7 +34,11 @@ class UserController extends Controller
 
     public function save(UserRequest $request)
     {
-        $user=User::create(array_merge($request->all(), [ 'password' => bcrypt($request->input('password')) ]));
+        $user=User::create([
+            'name'=>$request->name,
+            'email'=>strtolower($request->email),
+            'password' => bcrypt($request->input('password'))
+        ]);
         $user->assignRole($request->role_id);
         return redirect()->back()->with('message','User added successfully!!');
     }

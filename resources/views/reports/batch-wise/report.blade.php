@@ -29,11 +29,11 @@
         <thead>
         <tr>
             <th><div align="center">Member Name</div></th>
-            <th><div align="center">Member ID</div></th>
-            <th><div align="center">Email</div></th>
-            <th><div align="center">Phone</div></th>
-            <th><div align="center">Batch</div></th>
-            <th><div align="center">Registration Date</div></th>
+            <th style="width: 20%"><div align="center">Member ID</div></th>
+            <th style="width: 20%"><div align="center">Email</div></th>
+            <th style="width: 15%"><div align="center">Phone</div></th>
+            <th style="width: 5%"><div align="center">Batch</div></th>
+            <th style="width: 20%"><div align="center">Registration Date</div></th>
         </tr>
         </thead>
         <tbody>
