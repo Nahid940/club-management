@@ -1,0 +1,72 @@
+
+.ilqBSQ {
+    width: 33%px;
+    margin: 18px 10px 5px;
+    float: left;
+    padding: 2px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    background-color: initial;
+    border: none;
+}
+.short_cut_icon {
+    background-color: rgb(244, 245, 248);
+    background-size: 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 80px;
+    margin: 0px auto 8px;
+    border-radius: 50%;
+    border: 2px solid rgb(212, 215, 220);
+    }
+.iLmjWS {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 2.4em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.esp_icons{
+    font-size:35px
+}
+
+
+.form-control{
+    height: calc(1.40rem);
+    padding: .1rem 0.75rem;
+    border: 1px solid #b4bae2b5;
+    font-size: 0.7rem;
+}
+.suggestion-area, .suggestion-area1 {
+    position: absolute;
+    width: 98%;
+    background-color: #fff;
+    z-index: 11;
+    display: block;
+    height: auto;
+    margin-top:-16px
+}
+.search-item{
+    border-bottom:1px solid #fff;
+}
+.suggestion-area .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
+    background-color: #0b64d4;
+    color:#fff;
+    padding: 5px;
+    list-style: none;
+    overflow: hidden;
+}
+.search-content{
+    color:#fff
+}
+.search-item:hover{
+    background-color: #1975e6;
+    cursor:pointer
+}
+.hidden_area{
+    display:none
+}

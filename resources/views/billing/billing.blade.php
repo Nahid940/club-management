@@ -1,53 +1,5 @@
 @extends('main')
 @section('pageHeading'){{$title}}@stop
-@section('style')
-    .form-control{
-    height: calc(1.40rem);
-    padding: .1rem 0.75rem;
-    border: 1px solid #b4bae2b5;
-    font-size: 0.7rem;
-    }
-    .suggestion-area, .suggestion-area1 {
-    position: absolute;
-    width: 98%;
-    background-color: #fff;
-    z-index: 11;
-    display: block;
-    height: auto;
-    margin-top:-16px
-    }
-    .search-item{
-    border-bottom:1px solid #fff;
-    }
-    .suggestion-area .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
-    background-color: #0b64d4;
-    color:#fff;
-    padding: 5px;
-    list-style: none;
-    overflow: hidden;
-    }
-    .search-content{
-    color:#fff
-    }
-    .search-item:hover{
-    background-color: #1975e6;
-    cursor:pointer
-    }
-    .hidden_area{
-    display:none
-    }
-
-    fieldset {
-    display: block;
-    margin-left: 2px;
-    margin-right: 2px;
-    padding-top: 0.35em;
-    padding-bottom: 0.625em;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    border: 2px groove (internal value);
-    }
-@stop
 @section('content')
     <div class="row">
         <div class="col-md-6">
@@ -62,7 +14,7 @@
                         {{session('message')}}
                     </div>
                 @endif
-                <form action="{{route('payment-add')}}" method="POST" id="form_submit">
+                <form action="{{route('bill-add')}}" method="POST" id="form_submit">
                     {{csrf_field()}}
                     <div class="card-body">
                         <div class="row">
@@ -81,14 +33,14 @@
                                 @endif
 
                                 <div class="icheck-primary">
-                                    <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="member_type"  id="mem1" value="1">
-                                    <label for="mem1">
+                                    <input type="checkbox" name="guest_bill"  {{old('guest_bill')==1?"checked":""}} class="guest_bill"  id="guest_bill" value="1">
+                                    <label for="guest_bill">
                                         Guest Bill
                                     </label>
                                 </div>
                                 <div class="form-group mt-3" style="">
-                                    <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
-                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Member ID" id="member_search" required>
+                                    <label for=""><i class="fa fa-search" aria-hidden="true"></i> <span id="search_title">Search Member</span> <span class="text-danger">*</span></label>
+                                    <input autocomplete="off" type="text" class="form-control member_search" name="person_name" placeholder="Type Member ID" id="member_search" required>
                                     <input type="hidden" id="member_id" name="member_id">
                                 </div>
                                 <div class="suggestion-area hidden_area">
@@ -102,18 +54,18 @@
                                 </div>
                             </div>
 
-                            <h5 class="box-title text-purple">Lounge Bill</h5>
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Lounge Bill</p></div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{old('amount')}}"  name="amount" id="amount" required>
+                                    <input type="number" class="form-control" value="{{empty(old('lounge_amount'))?0:old('lounge_amount')}}"  name="lounge_amount" id="amount" required>
                                 </div>
                             </div>
-                            <h5 class="box-title text-purple">Restaurant Bill</h5>
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Restaurant Bill</p></div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{old('amount')}}"  name="amount" id="amount" required>
+                                    <input type="number" class="form-control" value="{{empty(old('restaurant_amount'))?0:old('restaurant_amount')}}"  name="restaurant_amount" id="amount" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -139,13 +91,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" value="{{old('payment_ref_no')}}"  name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="remarks">Remarks</label>
                                     <input type="text" class="form-control" value="{{old('remarks')}}" name="remarks" id="remarks" placeholder="Remarks">
@@ -204,4 +158,5 @@
     $('.close_purpose').addClass('hidden_area')
     $('.add_purpose').removeClass('hidden_area')
     });
+
 @stop

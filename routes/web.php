@@ -21,6 +21,8 @@ use App\Http\Controllers\report\DonationReportController;
 use App\Http\Controllers\EmailConfigController;
 use App\Http\Controllers\DonationPurposeController;
 use App\Http\Controllers\OccupationController;
+use App\Http\Controllers\report\BatchwiseReportController;
+use App\Http\Controllers\BillingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -224,6 +226,14 @@ Route::group(['middleware' => ['auth']],function (){
     Route::delete('occupation-delete',[OccupationController::class,'delete'])->name('occupation-delete');
 });
 
+Route::group(['middleware' => ['auth']],function () {
+    Route::get('batch-wise-report-index', [BatchwiseReportController::class, 'index'])->name('batch-wise-report-index');
+    Route::post('batch-wise-report', [BatchwiseReportController::class, 'report'])->name('batch-wise-report');
+});
+
+Route::group(['middleware' => ['auth']],function () {
+    Route::post('bill-add', [BillingController::class, 'save'])->name('bill-add');
+});
 
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');

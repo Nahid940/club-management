@@ -121,3 +121,22 @@ $('#mem3').on('click',function(){
     $('#mem2').prop('checked',false);
     $('#mem4').prop('checked',false);
 })
+
+
+
+$('#guest_bill').on('click',function () {
+    if($('.guest_bill').is(":checked"))
+    {
+        $('#search_title').text('Type Guest Name');
+        $('#member_id').val(0)
+        $('.member_search').attr('placeholder',"Guest Name")
+        $('.member_search').removeAttr('id')
+    }else if(!$('.guest_bill').is(":checked"))
+    {
+        $('#search_title').text('Search Member');
+        $('#member_search').attr('placeholder',"Type Member ID")
+        $('#member_id').val("")
+        $('.member_search').attr('id','member_search')
+    }
+    $('#member_search').val("");
+});
