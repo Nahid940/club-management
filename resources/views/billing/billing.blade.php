@@ -54,54 +54,37 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Lounge Bill</p></div>
-                            <div class="col-md-12">
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 14px;border-bottom: 1px dashed gray;font-weight: bold">LOUNGE Bill</p></div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="lounge_amount">Bill Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{empty(old('lounge_amount'))?0:old('lounge_amount')}}"  name="lounge_amount" id="lounge_amount" required>
+                                    <label for="lounge_cash_amount">Cash Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{empty(old('lounge_cash_amount'))?0:old('lounge_cash_amount')}}"  name="lounge_cash_amount" id="lounge_cash_amount" required>
                                 </div>
                             </div>
-                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Restaurant Bill</p></div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="restaurant_amount">Bill Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{empty(old('restaurant_amount'))?0:old('restaurant_amount')}}"  name="restaurant_amount" id="restaurant_amount" required>
+                                    <label for="lounge_card_amount">Card Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{empty(old('lounge_card_amount'))?0:old('lounge_card_amount')}}"  name="lounge_card_amount" id="lounge_card_amount" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group clearfix">
-                                    <label for="payment_method" class="lbl_payment_type">Payment Method: <span class="text-danger">*</span></label>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="payment_type"  id="mem1" value="1">
-                                        <label for="mem1">
-                                            Pay Order
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="payment_type"  id="mem2" value="2">
-                                        <label for="mem2">
-                                            Cash
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="payment_type"  id="mem3" value="3">
-                                        <label for="mem3">
-                                            Card
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==4?"checked":""}} class="payment_type"  id="mem4" value="4">
-                                        <label for="mem4">
-                                            Cheque
-                                        </label>
-                                    </div>
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 14px;border-bottom: 1px dashed gray;font-weight: bold">CAFE Bill</p></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="restaurant_cash_amount">Cash Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{empty(old('restaurant_cash_amount'))?0:old('restaurant_cash_amount')}}"  name="restaurant_cash_amount" id="restaurant_cash_amount" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="restaurant_card_amount">Card Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{empty(old('restaurant_card_amount'))?0:old('restaurant_card_amount')}}"  name="restaurant_card_amount" id="restaurant_card_amount" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
+                                    <label for="payment_ref_no">Reference No.</label>
                                     <input type="text" class="form-control" value="{{old('payment_ref_no')}}"  name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
@@ -128,19 +111,13 @@
                 <div class="card-body">
                     <table class="table table-hover">
                         <tr>
-                            <td class="text-lg"><b>Name</b></td>
-                            <td>:</td>
-                            <td class="text-lg"><b>Test</b></td>
-                            <td></td>
-                        </tr>
-                        <tr>
                             <td class="text-lg" style="width: 150px"><b>Lounge Bill</b></td>
                             <td>:</td>
                             <td class="text-lg"><b><span id="lounge_bill_amnt">0</span></b></td>
                             <td class="text-lg">/-</td>
                         </tr>
                         <tr>
-                            <td class="text-lg" style="width: 180px"><b>Restaurant Bill</b></td>
+                            <td class="text-lg" style="width: 180px"><b>Cafe Bill</b></td>
                             <td>:</td>
                             <td class="text-lg"><b><span id="restaurant_bill_amnt">0</span></b></td>
                             <td class="text-lg">/-</td>

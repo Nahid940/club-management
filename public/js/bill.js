@@ -17,14 +17,12 @@ $('.save_btn').on('click',function(){
             $('#search_title').css('color','red');
             Swal.fire('Guest name required!');
         }
-        else if($('#lounge_amount').val()==0 && $('#restaurant_amount').val()==0)
+        else if($('#restaurant_cash_amount').val()==0 && $('#restaurant_card_amount').val()==0
+            && $('#lounge_cash_amount').val()==0
+            && $('#lounge_card_amount').val()==0
+        )
         {
             Swal.fire('Invalid payment amount!');
-        }
-        else if(!$('.payment_type').is(":checked"))
-        {
-            $('.lbl_payment_type').css('color','red');
-            Swal.fire('Select payment method!');
         }
         else
         {
@@ -55,11 +53,6 @@ $('.save_btn').on('click',function(){
         {
             Swal.fire('Invalid payment amount!');
         }
-        else if(!$('.payment_type').is(":checked"))
-        {
-            $('.lbl_payment_type').css('color','red');
-            Swal.fire('Select payment method!');
-        }
         else
         {
             Swal.fire({
@@ -78,32 +71,69 @@ $('.save_btn').on('click',function(){
             })
         }
     }
-})
-
-$('.add_purpose').on('click',function(){
-    $('#purpose_div').removeClass('hidden_area')
-    $('.close_purpose').removeClass('hidden_area')
-    $('.add_purpose').addClass('hidden_area')
 });
-
-$('.close_purpose').on('click',function(){
-    $('#purpose_div').addClass('hidden_area')
-    $('.close_purpose').addClass('hidden_area')
-    $('.add_purpose').removeClass('hidden_area')
-});
-
 
 let total=0;
-$('#lounge_amount').on('keyup',function () {
-   let amount=$(this).val()==''?0:$(this).val();
-   $('#lounge_bill_amnt').text(amount);
-   total=parseFloat($('#restaurant_amount').val()==''?0:$('#restaurant_amount').val())+parseFloat($('#lounge_amount').val()==''?0:$('#lounge_amount').val());
+$('#lounge_cash_amount').on('keyup',function () {
+
+   if($('#lounge_cash_amount').val().length>10)
+   {
+       $('#lounge_cash_amount').val('0');
+   }
+   let lounge_cash_amount=$('#lounge_cash_amount').val()==''?0:parseFloat($('#lounge_cash_amount').val());
+   let lounge_card_amount=$('#lounge_card_amount').val()==''?0:parseFloat($('#lounge_card_amount').val());
+    $('#lounge_bill_amnt').text(lounge_cash_amount+lounge_card_amount);
+
+   let restaurant_cash_amount=$('#restaurant_cash_amount').val()==''?0:parseFloat($('#restaurant_cash_amount').val());
+   let restaurant_card_amount=$('#restaurant_card_amount').val()==''?0:parseFloat($('#restaurant_card_amount').val());
+    total=lounge_cash_amount+lounge_card_amount+restaurant_cash_amount+restaurant_card_amount;
     $('#ttl_amnt').text(total);
 });
 
-$('#restaurant_amount').on('keyup',function () {
-    let amount=$(this).val()==''?0:$(this).val();
-    $('#restaurant_bill_amnt').text(amount);
-    total=parseFloat($('#restaurant_amount').val()==''?0:$('#restaurant_amount').val())+parseFloat($('#lounge_amount').val()==''?0:$('#lounge_amount').val());
+$('#lounge_card_amount').on('keyup',function () {
+
+    if($('#lounge_card_amount').val().length>10)
+    {
+        $('#lounge_card_amount').val('0');
+    }
+
+    let lounge_cash_amount=$('#lounge_cash_amount').val()==''?0:parseFloat($('#lounge_cash_amount').val());
+    let lounge_card_amount=$('#lounge_card_amount').val()==''?0:parseFloat($('#lounge_card_amount').val());
+    $('#lounge_bill_amnt').text(lounge_cash_amount+lounge_card_amount);
+
+    let restaurant_cash_amount=$('#restaurant_cash_amount').val()==''?0:parseFloat($('#restaurant_cash_amount').val());
+    let restaurant_card_amount=$('#restaurant_card_amount').val()==''?0:parseFloat($('#restaurant_card_amount').val());
+    total=lounge_cash_amount+lounge_card_amount+restaurant_cash_amount+restaurant_card_amount;
+    $('#ttl_amnt').text(total);
+});
+
+
+$('#restaurant_cash_amount').on('keyup',function () {
+    if($('#restaurant_cash_amount').val().length>10)
+    {
+        $('#restaurant_cash_amount').val('0');
+    }
+    let lounge_cash_amount=$('#lounge_cash_amount').val()==''?0:parseFloat($('#lounge_cash_amount').val());
+    let lounge_card_amount=$('#lounge_card_amount').val()==''?0:parseFloat($('#lounge_card_amount').val());
+
+    let restaurant_cash_amount=$('#restaurant_cash_amount').val()==''?0:parseFloat($('#restaurant_cash_amount').val());
+    let restaurant_card_amount=$('#restaurant_card_amount').val()==''?0:parseFloat($('#restaurant_card_amount').val());
+    $('#restaurant_bill_amnt').text(restaurant_cash_amount+restaurant_card_amount);
+    total=lounge_cash_amount+lounge_card_amount+restaurant_cash_amount+restaurant_card_amount;
+    $('#ttl_amnt').text(total);
+});
+
+$('#restaurant_card_amount').on('keyup',function () {
+    if($('#restaurant_card_amount').val().length>10)
+    {
+        $('#restaurant_card_amount').val('0');
+    }
+    let lounge_cash_amount=$('#lounge_cash_amount').val()==''?0:parseFloat($('#lounge_cash_amount').val());
+    let lounge_card_amount=$('#lounge_card_amount').val()==''?0:parseFloat($('#lounge_card_amount').val());
+
+    let restaurant_cash_amount=$('#restaurant_cash_amount').val()==''?0:parseFloat($('#restaurant_cash_amount').val());
+    let restaurant_card_amount=$('#restaurant_card_amount').val()==''?0:parseFloat($('#restaurant_card_amount').val());
+    $('#restaurant_bill_amnt').text(restaurant_cash_amount+restaurant_card_amount);
+    total=lounge_cash_amount+lounge_card_amount+restaurant_cash_amount+restaurant_card_amount;
     $('#ttl_amnt').text(total);
 });

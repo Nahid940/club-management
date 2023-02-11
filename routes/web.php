@@ -231,8 +231,15 @@ Route::group(['middleware' => ['auth']],function () {
     Route::post('batch-wise-report', [BatchwiseReportController::class, 'report'])->name('batch-wise-report');
 });
 
-Route::group(['middleware' => ['auth']],function () {
+Route::group(['middleware' => ['auth','role:billing-manager|super-admin']],function () {
+    Route::get('bill-view/{id}', [BillingController::class, 'view'])->name('bill-view');
     Route::post('bill-add', [BillingController::class, 'save'])->name('bill-add');
+    Route::get('bill-index', [BillingController::class, 'index'])->name('bill-index');
+    Route::get('bill-edit/{id}', [BillingController::class, 'edit'])->name('bill-edit');
+    Route::post('bill-update', [BillingController::class, 'update'])->name('bill-update');
+    Route::post('bill-delete', [BillingController::class, 'delete'])->name('bill-delete');
+    Route::get('bill-report', [BillingController::class, 'report'])->name('bill-report');
+    Route::post('bill-report', [BillingController::class, 'getReport'])->name('bill-report');
 });
 
 Route::get('cache-clear',function (){

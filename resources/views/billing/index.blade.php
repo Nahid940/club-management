@@ -58,14 +58,23 @@
                     <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                         <thead>
                             <tr>
+                                <td colspan="6">&nbsp;</td>
+                                <td colspan="2" style="background-color: #eafbf8"><b>B & G Lounge</b></td>
+                                <td colspan="2" style="background-color: #f7e3e9"><b>Cafe</b></td>
+                                <td colspan="2">&nbsp;</td>
+
+                            </tr>
+                            <tr>
                                 <th>#</th>
                                 <th>Bill No</th>
                                 <th>Member Name</th>
                                 <th>Member ID</th>
                                 <th>Billing Date</th>
                                 <th>Payment Method</th>
-                                <th>Lounge Amount</th>
-                                <th>Restaurant Amount</th>
+                                <th><div align="right" style="background-color: #eafbf8">Cash Amount</div></th>
+                                <th><div align="right" style="background-color: #eafbf8">Card Amount</div></th>
+                                <th><div align="right" style="background-color: #f7e3e9">Cash Amount</div></th>
+                                <th><div align="right" style="background-color: #f7e3e9">Card Amount</div></th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -92,8 +101,10 @@
                                         Cheque
                                     @endif
                                 </td>
-                                <td>{{$bill->lounge_amount}}</td>
-                                <td>{{$bill->restaurant_amount}}</td>
+                                <td><div align="right" style="background-color: #eafbf8">{{number_format($bill->lounge_cash_amount,0,'.',',')}}</div></td>
+                                <td><div align="right" style="background-color: #eafbf8">{{number_format($bill->lounge_card_amount,0,'.',',')}}</div></td>
+                                <td><div align="right" style="background-color: #f7e3e9">{{number_format($bill->restaurant_cash_amount,0,'.',',')}}</div></td>
+                                <td><div align="right" style="background-color: #f7e3e9">{{number_format($bill->restaurant_card_amount,0,'.',',')}}</div></td>
                                 <td>@if($bill->status==1) <span class="badge badge-success">Succeed</span> @else <span class="badge badge-danger">Failed</span> @endif</td>
                                 <td>
                                     <a href="{{route('bill-view',$bill->id)}}" title="View"><i class="fa fa-eye text-success"></i></a>

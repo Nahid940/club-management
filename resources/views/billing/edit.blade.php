@@ -53,48 +53,30 @@
                                     <input type="date" class="form-control" value="{{date('Y-m-d',strtotime($bill->date))}}" name="date" id="date" required>
                                 </div>
                             </div>
-
-                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Lounge Bill</p></div>
-                            <div class="col-md-12">
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 14px;border-bottom: 1px dashed gray;font-weight: bold">LOUNGE Bill</p></div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="lounge_amount">Bill Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{$bill->lounge_amount}}"  name="lounge_amount" id="lounge_amount" required>
+                                    <label for="lounge_cash_amount">Cash Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{$bill->lounge_cash_amount}}"  name="lounge_cash_amount" id="lounge_cash_amount" required>
                                 </div>
                             </div>
-                            <div class="col-md-12"><p class="text-purple" style="font-size: 12px;border-bottom: 1px dashed gray">Restaurant Bill</p></div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="restaurant_amount">Bill Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{$bill->restaurant_amount}}"  name="restaurant_amount" id="restaurant_amount" required>
+                                    <label for="lounge_card_amount">Card Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{$bill->lounge_card_amount}}"  name="lounge_card_amount" id="lounge_card_amount" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group clearfix">
-                                    <label for="payment_method" class="lbl_payment_type">Payment Method: <span class="text-danger">*</span></label>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method"  {{$bill->payment_method==1?"checked":""}} class="payment_type"  id="mem1" value="1">
-                                        <label for="mem1">
-                                            Pay Order
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{$bill->payment_method==2?"checked":""}} class="payment_type"  id="mem2" value="2">
-                                        <label for="mem2">
-                                            Cash
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{$bill->payment_method==3?"checked":""}} class="payment_type"  id="mem3" value="3">
-                                        <label for="mem3">
-                                            Card
-                                        </label>
-                                    </div>
-                                    <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{$bill->payment_method==4?"checked":""}} class="payment_type"  id="mem3" value="4">
-                                        <label for="mem3">
-                                            Cheque
-                                        </label>
-                                    </div>
+                            <div class="col-md-12"><p class="text-purple" style="font-size: 14px;border-bottom: 1px dashed gray;font-weight: bold">CAFE Bill</p></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="restaurant_cash_amount">Cash Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{$bill->restaurant_cash_amount}}"  name="restaurant_cash_amount" id="restaurant_cash_amount" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="restaurant_card_amount">Card Amount <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" value="{{$bill->restaurant_card_amount}}"  name="restaurant_card_amount" id="restaurant_card_amount" required>
                                 </div>
                             </div>
                         </div>
