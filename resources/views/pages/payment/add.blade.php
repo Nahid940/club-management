@@ -36,6 +36,15 @@
     .hidden_area{
     display:none
     }
+    .exp_group{
+        margin-bottom: 0rem!important;
+    }
+    .exp-form-control{
+        height: calc(1.1rem);
+    }
+    #pay_row td{
+        padding:0.3rem
+    }
 @stop
 @section('content')
     <div class="row">
@@ -70,7 +79,7 @@
                                 @endif
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
-                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Member Name/Code" id="member_search" required>
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Type Member ID" id="member_search" required>
                                     <input type="hidden" id="member_id" name="member_id">
                                 </div>
                                 <div class="suggestion-area hidden_area">
@@ -85,40 +94,53 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="month">Month <span class="text-danger">*</span></label>
-                                    <select name="month" id="month" class="form-control" required>
-                                        <option value="">--Select--</option>
-                                        <option value="1" {{ old('month')==1?"selected":"" }}>January</option>
-                                        <option value="2" {{ old('month')==2?"selected":"" }}>February</option>
-                                        <option value="3" {{ old('month')==3?"selected":"" }}>March</option>
-                                        <option value="4" {{ old('month')==4?"selected":"" }}>April</option>
-                                        <option value="5" {{ old('month')==5?"selected":"" }}>May</option>
-                                        <option value="6" {{ old('month')==6?"selected":"" }}>June</option>
-                                        <option value="7" {{ old('month')==7?"selected":"" }}>July</option>
-                                        <option value="8" {{ old('month')==8?"selected":"" }}>August</option>
-                                        <option value="9" {{ old('month')==9?"selected":"" }}>September</option>
-                                        <option value="10" {{ old('month')==10?"selected":"" }}>October</option>
-                                        <option value="11" {{ old('month')==11?"selected":"" }}>November</option>
-                                        <option value="12" {{ old('month')==12?"selected":"" }}>December</option>
-                                    </select>
+                                    <label for="mr_no">Money Receipt No.</label>
+                                    <input type="text" class="form-control" value="{{old('mr_no')}}" name="mr_no" id="date" placeholder="Money Receipt No." required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="year">Year <span class="text-danger">*</span></label>
-                                    <select name="year" id="year" class="form-control" required>
-                                        <option value="">--Select--</option>
-                                        @for($i=2021;$i<=2025;$i++)
-                                            <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="amount">Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{old('amount')}}"  name="amount" id="amount" required>
-                                </div>
+                            <div class="col-md-12">
+                                 <a class="btn btn-xs btn-success float-right" id="add_new_row">Add Row</a>
+                                 <table class="table" id="pay_row">
+                                     <tr style="padding: 2px">
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 {{--<label for="year">Year <span class="text-danger">*</span></label>--}}
+                                                 <select name="year[]" id="year" class="form-control exp-form-control" required>
+                                                     <option value="">--Year--</option>
+                                                     @for($i=2018;$i<=2030;$i++)
+                                                         <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
+                                                     @endfor
+                                                 </select>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 {{--<label for="month">Month <span class="text-danger">*</span></label>--}}
+                                                 <select name="month[]" id="month" class="form-control exp-form-control" required>
+                                                     <option value="">--Month--</option>
+                                                     <option value="1" {{ old('month')==1?"selected":"" }}>January</option>
+                                                     <option value="2" {{ old('month')==2?"selected":"" }}>February</option>
+                                                     <option value="3" {{ old('month')==3?"selected":"" }}>March</option>
+                                                     <option value="4" {{ old('month')==4?"selected":"" }}>April</option>
+                                                     <option value="5" {{ old('month')==5?"selected":"" }}>May</option>
+                                                     <option value="6" {{ old('month')==6?"selected":"" }}>June</option>
+                                                     <option value="7" {{ old('month')==7?"selected":"" }}>July</option>
+                                                     <option value="8" {{ old('month')==8?"selected":"" }}>August</option>
+                                                     <option value="9" {{ old('month')==9?"selected":"" }}>September</option>
+                                                     <option value="10" {{ old('month')==10?"selected":"" }}>October</option>
+                                                     <option value="11" {{ old('month')==11?"selected":"" }}>November</option>
+                                                     <option value="12" {{ old('month')==12?"selected":"" }}>December</option>
+                                                 </select>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 {{--<label for="amount">Amount <span class="text-danger">*</span></label>--}}
+                                                 <input type="number" class="form-control exp-form-control" value="{{old('amount')}}"  name="amount[]" id="amount" placeholder="Amount" required>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                 </table>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group clearfix">
@@ -194,6 +216,7 @@
 @stop
 @section('script_link')
     <script src="{{asset('js/member-search.js')}}"></script>
+    <script src="{{asset('js/pay_row.js')}}"></script>
 @stop
 
 @section('script')
