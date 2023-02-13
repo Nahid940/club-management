@@ -1,8 +1,13 @@
 
-let year=2023
+var d = new Date();
+const months = ["1","2","3","4","5","6","7","8","9","10","11","12"];
+let year=d.getFullYear();
+let month=months[d.getMonth()];
+let i=2;
 $('#add_new_row').on('click',function () {
+
     $('#pay_row').append(
-        '<tr>' +
+        '<tr id="row'+i+'">' +
             '<td>' +
                 '<div class="form-group exp_group">'+
                         '<select name="year[]" id="year" class="form-control exp-form-control" required>'+
@@ -27,7 +32,6 @@ $('#add_new_row').on('click',function () {
                 '<div class="form-group exp_group">'+
                     '<select name="month[]" id="month" class="form-control exp-form-control" required>'+
                         '<option value="">--Month--</option>'+
-                        '<option value="">--Month--</option>'+
                         '<option value="1">January</option>'+
                         '<option value="2">February</option>'+
                         '<option value="3">March</option>'+
@@ -45,9 +49,28 @@ $('#add_new_row').on('click',function () {
             '</td>'+
             '<td>' +
                  '<div class="form-group exp_group">'+
-                    '<input type="number" class="form-control exp-form-control" value=""  name="amount[]" id="amount" placeholder="Amount" required>'+
+                    '<input type="number" class="form-control exp-form-control amount_val" value=""  name="amount[]" id="amount'+i+'" placeholder="Amount" required>'+
                  '</div>'+
             '</td>'+
+            '<td><a class="btn btn-xs btn-danger close_btn" data-sl="'+i+'">x</a></td>'+
         '</tr>'
-    )
+    );
+        i++;
+        $("#year option[value='"+year+"']").prop('selected', true);
+        $("#month option[value='"+month+"']").prop('selected', true);
+});
+
+
+$(document).on('click','.close_btn',function () {
+    i--;
+    let sl=$(this).data('sl');
+    document.getElementById('row'+sl).remove();
+});
+
+$('#same_amount').on('click',function () {
+    let amount=$('#amount').val();
+    $(".amount_val").each(function(){
+        $('.amount_val').val(amount)
+    });
+    $(this).prop('checked',false)
 });

@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                 <a class="btn btn-xs btn-success float-right" id="add_new_row">Add Row</a>
+                                 <a class="btn btn-xs btn-success float-right" id="add_new_row"><i class="fa fa-plus-circle"></i></a>
                                  <table class="table" id="pay_row">
                                      <tr style="padding: 2px">
                                          <td>
@@ -118,18 +118,18 @@
                                                  {{--<label for="month">Month <span class="text-danger">*</span></label>--}}
                                                  <select name="month[]" id="month" class="form-control exp-form-control" required>
                                                      <option value="">--Month--</option>
-                                                     <option value="1" {{ old('month')==1?"selected":"" }}>January</option>
-                                                     <option value="2" {{ old('month')==2?"selected":"" }}>February</option>
-                                                     <option value="3" {{ old('month')==3?"selected":"" }}>March</option>
-                                                     <option value="4" {{ old('month')==4?"selected":"" }}>April</option>
-                                                     <option value="5" {{ old('month')==5?"selected":"" }}>May</option>
-                                                     <option value="6" {{ old('month')==6?"selected":"" }}>June</option>
-                                                     <option value="7" {{ old('month')==7?"selected":"" }}>July</option>
-                                                     <option value="8" {{ old('month')==8?"selected":"" }}>August</option>
-                                                     <option value="9" {{ old('month')==9?"selected":"" }}>September</option>
-                                                     <option value="10" {{ old('month')==10?"selected":"" }}>October</option>
-                                                     <option value="11" {{ old('month')==11?"selected":"" }}>November</option>
-                                                     <option value="12" {{ old('month')==12?"selected":"" }}>December</option>
+                                                     <option value="1" {{ date('m')==1?"selected":"" }}>January</option>
+                                                     <option value="2" {{ date('m')==2?"selected":"" }}>February</option>
+                                                     <option value="3" {{ date('m')==3?"selected":"" }}>March</option>
+                                                     <option value="4" {{ date('m')==4?"selected":"" }}>April</option>
+                                                     <option value="5" {{ date('m')==5?"selected":"" }}>May</option>
+                                                     <option value="6" {{ date('m')==6?"selected":"" }}>June</option>
+                                                     <option value="7" {{ date('m')==7?"selected":"" }}>July</option>
+                                                     <option value="8" {{ date('m')==8?"selected":"" }}>August</option>
+                                                     <option value="9" {{ date('m')==9?"selected":"" }}>September</option>
+                                                     <option value="10" {{ date('m')==10?"selected":"" }}>October</option>
+                                                     <option value="11" {{ date('m')==11?"selected":"" }}>November</option>
+                                                     <option value="12" {{ date('m')==12?"selected":"" }}>December</option>
                                                  </select>
                                              </div>
                                          </td>
@@ -139,6 +139,7 @@
                                                  <input type="number" class="form-control exp-form-control" value="{{old('amount')}}"  name="amount[]" id="amount" placeholder="Amount" required>
                                              </div>
                                          </td>
+                                         <td><input type="checkbox" id="same_amount" title="Set Same Amount"></td>
                                      </tr>
                                  </table>
                             </div>
@@ -191,18 +192,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" value="{{old('payment_ref_no')}}"  name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="remarks">Remarks</label>
-                                        <input type="text" class="form-control" value="{{old('remarks')}}" name="remarks" id="remarks" placeholder="Remarks">
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="remarks">Remarks</label>
+                                    <input type="text" class="form-control" value="{{old('remarks')}}" name="remarks" id="remarks" placeholder="Remarks">
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
