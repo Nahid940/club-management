@@ -8,6 +8,7 @@ $('#add_new_row').on('click',function () {
 
     $('#pay_row').append(
         '<tr id="row'+i+'">' +
+            '<td>'+i+'.</td>'+
             '<td>' +
                 '<div class="form-group exp_group">'+
                         '<select name="year[]" id="year" class="form-control exp-form-control" required>'+
