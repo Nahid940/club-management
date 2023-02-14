@@ -8,6 +8,7 @@ use App\Mail\MemberPaymentMail;
 use App\Models\DonationPurpose;
 use App\Models\EmailConfig;
 use App\Models\Payment;
+use App\Models\PaymentDetails;
 use App\Models\PaymentType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -69,24 +70,37 @@ class PaymentController extends Controller
 
     public function save(PaymentRequest $request)
     {
-        $id=Payment::insertGetId([
+        $id=Payment::create([
             "member_id"=>$request->member_id,
-            "payment_type"=>$request->payment_type,
-            "payment_date"=>$request->date,
-            "amount"=>$request->amount,
-            "currency_rate"=>1,
-            "currency"=>"BDT",
-            "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "payment_method"=>$request->payment_method,
+            "payment_type"=>$request->payment_type,
             "purpose_id"=>$request->purpose_id,
-            "payment_month"=>$request->month,
-            "payment_year"=>$request->year,
+            "mr_no"=>$request->mr_no,
             "created_at"=>Carbon::now(),
             "created_by"=>Auth::user()->id,
             "is_payment"=>1
         ]);
-        return redirect()->back()->with(['message'=>'Payment saved successfully!',"id"=>$id]);
+
+        for($i=0;$i<sizeof($request->amount);$i++)
+        {
+            PaymentDetails::create([
+                "payment_id"=>$id->id,
+                "member_id"=>$request->member_id,
+                "payment_date"=>$request->date,
+                "amount"=>$request->amount[$i],
+                "currency_rate"=>1,
+                "currency"=>"BDT",
+                "payment_month"=>$request->month[$i],
+                "payment_year"=>$request->year[$i],
+                "created_at"=>Carbon::now(),
+                "created_by"=>Auth::user()->id,
+                "is_payment"=>1
+            ]);
+        }
+
+        return redirect()->back()->with(['message'=>'Payment saved successfully!']);
     }
 
     public function process(Request $request)

@@ -102,6 +102,7 @@
                                  <a class="btn btn-xs btn-success float-right" id="add_new_row"><i class="fa fa-plus-circle"></i></a>
                                  <table class="table" id="pay_row">
                                      <tr style="padding: 2px">
+                                         <td>1. </td>
                                          <td>
                                              <div class="form-group exp_group">
                                                  {{--<label for="year">Year <span class="text-danger">*</span></label>--}}

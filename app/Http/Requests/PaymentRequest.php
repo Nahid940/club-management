@@ -28,7 +28,6 @@ class PaymentRequest extends FormRequest
             'date'=>'required|date',
             'payment_type'=>'required',
             'month'=>'required',
-            'amount'=>'required|numeric|digits_between:2,10',
             'payment_method'=>'required',
             'payment_ref_no'=>'required|max:25',
         ];
