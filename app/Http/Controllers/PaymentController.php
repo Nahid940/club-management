@@ -10,6 +10,7 @@ use App\Models\EmailConfig;
 use App\Models\Payment;
 use App\Models\PaymentDetails;
 use App\Models\PaymentType;
+use App\Services\DueCalculationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,16 +45,30 @@ class PaymentController extends Controller
         {
             $where[] =['purpose_id','=',$request->purpose];
         }
-        $payments=Payment::with('member:id,first_name,member_code,email')
-            ->orderBy('id','desc')
-            ->where('status','!=','-2')
-            ->where('is_payment','=','1')
+        $payments=Payment::with('member:id,first_name,member_code')
+            ->orderBy('payments.id','desc')
+            ->where('payments.status','!=','-2')
+            ->where('payments.is_payment','=','1')
             ->whereHas('member', function ($query) use ($where){
                 $query->where($where);
             })
             ->paginate(15);
+        $payments_data=array();
+        $ids=array();
+        foreach ($payments as $payment)
+        {
+            $ids[]=$payment->id;
+        }
+        if(!empty($ids))
+        {
+            $payment_amounts=PaymentDetails::selectRaw('payment_id,SUM(amount) as amount')->whereIn('payment_id',$ids)->groupBy('payment_id')->get();
+            foreach ($payment_amounts as $payment_amount)
+            {
+                $payments_data[$payment_amount->payment_id]['amount']=$payment_amount->amount;
+            }
+        }
         $purposes=DonationPurpose::select('id','purpose')->where('status',1)->get();
-        return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments,'purposes'=>$purposes]);
+        return view('pages.payment.index')->with(['title'=>$title,'payments'=>$payments,'payments_data'=>$payments_data,'purposes'=>$purposes]);
     }
     public function view($id){
         $title="";
@@ -76,6 +91,7 @@ class PaymentController extends Controller
             "remarks"=>$request->remarks,
             "payment_method"=>$request->payment_method,
             "payment_type"=>$request->payment_type,
+            "payment_date"=>$request->date,
             "purpose_id"=>$request->purpose_id,
             "mr_no"=>$request->mr_no,
             "created_at"=>Carbon::now(),
@@ -85,19 +101,23 @@ class PaymentController extends Controller
 
         for($i=0;$i<sizeof($request->amount);$i++)
         {
-            PaymentDetails::create([
-                "payment_id"=>$id->id,
-                "member_id"=>$request->member_id,
-                "payment_date"=>$request->date,
-                "amount"=>$request->amount[$i],
-                "currency_rate"=>1,
-                "currency"=>"BDT",
-                "payment_month"=>$request->month[$i],
-                "payment_year"=>$request->year[$i],
-                "created_at"=>Carbon::now(),
-                "created_by"=>Auth::user()->id,
-                "is_payment"=>1
-            ]);
+            if($request->amount[$i]>0)
+            {
+                PaymentDetails::create([
+                    "payment_id"=>$id->id,
+                    "member_id"=>$request->member_id,
+                    "payment_type"=>$request->payment_type,
+                    "payment_date"=>$request->date,
+                    "amount"=>$request->amount[$i],
+                    "currency_rate"=>1,
+                    "currency"=>"BDT",
+                    "payment_month"=>$request->month[$i],
+                    "payment_year"=>$request->year[$i],
+                    "created_at"=>Carbon::now(),
+                    "created_by"=>Auth::user()->id,
+                    "is_payment"=>1
+                ]);
+            }
         }
 
         return redirect()->back()->with(['message'=>'Payment saved successfully!']);
@@ -111,7 +131,8 @@ class PaymentController extends Controller
             {
                 $email_config=EmailConfig::select('send_payment_approval_email')->first();
                 Payment::where('id',$request->process_payment)->update(['status'=>1]);
-                $payment=Payment::with('member:id,first_name,member_code,email')->findOrFail($request->process_payment);
+                PaymentDetails::where('payment_id',$request->process_payment)->update(['status'=>1]);
+                $payment=Payment::with('member:id,first_name,member_code,email','paymentDetails')->findOrFail($request->process_payment);
                 if(isset($email_config->send_payment_approval_email) && !empty($email_config->send_payment_approval_email) && $email_config->send_payment_approval_email==1)
                 {
                     Mail::to($payment->member->email)->queue(new MemberPaymentMail($payment));
@@ -120,9 +141,11 @@ class PaymentController extends Controller
             }else if($request->action_type==2)
             {
                 Payment::where('id',$request->process_payment)->update(['status'=>-1]);
+                PaymentDetails::where('payment_id',$request->process_payment)->update(['status'=>-1]);
                 return redirect()->back()->with('warning','Payment declined successfully!');
             }else if($request->action_type==3){
                 Payment::where('id',$request->process_payment)->update(['status'=>0]);
+                PaymentDetails::where('payment_id',$request->process_payment)->update(['status'=>0]);
                 return redirect()->back()->with('warning','Payment reverted successfully!');
             }
         }
@@ -159,9 +182,10 @@ class PaymentController extends Controller
     public function delete(Request $request)
     {
         if(!empty($request->payment_id)) {
-            Payment::where('id', $request->payment_id)->update(['status' => -2]);//delete
+            Payment::where('id', $request->payment_id)->delete();//delete
+            PaymentDetails::where('payment_id', $request->payment_id)->delete();//delete
         }
-        return redirect()->back()->with('message','Payment data moved to trash!');
+        return redirect()->back()->with('message','Payment data deleted successfully!');
     }
 
     public function paymentTypes()
@@ -249,5 +273,11 @@ class PaymentController extends Controller
             return redirect()->back()->with('message','No Data Found To Export!!');
         }
         return Excel::download(new PaymentExport($payments),"payment.xlsx");
+    }
+
+    public function getDue(Request $request,DueCalculationService $memberDue)
+    {
+        $due_amount=$memberDue->getDueOfMember($request->id);
+        return json_encode(["due"=>$due_amount]);
     }
 }

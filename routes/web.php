@@ -242,6 +242,8 @@ Route::group(['middleware' => ['auth','role:billing-manager|super-admin']],funct
     Route::post('bill-report', [BillingController::class, 'getReport'])->name('bill-report');
 });
 
+Route::post('payment/get-due',[PaymentController::class,'getDue'])->name('get-due');
+
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');
     return "Cache Cleared";
