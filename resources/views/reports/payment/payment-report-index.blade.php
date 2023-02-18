@@ -79,12 +79,12 @@
                                 <span id="date_to_error" class="text-danger"></span>
                             </div>
                             <div class="col-md-2 col-sm-12">
-                                 <label for="payment_method">Payment Method</label>
-                                <select class="form-control" id="payment_method" name="payment_method">
-                                    <option value="">--All--</option>
-                                    <option value="1">Pay Order</option>
-                                    <option value="2">Cash</option>
-                                    <option value="3">Cheque</option>
+                                <label for="payment_type">Payment Type</label>
+                                <select class="form-control" id="payment_type" name="payment_type">
+                                    <option value="">--Select--</option>
+                                    @foreach($paymentTypes as $paymentType)
+                                        <option value="{{$paymentType->id}}">{{$paymentType->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-2 col-sm-12">

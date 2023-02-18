@@ -12,6 +12,7 @@ namespace App\Repositories\report;
 use App\Interfaces\report\PaymentReportInterface;
 use App\Models\Member;
 use App\Models\Payment;
+use App\Models\PaymentDetails;
 use Illuminate\Support\Facades\DB;
 
 class PaymentReportRepository implements PaymentReportInterface
@@ -22,33 +23,33 @@ class PaymentReportRepository implements PaymentReportInterface
         $where=[];
         if(!empty($request->member))
         {
-            $where[]=['member_id','=',$request->member];
+            $where[]=['payment_details.member_id','=',$request->member];
         }
         if(!empty($request->date_from))
         {
-            $where[]=['payment_date','>=',$request->date_from];
+            $where[]=['payment_details.payment_date','>=',$request->date_from];
         }
 
         if(!empty($request->date_to))
         {
-            $where[]=['payment_date','<=',$request->date_to];
+            $where[]=['payment_details.payment_date','<=',$request->date_to];
         }
 
-        if(!empty($request->payment_method))
+        if(!empty($request->payment_type))
         {
-            $where[]=['payment_method','=',$request->payment_method];
-        }
-
-        if(!empty($request->purpose))
+            $where[]=['payment_details.payment_type','=',$request->payment_type];
+        }else
         {
-            $where[]=['purpose_id','=',$request->purpose];
+            $where[]=['payment_details.payment_type','=',1];
         }
 
-        $payments=Payment::where($where)
-            ->where('payments.status',1)
-            ->where('is_payment',1)
-            ->leftJoin('payment_types','payment_types.id','payments.payment_type')
-            ->select('payments.id','member_id','payment_date','amount','payment_types.name')
+        $payments=PaymentDetails::where($where)
+            ->where('payment_details.status',1)
+            ->where('payment_details.is_payment',1)
+            ->join('payments','payments.id','=','payment_details.payment_id')
+            ->leftJoin('payment_types','payment_types.id','payment_details.payment_type')
+            ->select('payment_details.id','payment_id','payment_details.member_id','amount','payment_details.payment_date','payment_types.name','payment_year','payment_month')
+            ->orderBy('payment_id','desc')
             ->get();
 
         if(!empty($request->member))
@@ -66,6 +67,8 @@ class PaymentReportRepository implements PaymentReportInterface
             $report_data[$payment->member_id]['payment'][$payment->id]['amount']=$payment->amount;
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_date']=$payment->payment_date;
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_type']=$payment->name;
+            $report_data[$payment->member_id]['payment'][$payment->id]['payment_year']=$payment->payment_year;
+            $report_data[$payment->member_id]['payment'][$payment->id]['payment_month']=$payment->payment_month;
         }
 
         foreach ($members as $member)
@@ -76,6 +79,7 @@ class PaymentReportRepository implements PaymentReportInterface
                 $report_data[$member->id]['name']=$member->first_name;
             }
         }
+//        echo "<pre>";print_r($report_data);echo "</pre>";die;
         return $report_data;
     }
 }

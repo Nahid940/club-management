@@ -7,6 +7,7 @@ use App\Interfaces\report\PaymentReportInterface;
 use App\Models\DonationPurpose;
 use App\Models\Member;
 use App\Models\Payment;
+use App\Models\PaymentType;
 use Illuminate\Http\Request;
 
 class PaymentReportController extends Controller
@@ -24,7 +25,8 @@ class PaymentReportController extends Controller
     {
         $members=Member::select('id','first_name','member_code')->where('status',1)->get();
         $purposes=DonationPurpose::select('id','purpose')->where('status',1)->get();
-        return view('reports.payment.payment-report-index',['title'=>"","purposes"=>$purposes,'members'=>$members]);
+        $paymentTypes=PaymentType::select('id','name')->where('status',1)->get();
+        return view('reports.payment.payment-report-index',['title'=>"","purposes"=>$purposes,'members'=>$members,'paymentTypes'=>$paymentTypes]);
     }
 
     public function report(Request $request)
