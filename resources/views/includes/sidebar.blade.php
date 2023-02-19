@@ -85,9 +85,9 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('member-book')}}" class="nav-link">
-                    <i class="fa fa-book-open nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
-                    <p>Book</p>
+                  <a href="{{route('bill-index')}}" class="nav-link">
+                    <i class="fa fa-list nav-icon" style="font-size: 10px;color: #ffb812" aria-hidden="true"></i>
+                    <p>Bill List</p>
                   </a>
                 </li>
               </ul>
@@ -271,6 +271,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{route('bill-report')}}" class="nav-link">
+                    <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                    <p>Billing Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="{{route('donation-report-index')}}" class="nav-link">
                     <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                     <p>Donation Report</p>
@@ -283,13 +289,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('donation-report-index')}}" class="nav-link">
+                    <a href="{{route('profession-report-index')}}" class="nav-link">
                         <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                         <p>Profession-wise report</p>
                     </a>
                  </li>
                   <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                      <a href="{{route('blood-group-report-index')}}" class="nav-link">
                           <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                           <p>Blood group-wise report</p>
                       </a>

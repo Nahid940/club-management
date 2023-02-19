@@ -23,6 +23,8 @@ use App\Http\Controllers\DonationPurposeController;
 use App\Http\Controllers\OccupationController;
 use App\Http\Controllers\report\BatchwiseReportController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\ProfessionWiseReportController;
+use App\Http\Controllers\report\BloodGroupWiseReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -243,6 +245,12 @@ Route::group(['middleware' => ['auth','role:billing-manager|super-admin']],funct
 });
 
 Route::post('payment/get-due',[PaymentController::class,'getDue'])->name('get-due');
+
+Route::get('profession-report-index',[ProfessionWiseReportController::class,'index'])->name('profession-report-index');
+Route::post('profession-report-report',[ProfessionWiseReportController::class,'report'])->name('profession-report');
+
+Route::get('blood-group-report-index',[BloodGroupWiseReportController::class,'index'])->name('blood-group-report-index');
+Route::post('blood-group-report',[BloodGroupWiseReportController::class,'report'])->name('blood-group-report');
 
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');
