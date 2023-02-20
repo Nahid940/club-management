@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DonationRequest;
 use App\Models\DonationPurpose;
 use App\Models\Payment;
+use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,10 @@ class DonationController extends Controller
         }
         $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
         $payments=Payment::with('donor:id,name,email')
-            ->orderBy('id','desc')
-            ->where('status','!=','-2')
-            ->where('is_payment','=','0')
+            ->join('payment_details','payment_details.payment_id','=','payments.id')
+            ->orderBy('payments.id','desc')
+            ->where('payments.status','!=','-2')
+            ->where('payments.is_payment','=','0')
             ->whereHas('donor', function ($query) use ($where){
                 $query->where($where);
             })
@@ -53,38 +55,53 @@ class DonationController extends Controller
 
     public function save(DonationRequest $request)
     {
-        Payment::create([
+
+        $id=Payment::create([
             "member_id"=>$request->member_id,
-            "payment_type"=>2, //donation
+            "payment_ref_no"=>$request->payment_ref_no,
+            "remarks"=>$request->remarks,
+            "payment_method"=>$request->payment_method,
+            "payment_type"=>100, //donation
+            "payment_date"=>$request->date,
+            "purpose_id"=>$request->purpose_id,
+            "mr_no"=>$request->mr_no,
+            "created_at"=>Carbon::now(),
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>0
+        ]);
+
+        PaymentDetails::create([
+            "payment_id"=>$id->id,
+            "member_id"=>$request->member_id,
+            "payment_type"=>100, //donation
             "payment_date"=>$request->date,
             "amount"=>$request->amount,
             "currency_rate"=>1,
             "currency"=>"BDT",
-            "payment_method"=>$request->payment_method,
-            "payment_ref_no"=>$request->payment_ref_no,
-            "remarks"=>$request->remarks,
-            "purpose_id"=>$request->purpose_id,
             "payment_month"=>$request->month,
             "payment_year"=>$request->year,
             "created_at"=>Carbon::now(),
             "created_by"=>Auth::user()->id,
             "is_payment"=>0
         ]);
+
         return redirect()->back()->with('message','Donation saved successfully!');
     }
 
     public function view($id){
         $title="";
         $payment=Payment::info()
-            ->where('payment_type',2)
+            ->where('payment_type',100)
             ->findOrFail($id);
-        return view('pages.donation.view',["payment"=>$payment,"title"=>$title]);
+        $payment_details=PaymentDetails::where('payment_id',$id)->first();
+        return view('pages.donation.view',["payment"=>$payment,"payment_details"=>$payment_details,"title"=>$title]);
     }
 
     public function delete(Request $request)
     {
         if(!empty($request->payment_id)) {
-            Payment::where('id', $request->payment_id)->update(['status' => -2]);//delete
+            Payment::where('id', $request->payment_id)->delete();//delete
+            PaymentDetails::where('payment_id', $request->payment_id)->delete();//delete
         }
         return redirect()->back()->with('message','Donation data moved to trash!');
     }
@@ -102,18 +119,33 @@ class DonationController extends Controller
     {
         Payment::where('id',$request->payment_sl)->update([
             "member_id"=>$request->member_id,
-            "payment_type"=>2,
-            "payment_date"=>$request->date,
-            "amount"=>$request->amount,
-            "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "payment_method"=>$request->payment_method,
+            "payment_type"=>100, //donation
+            "payment_date"=>$request->date,
             "purpose_id"=>$request->purpose_id,
-            "payment_month"=>date('m',strtotime($request->date)),
-            "payment_year"=>date('Y',strtotime($request->date)),
-            "updated_at"=>Carbon::now(),
-            "updated_by"=>Auth::user()->id
+            "mr_no"=>$request->mr_no,
+            "created_at"=>Carbon::now(),
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>0
         ]);
+
+        PaymentDetails::where('payment_id',$request->payment_sl)->update([
+            "payment_id"=>$request->payment_sl,
+            "member_id"=>$request->member_id,
+            "payment_type"=>100, //donation
+            "payment_date"=>$request->date,
+            "amount"=>$request->amount,
+            "currency_rate"=>1,
+            "currency"=>"BDT",
+            "payment_month"=>$request->month,
+            "payment_year"=>$request->year,
+            "created_at"=>Carbon::now(),
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>0
+        ]);
+
         return redirect()->back()->with('message','Donation data updated successfully!');
     }
 

@@ -36,15 +36,6 @@
     .hidden_area{
     display:none
     }
-    .exp_group{
-        margin-bottom: 0rem!important;
-    }
-    .exp-form-control{
-        height: calc(1.1rem);
-    }
-    #pay_row td{
-        padding:0.3rem
-    }
 @stop
 @section('content')
     <div class="row">
@@ -77,6 +68,7 @@
                                 @if(session('id'))
                                     <a href="{{route('payment-view',session('id'))}}" class="btn btn-xs btn-warning float-right mb-1">View Payment Details</a>
                                 @endif
+                                <p class="float-right text-danger text-md hidden_area due_area">Due: <span id="due_amount">0</span></p>
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
                                     <input autocomplete="off" type="text" class="form-control" placeholder="Type Member ID" id="member_search" required>
@@ -137,7 +129,7 @@
                                          <td>
                                              <div class="form-group exp_group">
                                                  {{--<label for="amount">Amount <span class="text-danger">*</span></label>--}}
-                                                 <input type="number" class="form-control exp-form-control" value="{{old('amount')}}"  name="amount[]" id="amount" placeholder="Amount" required>
+                                                 <input type="number" class="form-control exp-form-control amount_val" value="{{old('amount')}}"  name="amount[]" id="amount" placeholder="Amount" required>
                                              </div>
                                          </td>
                                          <td><input type="checkbox" id="same_amount" title="Set Same Amount"></td>
@@ -147,7 +139,7 @@
                             <div class="col-md-12">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Type: <span class="text-danger">*</span></label>
-                                    <select name="payment_type" id="" class="form-control" required>
+                                    <select name="payment_type" id="payment_type" class="form-control" required>
                                         <option value="">--Select--</option>
                                         @foreach($payment_types as $payment_type)
                                             <option value="{{$payment_type->id}}" {{old('payment_type')==$payment_type->id?'selected':''}}>{{$payment_type->name}}</option>
@@ -174,19 +166,19 @@
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Method: <span class="text-danger">*</span></label>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="member_type"  id="mem1" value="1">
+                                        <input type="checkbox" name="payment_method"  {{old('payment_method')==1?"checked":""}} class="payment_method"  id="mem1" value="1">
                                         <label for="mem1">
                                             Pay Order
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="member_type"  id="mem2" value="2">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==2?"checked":""}} class="payment_method"  id="mem2" value="2">
                                         <label for="mem2">
                                             Cash
                                         </label>
                                     </div>
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="member_type"  id="mem3" value="3">
+                                        <input type="checkbox" name="payment_method" {{old('payment_method')==3?"checked":""}} class="payment_method"  id="mem3" value="3">
                                         <label for="mem3">
                                             Cheque
                                         </label>
@@ -195,7 +187,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="payment_ref_no">Reference No. <span class="text-danger">*</span></label>
+                                    <label for="payment_ref_no">Reference No. </label>
                                     <input type="text" class="form-control" value="{{old('payment_ref_no')}}"  name="payment_ref_no" id="payment_ref_no" placeholder="Reference No." required>
                                 </div>
                             </div>
@@ -218,7 +210,59 @@
 @stop
 @section('script_link')
     <script src="{{asset('js/member-search.js')}}"></script>
+    <script src="{{asset('js/get-due.js')}}"></script>
     <script src="{{asset('js/pay_row.js')}}"></script>
+    <script>
+        $('.save_btn').on('click',function(){
+            let null_amount=false;
+            $(".amount_val").each(function(){
+                if($(this).val()=="")
+                {
+                    null_amount=true;
+                    $(this).css('border-color','red')
+                }else
+                {
+                    $(this).css('border-color','#b4bae2b5')
+                }
+            });
+            if($('#member_id').val()=="")
+            {
+                Swal.fire("Select a Member first!!");
+                $('#member_search').css('border-color','red')
+            }else if($('#date').val()=="")
+            {
+                Swal.fire("Payment date is required!!");
+                $('#date').css('border-color','red')
+            }else if(null_amount)
+            {
+                Swal.fire("Payment amount should not be empty!!");
+            }
+            else if($('#payment_type').val()=="")
+            {
+                Swal.fire("Payment type is required!!");
+                $('#payment_type').css('border-color','red')
+            }else if(!$('.payment_method').is(":checked"))
+            {
+                Swal.fire("Payment method is required!!");
+            }else {
+                Swal.fire({
+                    title: 'Do you want to save this data?',
+                    text: "Click on Yes to proceed",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('.save_btn').attr('disabled','disabled');
+                        $('#form_submit').submit();
+                    }
+                })
+            }
+
+        })
+    </script>
 @stop
 
 @section('script')
@@ -231,22 +275,7 @@
         $('.suggestion-area').html();
     });
 
-    $('.save_btn').on('click',function(){
-        Swal.fire({
-            title: 'Do you want to save this data?',
-            text: "Click on Yes to proceed",
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-            }).then((result) => {
-            if (result.isConfirmed) {
-            $('.save_btn').attr('disabled','disabled')
-                $('#form_submit').submit();
-            }
-        })
-    })
+
 
     $('.add_purpose').on('click',function(){
         $('#purpose_div').removeClass('hidden_area')

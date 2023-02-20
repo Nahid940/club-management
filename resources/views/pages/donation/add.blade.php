@@ -40,6 +40,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 offset-md-3 col-sm-12">
+            @if(session('message'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-check"></i> Success!</h5>
+                    {{session('message')}}
+                </div>
+            @endif
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-donate" aria-hidden="true"></i> Add New Donation</h3>
@@ -57,13 +64,6 @@
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
-                                </div>
-                            @endif
-                            @if(session('message'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <h5><i class="icon fas fa-check"></i> Success!</h5>
-                                    {{session('message')}}
                                 </div>
                             @endif
                             <div class="col-md-12">
@@ -158,6 +158,12 @@
                                             Cheque
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="mr_no">Money Receipt </label>
+                                    <input type="text" class="form-control" name="mr_no" value="{{ old('mr_no') }}" id="mr_no" placeholder="Money Receipt" required>
                                 </div>
                             </div>
                             <div class="col-md-12">

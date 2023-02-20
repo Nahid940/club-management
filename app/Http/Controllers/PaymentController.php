@@ -85,6 +85,7 @@ class PaymentController extends Controller
 
     public function save(PaymentRequest $request)
     {
+
         $id=Payment::create([
             "member_id"=>$request->member_id,
             "payment_ref_no"=>$request->payment_ref_no,
@@ -157,25 +158,48 @@ class PaymentController extends Controller
         $donation_purpose=DonationPurpose::select('id','purpose')->where('status',1)->get();
         $payment_types=PaymentType::select('id','name')->get();
         $payment=Payment::with('member:id,first_name,member_code,email,member_type,mobile_number')->findOrFail($id);
-        return view('pages.payment.edit')->with(['title'=>$title,'payment'=>$payment,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
+        $payment_details=PaymentDetails::where('payment_id',$id)->get();
+        return view('pages.payment.edit')->with(['title'=>$title,'payment'=>$payment,'payment_details'=>$payment_details,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
     }
 
     public function update(PaymentRequest $request)
     {
+
         Payment::where('id',$request->payment_sl)->update([
             "member_id"=>$request->member_id,
-            "payment_type"=>$request->payment_type,
-            "payment_date"=>$request->date,
-            "amount"=>$request->amount,
-            "payment_method"=>$request->payment_method,
             "payment_ref_no"=>$request->payment_ref_no,
             "remarks"=>$request->remarks,
+            "payment_method"=>$request->payment_method,
+            "payment_type"=>$request->payment_type,
+            "payment_date"=>$request->date,
             "purpose_id"=>$request->purpose_id,
-            "payment_month"=>$request->month,
-            "payment_year"=>$request->year,
-            "updated_at"=>Carbon::now(),
-            "updated_by"=>Auth::user()->id
+            "mr_no"=>$request->mr_no,
+            "created_at"=>Carbon::now(),
+            "created_by"=>Auth::user()->id,
+            "is_payment"=>1
         ]);
+
+        PaymentDetails::where('payment_id',$request->payment_sl)->delete();
+        for($i=0;$i<sizeof($request->amount);$i++)
+        {
+            if($request->amount[$i]>0)
+            {
+                PaymentDetails::create([
+                    "payment_id"=>$request->payment_sl,
+                    "member_id"=>$request->member_id,
+                    "payment_type"=>$request->payment_type,
+                    "payment_date"=>$request->date,
+                    "amount"=>$request->amount[$i],
+                    "currency_rate"=>1,
+                    "currency"=>"BDT",
+                    "payment_month"=>$request->month[$i],
+                    "payment_year"=>$request->year[$i],
+                    "created_at"=>Carbon::now(),
+                    "created_by"=>Auth::user()->id,
+                    "is_payment"=>1
+                ]);
+            }
+        }
         return redirect()->back()->with('message','Payment updated successfully!');
     }
 
@@ -279,5 +303,11 @@ class PaymentController extends Controller
     {
         $due_amount=$memberDue->getDueOfMember($request->id);
         return json_encode(["due"=>$due_amount]);
+    }
+
+    public function paymentDetailsDelete(Request $request)
+    {
+        PaymentDetails::where('id',$request->payment_details_id)->delete();
+        return redirect()->back()->with('message','Data deleted successfully!!');
     }
 }

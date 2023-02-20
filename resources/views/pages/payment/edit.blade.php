@@ -39,7 +39,15 @@
 @stop
 @section('content')
     <div class="row">
+
         <div class="col-md-6 offset-md-3 col-sm-12">
+            @if(session('message'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-check"></i> Success!</h5>
+                    {{session('message')}}
+                </div>
+            @endif
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa fa-credit-card" aria-hidden="true"></i> Edit Payment</h3>
@@ -59,17 +67,11 @@
                                     </ul>
                                 </div>
                             @endif
-                            @if(session('message'))
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <h5><i class="icon fas fa-check"></i> Success!</h5>
-                                    {{session('message')}}
-                                </div>
-                            @endif
+
                             <div class="col-md-12">
                                 <div class="form-group" style="">
                                     <label for=""><i class="fa fa-search" aria-hidden="true"></i> Search Member <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Type Member Name/Code" value="{{$payment->member->first_name}}" id="member_search" required>
+                                    <input type="text" class="form-control" placeholder="Type Member Name/Code" value="{{$payment->member->first_name." ".$payment->member->member_code}}" id="member_search" required>
                                     <input type="hidden" id="member_id"  value="{{$payment->member->id}}" name="member_id">
                                 </div>
                                 <div class="suggestion-area hidden_area">
@@ -85,40 +87,61 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="month">Month <span class="text-danger">*</span></label>
-                                    <select name="month" id="month" class="form-control" required>
-                                        <option value="">--Select--</option>
-                                        <option value="1" {{$payment->payment_month==1?"selected":""}}>January</option>
-                                        <option value="2" {{$payment->payment_month==2?"selected":""}} >February</option>
-                                        <option value="3" {{$payment->payment_month==3?"selected":""}} >March</option>
-                                        <option value="4" {{$payment->payment_month==4?"selected":""}} >April</option>
-                                        <option value="5" {{$payment->payment_month==5?"selected":""}} >May</option>
-                                        <option value="6" {{$payment->payment_month==6?"selected":""}} >June</option>
-                                        <option value="7" {{$payment->payment_month==7?"selected":""}} >July</option>
-                                        <option value="8" {{$payment->payment_month==8?"selected":""}} >August</option>
-                                        <option value="9" {{$payment->payment_month==9?"selected":""}} >September</option>
-                                        <option value="10" {{$payment->payment_month==10?"selected":""}}>October</option>
-                                        <option value="11" {{$payment->payment_month==11?"selected":""}}>November</option>
-                                        <option value="12" {{$payment->payment_month==12?"selected":""}}>December</option>
-                                    </select>
+                                    <label for="mr_no">Money Receipt No.</label>
+                                    <input type="text" class="form-control" value="{{$payment->mr_no}}" name="mr_no" id="date" placeholder="Money Receipt No." required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="year">Year <span class="text-danger">*</span></label>
-                                    <select name="year" id="year" class="form-control" required>
-                                        <option value="">--Select--</option>
-                                        @for($i=2021;$i<=2025;$i++)
-                                            <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="amount">Amount <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="amount" value="{{$payment->amount}}" id="amount" required>
-                                </div>
+                            @php
+                                $count=1;
+                            @endphp
+                            <input type="hidden" value="{{count($payment_details)}}" id="total_payments">
+                            <div class="col-md-12">
+                                <a class="btn btn-xs btn-success float-right" id="add_new_row"><i class="fa fa-plus-circle"></i></a>
+                                <table class="table" id="pay_row">
+                                    @foreach($payment_details as $payment_detail)
+                                    <tr style="padding: 2px">
+                                        <td>{{$count++}}. </td>
+                                        <td>
+                                            <div class="form-group exp_group">
+                                                {{--<label for="year">Year <span class="text-danger">*</span></label>--}}
+                                                <select name="year[]" id="year" class="form-control exp-form-control" required>
+                                                    <option value="">--Year--</option>
+                                                    @for($i=2018;$i<=2030;$i++)
+                                                        <option value="{{$i}}" {{$payment_detail->payment_year==$i?'selected':''}}>{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group exp_group">
+                                                {{--<label for="month">Month <span class="text-danger">*</span></label>--}}
+                                                <select name="month[]" id="month" class="form-control exp-form-control" required>
+                                                    <option value="">--Month--</option>
+                                                    <option value="1" {{$payment_detail->payment_month==1?"selected":"" }}>January</option>
+                                                    <option value="2" {{$payment_detail->payment_month==2?"selected":"" }}>February</option>
+                                                    <option value="3" {{$payment_detail->payment_month==3?"selected":"" }}>March</option>
+                                                    <option value="4" {{$payment_detail->payment_month==4?"selected":"" }}>April</option>
+                                                    <option value="5" {{$payment_detail->payment_month==5?"selected":"" }}>May</option>
+                                                    <option value="6" {{$payment_detail->payment_month==6?"selected":"" }}>June</option>
+                                                    <option value="7" {{$payment_detail->payment_month==7?"selected":"" }}>July</option>
+                                                    <option value="8" {{$payment_detail->payment_month==8?"selected":"" }}>August</option>
+                                                    <option value="9" {{$payment_detail->payment_month==9?"selected":"" }}>September</option>
+                                                    <option value="10" {{ $payment_detail->payment_month==10?"selected":"" }}>October</option>
+                                                    <option value="11" {{ $payment_detail->payment_month==11?"selected":"" }}>November</option>
+                                                    <option value="12" {{ $payment_detail->payment_month==12?"selected":"" }}>December</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group exp_group">
+                                                {{--<label for="amount">Amount <span class="text-danger">*</span></label>--}}
+                                                <input type="number" class="form-control exp-form-control amount_val" value="{{$payment_detail->amount}}"  name="amount[]" id="amount" placeholder="Amount" required>
+                                            </div>
+                                        </td>
+                                        <td><a class="btn btn-xs btn-danger ext_close_btn" data-id="{{$payment_detail->id}}">x</a></td>
+                                    </tr>
+                                    @endforeach
+                                </table>
                             </div>
                             <span>
                                 <a class="mb-1 text-danger add_purpose ml-1" style="cursor: pointer"><i class="fa fa-hand-point-up"></i> Add Donation Purpose</a>
@@ -191,30 +214,57 @@
             </div>
         </div>
     </div>
+    <form action="{{route('paymentdetals-delete')}}" method="POST" id="payment_detls_del">
+        {{ csrf_field() }}
+        <input type="hidden" name="payment_details_id" id="payment_details_id"/>
+    </form>
 @stop
 @section('script_link')
     <script src="{{asset('js/member-search.js')}}"></script>
+    <script src="{{asset('js/pay_row.js')}}"></script>
+    <script>
+        $(document).on('click','.ext_close_btn',function () {
+            let sl=$(this).data('id');
+            $('#payment_details_id').val(sl);
+            Swal.fire({
+                title: '<div style="font-size:20px;font-weight:bold;">Do you want to delete this information?</div>',
+                html: '<div style="font-size:10px">Your current information will be deleted!!</div>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0ba70c',
+                cancelButtonColor: '#dd2900',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#payment_detls_del').submit();
+                }
+            });
+        });
+
+
+        $("body").on("click", ".listitem", function () {
+            let name=$(this).data('name');
+            let id=$(this).data('id');
+            $('#member_search').val(name);
+            $('#member_id').val(id);
+            $('.suggestion-area').addClass('hidden_area');
+            $('.suggestion-area').html();
+        });
+
+        $('.add_purpose').on('click',function(){
+            $('#purpose_div').removeClass('hidden_area')
+            $('.close_purpose').removeClass('hidden_area')
+            $('.add_purpose').addClass('hidden_area')
+        });
+
+        $('.close_purpose').on('click',function(){
+            $('#purpose_div').addClass('hidden_area')
+            $('.close_purpose').addClass('hidden_area')
+            $('.add_purpose').removeClass('hidden_area')
+        });
+    </script>
 @stop
 
 @section('script')
-    $("body").on("click", ".listitem", function () {
-    let name=$(this).data('name');
-    let id=$(this).data('id');
-    $('#member_search').val(name);
-    $('#member_id').val(id);
-    $('.suggestion-area').addClass('hidden_area');
-    $('.suggestion-area').html();
-    });
 
-    $('.add_purpose').on('click',function(){
-    $('#purpose_div').removeClass('hidden_area')
-    $('.close_purpose').removeClass('hidden_area')
-    $('.add_purpose').addClass('hidden_area')
-    });
-
-    $('.close_purpose').on('click',function(){
-    $('#purpose_div').addClass('hidden_area')
-    $('.close_purpose').addClass('hidden_area')
-    $('.add_purpose').removeClass('hidden_area')
-    });
 @stop

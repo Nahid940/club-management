@@ -16,10 +16,10 @@
     @include('reports.report_header')
     <table id="heading">
         <thead>
-        <th colspan="2" style="border: none"><div class="text-lg" align="center">Blood-group-wise Member Report</div></th>
+        <th colspan="2" style="border: none"><div class="text-lg" align="center">Date of Birth-wise Report</div></th>
         </thead>
         <tr>
-            <td>Blood Group: {{empty($blood_group)?"All":$blood_group}}</td>
+            <td>DOB: {{empty($date_of_birth)?"All":$date_of_birth}}</td>
             <td>Print Date : <b>{{date('d-m-Y')}}</b></td>
         </tr>
     </table>
@@ -29,7 +29,7 @@
         <thead>
         <tr>
             <th><div align="center">Member Name</div></th>
-            <th style="width: 10%"><div align="center">Blood Group</div></th>
+            <th style="width: 10%"><div align="center">Date of Birth</div></th>
             <th style="width: 20%"><div align="center">Email</div></th>
             <th style="width: 15%"><div align="center">Phone</div></th>
         </tr>
@@ -38,7 +38,7 @@
         @foreach($members as $member)
             <tr>
                 <td><div align="center">{{$member->first_name." (".$member->member_code.")"}}</div></td>
-                <td><div align="center">{{$member->blood_group}}</div></td>
+                <td><div align="center">{{date('d-m-Y',strtotime($member->date_of_birth))}}</div></td>
                 <td><div align="center">{{$member->email}}</div></td>
                 <td><div align="center">{{$member->mobile_number}}</div></td>
             </tr>

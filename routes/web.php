@@ -25,6 +25,7 @@ use App\Http\Controllers\report\BatchwiseReportController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProfessionWiseReportController;
 use App\Http\Controllers\report\BloodGroupWiseReportController;
+use App\Http\Controllers\report\DOBwiseReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,6 +120,7 @@ Route::controller(PaymentController::class)->group(function(){
     Route::post('payment/type/add',[PaymentController::class,'typeSave'])->name('payment-type-save')->middleware('auth');
     Route::get('payment/export',[PaymentController::class,'export'])->name('payment-export')->middleware('auth');
     Route::post('payment/export',[PaymentController::class,'getExportFile'])->name('payment-export')->middleware('auth');
+    Route::post('paymentdetals-delete',[PaymentController::class,'paymentDetailsDelete'])->name('paymentdetals-delete')->middleware('auth');
 
 });
 
@@ -242,19 +244,30 @@ Route::group(['middleware' => ['auth','role:billing-manager|super-admin']],funct
     Route::post('bill-delete', [BillingController::class, 'delete'])->name('bill-delete');
     Route::get('bill-report', [BillingController::class, 'report'])->name('bill-report');
     Route::post('bill-report', [BillingController::class, 'getReport'])->name('bill-report');
+    Route::get('dob-report', [DOBwiseReportController::class, 'index'])->name('dob-report');
+    Route::post('dob-report', [DOBwiseReportController::class, 'report'])->name('dob-report');
 });
 
 Route::post('payment/get-due',[PaymentController::class,'getDue'])->name('get-due');
 
-Route::get('profession-report-index',[ProfessionWiseReportController::class,'index'])->name('profession-report-index');
-Route::post('profession-report-report',[ProfessionWiseReportController::class,'report'])->name('profession-report');
+Route::group(['middleware' => ['auth']],function () {
+    Route::get('profession-report-index', [ProfessionWiseReportController::class, 'index'])->name('profession-report-index');
+    Route::post('profession-report-report', [ProfessionWiseReportController::class, 'report'])->name('profession-report');
 
-Route::get('blood-group-report-index',[BloodGroupWiseReportController::class,'index'])->name('blood-group-report-index');
-Route::post('blood-group-report',[BloodGroupWiseReportController::class,'report'])->name('blood-group-report');
+    Route::get('blood-group-report-index', [BloodGroupWiseReportController::class, 'index'])->name('blood-group-report-index');
+    Route::post('blood-group-report', [BloodGroupWiseReportController::class, 'report'])->name('blood-group-report');
+});
 
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');
     return "Cache Cleared";
+});
+
+Route::get('data-clear',function (){
+    \App\Models\Payment::truncate();
+    \App\Models\PaymentDetails::truncate();
+    \App\Models\PaymentDetails::truncate();
+    echo "Data truncated";
 });
 
 require __DIR__.'/auth.php';

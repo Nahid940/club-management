@@ -29,7 +29,6 @@
         <thead>
         <tr>
             <th><div align="center">Member Name</div></th>
-            <th style="width: 20%"><div align="center">Member ID</div></th>
             <th style="width: 20%"><div align="center">Email</div></th>
             <th style="width: 15%"><div align="center">Phone</div></th>
             <th style="width: 5%"><div align="center">Batch</div></th>
@@ -39,8 +38,7 @@
         <tbody>
         @foreach($members as $member)
             <tr>
-                <td><div align="center">{{$member->first_name}}</div></td>
-                <td><div align="center">{{$member->member_code}}</div></td>
+                <td><div align="center">{{$member->first_name." (".$member->member_code.")"}}</div></td>
                 <td><div align="center">{{$member->email}}</div></td>
                 <td><div align="center">{{$member->mobile_number}}</div></td>
                 <td><div align="center">{{$member->passing_year}}</div></td>

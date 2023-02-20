@@ -4,6 +4,10 @@ const months = ["1","2","3","4","5","6","7","8","9","10","11","12"];
 let year=d.getFullYear();
 let month=months[d.getMonth()];
 let i=2;
+if($('#total_payments').val()!=undefined)
+{
+    i=parseInt($('#total_payments').val())+1;
+}
 $('#add_new_row').on('click',function () {
 
     $('#pay_row').append(
@@ -11,7 +15,7 @@ $('#add_new_row').on('click',function () {
             '<td>'+i+'.</td>'+
             '<td>' +
                 '<div class="form-group exp_group">'+
-                        '<select name="year[]" id="year" class="form-control exp-form-control" required>'+
+                        '<select name="year[]" id="year'+i+'" class="form-control exp-form-control" required>'+
                             '<option value="">--Year--</option>'+
                             '<option value="2018">2018</option>'+
                             '<option value="2019">2019</option>'+
@@ -31,7 +35,7 @@ $('#add_new_row').on('click',function () {
             '</td>'+
             '<td>' +
                 '<div class="form-group exp_group">'+
-                    '<select name="month[]" id="month" class="form-control exp-form-control" required>'+
+                    '<select name="month[]" id="month'+i+'" class="form-control exp-form-control" required>'+
                         '<option value="">--Month--</option>'+
                         '<option value="1">January</option>'+
                         '<option value="2">February</option>'+
@@ -56,9 +60,10 @@ $('#add_new_row').on('click',function () {
             '<td><a class="btn btn-xs btn-danger close_btn" data-sl="'+i+'">x</a></td>'+
         '</tr>'
     );
-        i++;
-        $("#year option[value='"+year+"']").prop('selected', true);
-        $("#month option[value='"+month+"']").prop('selected', true);
+    $("#year"+i+" option[value='"+year+"']").prop('selected', true);
+    $("#month"+i+" option[value='"+month+"']").prop('selected', true);
+    i++;
+
 });
 
 
