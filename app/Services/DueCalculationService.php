@@ -27,7 +27,9 @@ class DueCalculationService
 
         date_default_timezone_set('Asia/Dhaka');
         $current_date=date('Y-m-d');
-        $current_date='2023-02-26';
+        $current_year=date('Y');
+        $current_month=date('m');
+//        $current_date='2023-02-26';
         $member_monthly_fee=DB::table('membership_fees')->where('status',1)
             ->select('monthly_fee')->first();
         $member_registration_date=Member::where('id',$member_id)->select('registration_date')->first();
@@ -50,11 +52,19 @@ class DueCalculationService
             $total_months=$total_months-1==0?1:$total_months;
         }
 //        echo $total_months;die;
-        $totalPayment=PaymentDetails::where('payment_type',1)->where('is_payment',1)
-            ->where('status',1)->where('member_id',$member_id)->sum('amount');
+        $total_payable=$member_monthly_fee->monthly_fee*$total_months;//echo ($total_payable."-".$totalPayment)."+".$admission_fee_due;die;
 
-        $total_payable=$member_monthly_fee->monthly_fee*$total_months;
-
+        if($total_payable==0)
+        {
+            $totalPayment=0;
+        }else
+        {
+            $totalPayment=PaymentDetails::where('payment_type',1)->where('is_payment',1)
+                ->where('status',1)->where('member_id',$member_id)
+                ->where('payment_year','<=',$current_year)
+                ->where('payment_month','<=',$current_month)
+                ->sum('amount');
+        }
         $due=($total_payable-$totalPayment)+$admission_fee_due;
         if($due>0)
         {
@@ -71,4 +81,189 @@ class DueCalculationService
     {
 
     }
+
+
+    public function memberDueCalculation($admission_fee,$member_id)
+    {
+        $total_paid_admission_fees=PaymentDetails::where('member_id',$member_id)
+            ->where('payment_type',2)->where('status',1)->sum('amount');
+        $admission_fee_due=($admission_fee-$total_paid_admission_fees);
+
+        date_default_timezone_set('Asia/Dhaka');
+        $current_date=date('Y-m-d');
+        $current_year=date('Y');
+        $current_month=date('m');
+//        $current_date='2023-02-26';
+        $member_monthly_fee=DB::table('membership_fees')->where('status',1)
+            ->select('monthly_fee')->first();
+        $member_registration_date=Member::where('id',$member_id)->select('registration_date')->first();
+
+//        echo $member_registration_date->registration_date."<br>";
+        $startDate = new \DateTime($member_registration_date->registration_date);
+        $endDate = new \DateTime($current_date);
+        $interval = $endDate->diff($startDate);
+        $monthCount = ($interval->y * 12) + $interval->m;
+
+        $increment_month=0;
+        if(date('d',strtotime($current_date))>=25)
+        {
+            $increment_month=1;
+        }
+
+        $total_months=($monthCount)+$increment_month;
+        if(intval(date('d',strtotime($member_registration_date->registration_date)))>=25 && intval(date('d',strtotime($member_registration_date->registration_date)))<=31)
+        {
+            $total_months=$total_months-1==0?1:$total_months;
+        }
+//        echo $total_months;die;
+        $total_payable=$member_monthly_fee->monthly_fee*$total_months;//echo ($total_payable."-".$totalPayment)."+".$admission_fee_due;die;
+
+        if($total_payable==0)
+        {
+            $totalPayment=0;
+        }else
+        {
+            $totalPayment=PaymentDetails::where('payment_type',1)->where('is_payment',1)
+                ->where('status',1)->where('member_id',$member_id)
+                ->where('payment_year','<=',$current_year)
+                ->where('payment_month','<=',$current_month)
+                ->sum('amount');
+        }
+        $monthly_fee_due=$total_payable-$totalPayment;
+        return array(
+            "membership_fee_due"=>$admission_fee_due,
+            "monthly_fee_due"=>$monthly_fee_due,
+        );
+    }
+
+
+    public function getMembershipDue($data)
+    {
+        $where=[];
+        if(isset($data->membership_type) && $data->membership_type>0)
+        {
+            $where[]=['member_type','=',$data->membership_type];
+        }
+        $members=Member::where('members.status',1)->select('members.id','first_name','member_code','registration_date','membership_types.type_name as type_name','admission_fee')
+            ->leftJoin('membership_types','membership_types.id','=','members.member_type')
+            ->where($where)
+            ->get();
+
+        $report_data=array();
+        foreach ($members as $member)
+        {
+            $due=$this->memberDueCalculation($member->admission_fee,$member->id);
+
+            if($due['membership_fee_due']+$due['monthly_fee_due']>0)
+            {
+                $report_data[$member->id]['name']=$member->first_name." (".$member->member_code.")";
+                $report_data[$member->id]['registration_date']=$member->registration_date;
+                $report_data[$member->id]['membership_type']=$member->type_name;
+                $report_data[$member->id]['membership_fee_due']=$due['membership_fee_due'];
+                $report_data[$member->id]['monthly_fee_due']=$due['monthly_fee_due'];
+            }
+        }
+        return $report_data;
+    }
+
+
+    public function getMembersDueData($data)
+    {
+        $where=[];
+        if(isset($data->member_id) && $data->member_id>0)
+        {
+            $where[]=['members.id','=',$data->member_id];
+            $members=Member::where('members.status',1)
+                ->where($where)
+                ->select('members.id','first_name','member_code','registration_date','membership_types.type_name')
+                ->join('membership_types','membership_types.id','=','members.member_type')
+                ->get();
+        }else
+        {
+            $members=Member::where('members.status',1)
+                ->where('short_form','=' ,'UM')
+                ->orWhere('short_form', '=','GM')
+                ->select('members.id','first_name','member_code','registration_date','membership_types.type_name')
+                ->join('membership_types','membership_types.id','=','members.member_type')
+                ->get();
+        }
+
+//        echo "<pre>";print_r($members);die;
+
+        $to_year=$data->to_year;
+        $to_month=$data->to_month;
+
+        $members_schedule=array();
+        $members_ids=array();
+        $members_info=array();
+        foreach ($members as $member)
+        {
+            $start_year=date('Y',strtotime($member->registration_date));
+            $start_month=date('m',strtotime($member->registration_date));
+//
+            if($start_year>=$data->from_year)
+            {
+                $from_year=$start_year;
+            }else
+            {
+                $from_year=$data->from_year;
+            }
+
+            if($start_month>=$data->from_month)
+            {
+                $from_month=$start_month;
+            }else
+            {
+                $from_month=$data->from_month;
+            }
+            $members_info[$member->id]['total_schedule']=0;
+            for ($year = $from_year; $year <= $to_year; $year++) {
+                $start_month = ($year == $from_year) ? $from_month : 1;
+                $end_month = ($year == $to_year) ? $to_month : 12;
+                for ($month = $start_month; $month <= $end_month; $month++) {
+                    $members_schedule[$member->id][$year][intval($month)]=0;
+                    $members_info[$member->id]['total_schedule']+=1;
+                }
+            }
+            $members_ids[$member->id]=$member->id;
+            $members_info[$member->id]['first_name']=$member->first_name." (".$member->member_code.")";
+            $members_info[$member->id]['registration_date']=$member->registration_date;
+            $members_info[$member->id]['type_name']=$member->type_name;
+        }
+
+        $payments=PaymentDetails::whereIn('member_id',$members_ids)
+            ->select('member_id','payment_year','payment_month','amount')
+            ->where('is_payment',1)
+            ->where('payment_year','>=',$data->from_year)
+            ->where('payment_month','>=',$data->from_month)
+            ->where('payment_year','<=',$to_year)
+            ->where('payment_month','<=',$to_month)
+            ->where('status',1)
+            ->get();
+
+//        echo "<pre>";print_r($members_schedule);die;
+        foreach ($payments as $payment)
+        {
+            if(isset($members_schedule[$payment->member_id]))
+            {
+                if(isset($members_schedule[$payment->member_id][$payment->payment_year][$payment->payment_month]) && isset($payment->amount) && !empty($payment->amount))
+                {
+                    $members_schedule[$payment->member_id][$payment->payment_year][$payment->payment_month]=$payment->amount;
+                }
+            }
+        }
+        $report_data=array();
+        foreach ($members_schedule as $key=>$schedule)
+        {
+            $report_data[$key]['name']=$members_info[$key]['first_name'];
+            $report_data[$key]['registration_date']=$members_info[$key]['registration_date'];
+            $report_data[$key]['type_name']=$members_info[$key]['type_name'];
+            $report_data[$key]['total_schedule']=$members_info[$key]['total_schedule'];
+            $report_data[$key]['schedule']=$schedule;
+        }
+        return $report_data;
+    }
+
+
+
 }
