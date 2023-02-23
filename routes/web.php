@@ -26,6 +26,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\ProfessionWiseReportController;
 use App\Http\Controllers\report\BloodGroupWiseReportController;
 use App\Http\Controllers\report\DOBwiseReportController;
+use App\Http\Controllers\report\DueReporController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -256,6 +257,18 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::get('blood-group-report-index', [BloodGroupWiseReportController::class, 'index'])->name('blood-group-report-index');
     Route::post('blood-group-report', [BloodGroupWiseReportController::class, 'report'])->name('blood-group-report');
+
+
+    Route::get('member-due-index', [DueReporController::class, 'getMemberWiseDueIndex'])->name('member-due-report-index');
+    Route::post('member-due-report', [DueReporController::class, 'getMemberWiseDue'])->name('member-due-report');
+
+
+    Route::get('membership-due-index', [DueReporController::class, 'getMembershipWiseDueIndex'])->name('membership-due-report-index');
+    Route::post('membership-due-report', [DueReporController::class, 'getMembershipWiseDue'])->name('membership-due-report');
+
+    Route::get('member-fee-due-index',[DueReporController::class,'memberFeeDueIndex'])->name('member-fee-due-index');
+    Route::post('member-fee-due-report',[DueReporController::class,'memberFeeDueReport'])->name('member-fee-due-report');
+
 });
 
 Route::get('cache-clear',function (){
