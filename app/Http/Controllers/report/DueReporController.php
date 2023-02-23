@@ -53,4 +53,19 @@ class DueReporController extends Controller
             'html' => view('reports.member-wise-due.report',["report_data"=>$report_data])->render()
         ]);
     }
+
+    public function memberFeeDueIndex()
+    {
+        $members=Member::select('id','first_name','member_code')->where('status',1)->get();
+        return view('reports.member-fee.index',['title'=>'','members'=>$members]);
+    }
+
+    public function memberFeeDueReport(Request $request)
+    {
+        $report_data=$this->due_calculation->getMemberFeeDueReport($request);
+//        echo "<pre>";print_r($report_data);die;
+        return response()->json([
+            'html' => view('reports.member-fee.report',["report_data"=>$report_data])->render()
+        ]);
+    }
 }
