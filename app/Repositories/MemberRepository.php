@@ -3,6 +3,7 @@ namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
 use App\Models\Payment;
+use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,14 +17,35 @@ class MemberRepository implements MemberInterface
 
     public function getMember($id){
         $member = DB::table('members')
-                ->where('id', $id)
+                ->where('members.id', $id)
                 ->where('branch_id',1)
+                ->leftJoin('occupations','occupations.id','=','members.occupation')
+                ->select('members.*','occupations.occupation')
                 ->first();
         $classification=DB::table('member_has_member_classifications')
         ->where('member_id',$id)
         ->join('member_classifications', 'member_classifications.id', '=', 'member_has_member_classifications.member_classifications_id')
         ->select('member_has_member_classifications.member_classifications_id as id','name')
         ->get();
+
+
+        $member->proposed_member="";
+        $member->seconded_member="";
+        if(!empty($member->proposed_by))
+        {
+            $proposed_by = DB::table('members')
+                ->where('id', $member->proposed_by)
+                ->select('first_name','member_code')
+                ->first();
+            $member->proposed_member=$proposed_by->first_name ."-".$proposed_by->member_code;
+        }
+        if(!empty($member->seconded_by)) {
+            $seconded_by = DB::table('members')
+                ->where('id', $member->seconded_by)
+                ->select('first_name', 'member_code')
+                ->first();
+            $member->seconded_member=$seconded_by->first_name ."-".$seconded_by->member_code;
+        }
 
         if($member->member_type==1)
         {
@@ -312,23 +334,38 @@ class MemberRepository implements MemberInterface
                     }
                 }
 
-                Payment::create([
-                    "member_id"=>$id,
-                    "payment_type"=>0, //0 for admission type payment
-                    "payment_date"=>$data['registration_date'],
-                    "amount"=>$data['amount'],
-                    "currency_rate"=>1,
-                    "currency"=>"BDT",
-                    "payment_method"=>$data['payment_method'],
-                    "payment_ref_no"=>$data['payment_ref_no'],
-                    "remarks"=>$data['remarks'],
-                    "purpose_id"=>null,
-                    "payment_month"=>date('m',strtotime($data['registration_date'])),
-                    "payment_year"=>date('Y',strtotime($data['registration_date'])),
-                    "created_at"=>Carbon::now(),
-                    "created_by"=>Auth::user()->id,
-                    "is_payment"=>1
-                ]);
+                if(!empty($data['amount']) && $data['amount']>0)
+                {
+                    $payment_id=Payment::create([
+                        "member_id"=>$id,
+                        "payment_ref_no"=>$data['payment_ref_no'],
+                        "remarks"=>$data['remarks'],
+                        "payment_method"=>$data['payment_method'],
+                        "payment_type"=>2,
+                        "payment_date"=>$data['registration_date'],
+                        "purpose_id"=>null,
+                        "mr_no"=>null,
+                        "created_at"=>Carbon::now(),
+                        "created_by"=>Auth::user()->id,
+                        "is_payment"=>1
+                    ]);
+
+                    PaymentDetails::create([
+                        "payment_id"=>$payment_id->id,
+                        "member_id"=>$id,
+                        "payment_type"=>2,
+                        "payment_date"=>$data['registration_date'],
+                        "amount"=>$data['amount'],
+                        "currency_rate"=>1,
+                        "currency"=>"BDT",
+                        "payment_month"=>date('m',strtotime($data['registration_date'])),
+                        "payment_year"=>date('Y',strtotime($data['registration_date'])),
+                        "created_at"=>Carbon::now(),
+                        "created_by"=>Auth::user()->id,
+                        "is_payment"=>1
+                    ]);
+                }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -346,7 +383,6 @@ class MemberRepository implements MemberInterface
         // "branch_name"=>$data['branch_name'],
         // "acc_no"=>$data['acc_no'],
         // DB::table('student_details')->insert($data);
-
     }
 
     public function deleteMember($id){
@@ -437,13 +473,6 @@ class MemberRepository implements MemberInterface
             "email"                     =>   $data['email'],
             "occupation"                =>   $data['occupation'],
             "occupation_type"           =>   $data['occupation_type'],
-
-            "admission_fee"             =>  $data['admission_fee'],
-            "amount"                    =>  $data['amount'],
-            "payment_method"            =>  $data['payment_method'],
-            "payment_ref_no"            =>  $data['payment_ref_no'],
-            "remarks"                   =>  $data['remarks'],
-
 
             "present_address"           =>   $data['present_address'],
             "permanent_address"         =>   $data['permanent_address'],

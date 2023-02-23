@@ -1,36 +1,12 @@
 @extends('main')
 @section('pageHeading'){{$title}}@stop
 @section('style')
-    .table{
-        width:100%
-    }
     .table td, .table th {
         padding: .2rem;
         text-align:center;
         vertical-align: middle;
     }
-    .action_button{
-        font-weight: 400;
-        padding: 0.2rem .2rem;
-        font-size: 10px;
-        border-radius: .3re
-    }
-    .form-control{
-        height: calc(1.40rem);
-        padding: .1rem 0.75rem;
-        font-size:inherit
-    }
-    .search_btn{
-        padding: .0rem .5rem;
-        line-height: 1.3;
-    }
-    .search_frm{
-        margin-bottom:.6rem
-    }
-    .action_btn{
-        padding: 0.1rem .1rem
-    }
-@stop
+@endsection
 @section('content')
 <div class="row">
     <div class="col-sm-12 col-lg-12">
@@ -49,7 +25,7 @@
                         </div>
                         <div class="col-lg-2 col-sm-12">
                             {{-- <label for="mobile_number">Mobile Number</label> --}}
-                            <input type="text" class="form-control" value="{{ request()->input('member_code') }}" id="member_code" name="member_code" placeholder="Member Code" require/>
+                            <input type="text" class="form-control" value="{{ request()->input('member_code') }}" id="member_code" name="member_code" placeholder="Member ID" require/>
                         </div>
                         <div class="col-lg-2 col-sm-12">
                             {{-- <label>Member Type <span class="txt-info"></span></label> --}}
@@ -95,13 +71,10 @@
                 @endif
                 <table id="example2" class="table table-bordered table-hover table-responsive-sm">
                     <thead>
-                        {{-- <tr>
-                            <th colspan="5"><a class="btn btn-success" href="{{route('member-admission')}}">+</a></th>
-                        </tr> --}}
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Member Code</th>
+                            <th>Member ID</th>
                             <th>Member Type</th>
                             <th>Mobile</th>
                             <th>Email</th>

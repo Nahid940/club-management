@@ -301,33 +301,27 @@
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                      <a href="{{route('dob-report')}}" class="nav-link">
                           <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                           <p>DOB-wise report</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                    <a href="{{route('member-due-report-index')}}" class="nav-link">
+                      <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
+                      <p>Member-wise payment report</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{route('membership-due-report-index')}}" class="nav-link">
                           <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                           <p>Membership-wise due report</p>
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
-                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
-                          <p>Membership-wise full-payment report</p>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
+                      <a href="{{route('member-fee-due-index')}}" class="nav-link">
                           <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
                           <p>Membership fee due report</p>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="{{route('donation-report-index')}}" class="nav-link">
-                          <i class="fa fa-chart-bar nav-icon" style="font-size: 10px;color: #ffb300"></i>
-                          <p>Monthly payment due report</p>
                       </a>
                   </li>
               </ul>

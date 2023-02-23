@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SystemInfo;
 use App\Models\User_setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -14,7 +16,8 @@ class SettingsController extends Controller
     {
         $title="";
         $settings=User_setting::where('user_id',Auth::user()->id)->first();
-        return view('pages.settings.settings',['title'=>$title,'settings'=>$settings]);
+        $site_info=SystemInfo::first();
+        return view('pages.settings.settings',['title'=>$title,'settings'=>$settings,'site_info'=>$site_info]);
     }
 
     public function save(Request $request)
@@ -26,7 +29,29 @@ class SettingsController extends Controller
             'template_color' => $request->template_color,
             'font_size' => $request->font_size
         ]);
-        return redirect()->back()->with('success','Settings saved successfully!');
+
+        if(!empty($request->logo))
+        {
+            Storage::disk('local')->delete('public/logo/'. $request->old_logo);
+            $input['file'] =$request->file('logo');
+            $data['logo']= time().'.'.$input['file']->getClientOriginalExtension();
+            $destinationPath = public_path('/storage/logo');
+            $imgFile = \Intervention\Image\Facades\Image::make($request->file('logo')->getRealPath());
+            $imgFile->resize(150, 150, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$data['logo']);
+        }else
+        {
+            $data['logo']=$request->old_logo;
+        }
+        SystemInfo::truncate();
+
+        SystemInfo::create([
+            'logo'=>$data['logo'],
+            'heading'=>$request->heading,
+            'info'=>$request->info
+        ]);
+        return redirect()->back()->with('message','Settings saved successfully!');
 
     }
 }
