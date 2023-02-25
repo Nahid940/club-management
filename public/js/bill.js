@@ -36,7 +36,7 @@ $('.save_btn').on('click',function(){
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('.save_btn').attr('disabled','disabled')
+                    $('.save_btn').attr('disabled','disabled');
                     $('#form_submit').submit();
                 }
             })
@@ -65,7 +65,8 @@ $('.save_btn').on('click',function(){
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('.save_btn').attr('disabled','disabled')
+                    $('.save_btn').attr('disabled','disabled');
+                    $('#sv_btn').html('<p><i class="fas fa-spinner fa-pulse"></i> Processing...Please wait...!!</p>');
                     $('#form_submit').submit();
                 }
             })

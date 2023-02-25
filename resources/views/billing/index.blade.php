@@ -70,7 +70,6 @@
                                 <th>Member Name</th>
                                 <th>Member ID</th>
                                 <th>Billing Date</th>
-                                <th>Payment Method</th>
                                 <th><div align="right" style="background-color: #eafbf8">Cash Amount</div></th>
                                 <th><div align="right" style="background-color: #eafbf8">Card Amount</div></th>
                                 <th><div align="right" style="background-color: #f7e3e9">Cash Amount</div></th>
@@ -90,17 +89,6 @@
                                 <td>{{$bill->member_name}}</td>
                                 <td>{{$bill->member_code==0?"-":$bill->member_code}}</td>
                                 <td>{{date('d-m-Y',strtotime($bill->date))}}</td>
-                                <td>
-                                    @if($bill->payment_method==1)
-                                        Pay Order
-                                    @elseif($bill->payment_method==2)
-                                        Cash
-                                    @elseif($bill->payment_method==3)
-                                        Card
-                                    @elseif($bill->payment_method==4)
-                                        Cheque
-                                    @endif
-                                </td>
                                 <td><div align="right" style="background-color: #eafbf8">{{number_format($bill->lounge_cash_amount,0,'.',',')}}</div></td>
                                 <td><div align="right" style="background-color: #eafbf8">{{number_format($bill->lounge_card_amount,0,'.',',')}}</div></td>
                                 <td><div align="right" style="background-color: #f7e3e9">{{number_format($bill->restaurant_cash_amount,0,'.',',')}}</div></td>

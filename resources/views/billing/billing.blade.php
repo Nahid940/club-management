@@ -27,6 +27,7 @@
                                     </ul>
                                 </div>
                             @endif
+                            <span id="sv_btn" class="text-danger text-lg"></span>
                             <div class="col-md-12">
                                 @if(session('id'))
                                     <a href="{{route('payment-view',session('id'))}}" class="btn btn-xs btn-warning float-right mb-1">View Payment Details</a>
@@ -135,7 +136,7 @@
     </div>
 @stop
 @section('script_link')
-    <script src="{{asset('js/member-search.js')}}"></script>
+    <script src="{{asset('js/search-member-on-billing.js')}}"></script>
     <script src="{{asset('js/bill.js')}}"></script>
 @stop
 

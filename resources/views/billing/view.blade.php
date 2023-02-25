@@ -54,18 +54,7 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Bill No.:</b> #{{$bill->id}}<br>
-                                    <b>Bill Method:
-                                        @if($bill->payment_method==1)
-                                            Pay Order
-                                        @elseif($bill->payment_method==2)
-                                            Cash
-                                        @elseif($bill->payment_method==3)
-                                            Card
-                                        @else
-                                            Cheque
-                                        @endif
-                                    </b>
+                                    <b>Bill No.:</b> #{{$bill->id}}
                                     <br>
                                     <b>Bill Status:
                                         @if($bill->status==1)
@@ -85,15 +74,18 @@
                                         <tbody>
                                         <tr>
                                             <td>Lounge Bill Amount</td>
-                                            <td><b>{{number_format($bill->lounge_amount,2,".",",")}}</b></td>
+                                            <td><b>{{number_format(($bill->lounge_cash_amount+$bill->lounge_card_amount),2,".",",")}}</b></td>
                                         </tr>
                                         <tr>
                                             <td>Restaurant Bill Amount</td>
-                                            <td><b>{{number_format($bill->restaurant_amount,2,".",",")}}</b></td>
+                                            <td><b>{{number_format($bill->restaurant_cash_amount+$bill->restaurant_card_amount,2,".",",")}}</b></td>
                                         </tr>
+                                        @php
+                                            $total=$bill->lounge_cash_amount+$bill->lounge_card_amount+$bill->restaurant_cash_amount+$bill->restaurant_card_amount;
+                                        @endphp
                                         <tr>
                                             <td>Total</td>
-                                            <td><b>{{number_format(($bill->lounge_amount+$bill->restaurant_amount),2,".",",")}}</b></td>
+                                            <td><b>{{number_format(($total),2,".",",")}}</b></td>
                                         </tr>
                                         <tr>
                                             <td>Billing Date</td>
