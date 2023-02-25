@@ -10,6 +10,7 @@ use App\Models\MemberClassification;
 use App\Models\MembershipType;
 use App\Models\Occupation;
 use App\Models\User;
+use App\Services\DueCalculationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -187,37 +188,41 @@ class MemberController extends Controller
 
     public function approve(Request $request)
     {
-        $email_config=EmailConfig::select('send_application_approval_email')->first();
-        $memberInfo=Member::where('id',$request->id)->select('first_name','member_code','email','member_type','registration_date','user_id')->first();
-        if(empty($memberInfo->user_id))
+        if(!isset($request->approve_all))
         {
-            $exist_email=User::where('email',$memberInfo->email)->count();
-            if($exist_email>0)
+            $email_config=EmailConfig::select('send_application_approval_email')->first();
+            $memberInfo=Member::where('id',$request->id)->select('first_name','member_code','email','member_type','registration_date','user_id')->first();
+            if(empty($memberInfo->user_id))
             {
-                return redirect()->back()->with('warning','Email already exist!!');
-            }
-            $user=User::create([
-                'name'=>$memberInfo->first_name,
-                'email'=>$memberInfo->email,
-                'user_type'=>3,
-                'password' => bcrypt($request->input('password')),
-                'created_at'=>Carbon::now()
-            ]);
-            $user->assignRole(2);
-            Member::where('id',$request->id)->update(['user_id'=>$user->id]);
+                $exist_email=User::where('email',$memberInfo->email)->count();
+                if($exist_email>0)
+                {
+                    return redirect()->back()->with('warning','Email already exist!!');
+                }
+                $user=User::create([
+                    'name'=>$memberInfo->first_name,
+                    'email'=>$memberInfo->email,
+                    'user_type'=>3,
+                    'password' => bcrypt($request->input('password')),
+                    'created_at'=>Carbon::now()
+                ]);
+                $user->assignRole(2);
+                Member::where('id',$request->id)->update(['user_id'=>$user->id]);
 
-            $this->memberInfo->approve($request->id);
-            if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
-            {
-                $memberInfo->send_credentials=1;
-                Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
-            }
-            return redirect()->back()->with(['message' => "Membership application approved!"]);
+                $this->memberInfo->approve($request->id);
+                if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
+                {
+                    $memberInfo->send_credentials=1;
+                    Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
+                }
+                return redirect()->back()->with(['message' => "Membership application approved!"]);
+            };
         }
+
         $this->memberInfo->approve($request->id);
         if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
         {
-            Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
+//            Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
         }
         return redirect()->back()->with(['message' => "Membership application approved!"]);
     }
@@ -231,7 +236,8 @@ class MemberController extends Controller
     public function search(Request $request)
     {
         if(empty($request->value)) return false;
-        $members=Member::where('member_code','LIKE',"%$request->value%")->where('status',1)->select('id','first_name','member_code')->get();
+        $members=Member::where('member_code','LIKE',"%$request->value%")
+            ->where('status',1)->select('id','first_name','member_code')->get();
         return json_encode(["members"=>$members]);
     }
 
@@ -254,6 +260,45 @@ class MemberController extends Controller
                 return response()->file("public/storage/member_tin/" . $request->nid);
             }
         }
+    }
+
+
+    public function fees()
+    {
+        $fees=DB::table('membership_fees')->select('membership_fees.id','membership_types.type_name','admission_fee','monthly_fee')
+        ->join('membership_types','membership_types.id','=','membership_fees.membership_type_id')
+        ->where('membership_fees.status',1)
+        ->get()
+        ;
+        return view('pages.member.fees',['title'=>'','fees'=>$fees]);
+    }
+
+    public function feeEdit($id)
+    {
+        $fee=DB::table('membership_fees')->select('membership_fees.id','membership_types.type_name',
+            'admission_fee','monthly_fee','membership_type_id')
+            ->join('membership_types','membership_types.id','=','membership_fees.membership_type_id')
+            ->where('membership_fees.id',$id)
+            ->first();
+        return view('pages.member.fees-update',['title'=>'','fee'=>$fee]);
+    }
+
+    public function feesUpdate(Request $request)
+    {
+        DB::table('membership_fees')->where('id',$request->id)->update([
+            'closing_date'=>date('Y-m-d'),
+            'status'=>0
+        ]);
+
+        $data=DB::table('membership_fees')->insertGetId([
+            'admission_fee'=>$request->admission_fee,
+            'monthly_fee'=>$request->monthly_fee,
+            'membership_type_id'=>$request->membership_type_id,
+            'effective_from'=>date('Y-m-d'),
+            'updated_at'=>date('Y-m-d'),
+            'status'=>1,
+        ]);
+        return redirect()->route('fee-edit',$data)->with(['message' => "Data updated successfully!"]);
     }
 
 

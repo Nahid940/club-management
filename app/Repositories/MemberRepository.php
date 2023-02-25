@@ -2,12 +2,17 @@
 namespace app\Repositories;
 
 use App\Interfaces\MemberInterface;
+use App\Mail\MemberMail;
+use App\Models\EmailConfig;
+use App\Models\Member;
 use App\Models\Payment;
 use App\Models\PaymentDetails;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class MemberRepository implements MemberInterface
@@ -680,13 +685,29 @@ class MemberRepository implements MemberInterface
         $application_id_str="";
         if(is_array($id))
         {
-//            foreach ($id as $application_id)
-//            {
-//                $ids[$application_id]=$application_id;
-//            }
-//            $application_id_str=implode(',',$ids);
-
+            $application_id_str=implode(',',$ids);
+            $email_config=EmailConfig::select('send_application_approval_email')->first();
             DB::table('members')->whereIn('id',$id)->update(['status'=>1]);
+            foreach ($id as $application_id)
+            {
+                $memberInfo=Member::where('id',$application_id)->select('first_name','member_code','email','member_type','registration_date','user_id')->first();
+
+                $ids[$application_id]=$application_id;
+                $user=User::create([
+                    'name'=>$memberInfo->first_name,
+                    'email'=>$memberInfo->email,
+                    'user_type'=>3,
+                    'password' => bcrypt('12345678'),
+                    'created_at'=>Carbon::now()
+                ]);
+                $user->assignRole(2);
+                Member::where('id',$application_id)->update(['user_id'=>$user->id]);
+                if(isset($email_config->send_application_approval_email) && !empty($email_config->send_application_approval_email) && $email_config->send_application_approval_email==1)
+                {
+                    $memberInfo->send_credentials=1;
+                    Mail::to($memberInfo->email)->send(new MemberMail($memberInfo));
+                }
+            }
         }else
         {
             DB::table('members')->where('id',$id)->update(['status'=>1]);

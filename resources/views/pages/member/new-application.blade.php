@@ -101,6 +101,7 @@
                         @php $i=0; @endphp
                             <form action="{{route('approve-all-applications')}}" method="POST" id="approve_all">
                                 {{csrf_field()}}
+                                <input type="hidden" name="approve_all" value="1">
                                 @foreach ($members as $member)
                                     @php $i++; @endphp
                                     <tr>
@@ -162,6 +163,8 @@
                 confirmButtonText: 'Yes!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#approve_all_btn').attr('disabled','disabled')
+                    $('#approve_all_btn').text('Data processing...Please wait!!');
                     $('#approve_all').submit();
                 }
             })
