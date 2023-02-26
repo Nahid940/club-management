@@ -24,12 +24,12 @@ class DonationReportService
         $where=[];
         if(!empty($data->date_from))
         {
-            $where[]=['payment_date','>=',$data->date_from];
+            $where[]=['payments.payment_date','>=',$data->date_from];
         }
 
         if(!empty($data->date_to))
         {
-            $where[]=['payment_date','<=',$data->date_to];
+            $where[]=['payments.payment_date','<=',$data->date_to];
         }
 
         if(!empty($data->payment_method))
@@ -38,9 +38,10 @@ class DonationReportService
         }
 
         $payments=Payment::where($where)
-            ->where('is_payment','=','0')
-            ->where('status',1)
-            ->select('id','member_id','payment_date','amount')
+            ->where('payments.is_payment','=','0')
+            ->where('payments.status',1)
+            ->join('payment_details','payment_details.payment_id','=','payments.id')
+            ->select('payments.id','payments.member_id','payments.payment_date','amount')
             ->get();
         $members=Donor::select('name','id')->where('status',1)->get();
 
