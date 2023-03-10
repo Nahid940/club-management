@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\MembershipType;
 use App\Services\DueCalculationService;
+use App\Services\MembershipFeeSchedule;
 use Illuminate\Http\Request;
 
 class DueReporController extends Controller
@@ -13,10 +14,12 @@ class DueReporController extends Controller
     //
 
     protected $due_calculation;
+    protected $fees_schedule;
 
-    public function __construct(DueCalculationService $due_calculation)
+    public function __construct(DueCalculationService $due_calculation,MembershipFeeSchedule $fees_schedule)
     {
         $this->due_calculation=$due_calculation;
+        $this->fees_schedule=$fees_schedule;
     }
 
 
@@ -47,7 +50,7 @@ class DueReporController extends Controller
 
     public function getMemberWiseDue(Request $request)
     {
-        $report_data=$this->due_calculation->getMembersDueData($request);
+        $report_data=$this->due_calculation->getMembersDueData($request,$this->fees_schedule);
 //        echo "<pre>";print_r($report_data);die;
         return response()->json([
             'html' => view('reports.member-wise-due.report',["report_data"=>$report_data])->render()

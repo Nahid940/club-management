@@ -32,6 +32,8 @@
                 <th style="width: 10%"><div align="center">Registration Date</div></th>
                 <th style="width: 10%"><div align="center">Year</div></th>
                 <th style="width: 10%"><div align="center">Month</div></th>
+                <th style="width: 10%"><div align="center">Payable</div></th>
+                <th style="width: 10%"><div align="center">Paid Amount</div></th>
                 <th style="width: 10%"><div align="center">Payment Status</div></th>
             </tr>
         </thead>
@@ -49,6 +51,9 @@
                     $year_row=0;
                 @endphp
                 @foreach($data as $month=>$schedule_data)
+                    @php
+                        $payable=isset($report_dt['payables'][$key][$month])?$report_dt['payables'][$key][$month]:0;
+                    @endphp
                     <tr>
                         @if($member_row==0)
                             <td rowspan="{{$report_dt['total_schedule']}}"><div align="center">{{$report_dt['name']}}</div></td>
@@ -58,8 +63,10 @@
                         @if($year_row==0)
                             <td rowspan="{{sizeof($data)}}"><div align="center">{{$key}}</div></td>
                         @endif
-                        <td style="background-color: {{empty($schedule_data)?'#f7acac38':'#d1f5c538'}}"><div align="center">{{date("F", mktime(0, 0, 0, $month, 10))}}</div></td>
-                        <td style="background-color: {{empty($schedule_data)?'#f7acac38':'#d1f5c538'}}"><div align="center">{{empty($schedule_data)?'Due':'Paid'}}</div></td>
+                        <td style="background-color: {{$payable!=$schedule_data?'#f7acac38':'#d1f5c538'}}"><div align="center">{{date("F", mktime(0, 0, 0, $month, 10))}}</div></td>
+                        <td style="background-color: {{$payable!=$schedule_data?'#f7acac38':'#d1f5c538'}}"><div align="center">{{$payable}}</div></td>
+                        <td style="background-color: {{$payable!=$schedule_data?'#f7acac38':'#d1f5c538'}}"><div align="center">{{$schedule_data}}</div></td>
+                        <td style="background-color: {{$payable!=$schedule_data?'#f7acac38':'#d1f5c538'}}"><div align="center">{{empty($schedule_data)?'Due':'Paid'}}</div></td>
                     </tr>
                     @php
                         $member_row++;
