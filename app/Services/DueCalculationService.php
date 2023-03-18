@@ -19,7 +19,8 @@ class DueCalculationService
 
     public function getDueOfMember($member_id)
     {
-        $admission_fee=Member::where('id',$member_id)->select('admission_fee')->first();
+        $fees_schedule=new MembershipFeeSchedule();
+        $admission_fee=Member::where('id',$member_id)->select('admission_fee','member_type')->first();
         $total_paid_admission_fees=PaymentDetails::where('member_id',$member_id)
             ->where('payment_type',2)->where('status',1)->sum('amount');
         $admission_fee_due=($admission_fee->admission_fee-$total_paid_admission_fees);
@@ -29,21 +30,13 @@ class DueCalculationService
         $current_date=date('Y-m-d');
         $current_year=date('Y');
         $current_month=date('m');
-//        $current_date='2023-02-24';
+
         $member_monthly_fee=DB::table('membership_fees')->where('status',1)
+            ->where('membership_type_id',$admission_fee->member_type)
             ->select('monthly_fee')->first();
         $member_registration_date=Member::where('id',$member_id)->select('registration_date')->first();
 
-//        echo $member_registration_date->registration_date."<br>";
-//        $startDate = new \DateTime($member_registration_date->registration_date);
-//        $endDate = new \DateTime($current_date);
-//        $interval = $endDate->diff($startDate);
-//        $monthCount = ($interval->y * 12) + $interval->m;
-
-        $date1 = $member_registration_date->registration_date;
-        $date2 = $current_date;
-
-        if(date('d',strtotime($member_registration_date->registration_date))>25)
+        if(date('d',strtotime($member_registration_date->registration_date))>=25)
         {
             $date1=date('Y-m-01',strtotime('+1 month',strtotime($member_registration_date->registration_date)));
         }else
@@ -53,7 +46,7 @@ class DueCalculationService
 
         if(date('d',strtotime($current_date))<25)
         {
-            $date2=date('Y-m-01',strtotime($current_date));
+            $date2=date('Y-m-t',strtotime('-1 month',strtotime($current_date)));
         }else
         {
             $date2=date('Y-m-t',strtotime($current_date));
@@ -65,16 +58,33 @@ class DueCalculationService
         $year2 = date('Y', $ts2);
         $month1 = date('m', $ts1);
         $month2 = date('m', $ts2);
-        $diff = ((($year2 - $year1) * 12) + ($month2 - $month1))+1;
-        $increment_month=0;
-        $total_months=($diff)+$increment_month;
+//        $diff = ((($year2 - $year1) * 12) + ($month2 - $month1))+1;
+//        $increment_month=0;
+//        $total_months=($diff);
 
-        if(intval(date('d',strtotime($member_registration_date->registration_date)))>=25 && intval(date('d',strtotime($member_registration_date->registration_date)))<=31)
-        {
-            $total_months=$total_months-1==0?1:$total_months;
+
+        $fees=$fees_schedule->fees($admission_fee->member_type);
+        $total_payable=0;
+        for ($year = $year1; $year <= $year2; $year++) {
+            $start_month = ($year == $year1) ? $month1 : 1;
+            $end_month = ($year == $year2) ? $month2 : 12;
+            for ($month = $start_month; $month <= $end_month; $month++) {
+                $month=intval($month);
+                if(sizeof($fees)>0)
+                {
+                    foreach ($fees as $key=>$fee)
+                    {
+                        if(isset($fees[$key][$year][$month]))
+                        {
+                            $total_payable+=$fees[$key][$year][$month];//echo $year."==".$month."==".$fees[$key][$year][$month]."<br>";
+                        }
+                    }
+                }
+            }
         }
+//        echo $total_payable;
+//        die;
 
-        $total_payable=$member_monthly_fee->monthly_fee*$total_months;//echo ($total_payable."-".$totalPayment)."+".$admission_fee_due;die;
         $total_payment=0;
         $advance=0;
         if($total_payable==0)
@@ -125,7 +135,7 @@ class DueCalculationService
     }
 
 
-    public function memberDueCalculation($admission_fee,$member_id)
+    public function memberDueCalculation($admission_fee,$member_id,$membership_type_id)
     {
         $total_paid_admission_fees=PaymentDetails::where('member_id',$member_id)
             ->where('payment_type',2)->where('status',1)->sum('amount');
@@ -137,6 +147,7 @@ class DueCalculationService
         $current_month=date('m');
 //        $current_date='2023-02-24';
         $member_monthly_fee=DB::table('membership_fees')->where('status',1)
+            ->where('membership_type_id',$membership_type_id)
             ->select('monthly_fee')->first();
         $member_registration_date=Member::where('id',$member_id)->select('registration_date')->first();
 
@@ -168,15 +179,6 @@ class DueCalculationService
         $total_months=($diff)+$increment_month;
 
         $total_months=($total_months)+$increment_month;
-        if(intval(date('d',strtotime($member_registration_date->registration_date)))>=25 && intval(date('d',strtotime($member_registration_date->registration_date)))<=31)
-        {
-            $total_months=$total_months-1==0?1:$total_months;
-        }
-//        if($member_id==135)
-//        {
-//            echo $increment_month." ".$total_months;die;
-//        }
-//        echo $total_months;die;
 
         $total_payable=$member_monthly_fee->monthly_fee*$total_months;//echo ($total_payable."-".$totalPayment)."+".$admission_fee_due;die;
         $total_payment=0;
@@ -226,15 +228,16 @@ class DueCalculationService
         {
             $where[]=['member_type','=',$data->membership_type];
         }
-        $members=Member::where('members.status',1)->select('members.id','first_name','member_code','registration_date','membership_types.type_name as type_name','admission_fee')
+        $members=Member::where('members.status',1)->select('members.id','first_name','member_code','registration_date','member_type','membership_types.type_name as type_name','admission_fee')
             ->leftJoin('membership_types','membership_types.id','=','members.member_type')
             ->where($where)
+            ->orderBy('id','desc')
             ->get();
 
         $report_data=array();
         foreach ($members as $member)
         {
-            $due=$this->memberDueCalculation($member->admission_fee,$member->id);
+            $due=$this->memberDueCalculation($member->admission_fee,$member->id,$member->member_type);
 
             if($due['membership_fee_due']+$due['monthly_fee_due']>0)
             {
@@ -249,7 +252,7 @@ class DueCalculationService
     }
 
 
-    public function getMembersDueData($data)
+    public function getMembersDueData($data,$fees_schedule)
     {
         $where=[];
         if(isset($data->member_id) && $data->member_id>0)
@@ -257,7 +260,7 @@ class DueCalculationService
             $where[]=['members.id','=',$data->member_id];
             $members=Member::where('members.status',1)
                 ->where($where)
-                ->select('members.id','first_name','member_code','registration_date','membership_types.type_name')
+                ->select('members.id','first_name','member_code','member_type','registration_date','membership_types.type_name')
                 ->join('membership_types','membership_types.id','=','members.member_type')
                 ->get();
         }else
@@ -265,8 +268,9 @@ class DueCalculationService
             $members=Member::where('members.status',1)
                 ->where('short_form','=' ,'UM')
                 ->orWhere('short_form', '=','GM')
-                ->select('members.id','first_name','member_code','registration_date','membership_types.type_name')
+                ->select('members.id','first_name','member_code','member_type','registration_date','membership_types.type_name')
                 ->join('membership_types','membership_types.id','=','members.member_type')
+                ->orderBy('members.id','desc')
                 ->get();
         }
 
@@ -278,6 +282,7 @@ class DueCalculationService
         $members_schedule=array();
         $members_ids=array();
         $members_info=array();
+        $member_payable=array();
         foreach ($members as $member)
         {
             $start_year=date('Y',strtotime($member->registration_date));
@@ -299,25 +304,47 @@ class DueCalculationService
                 $from_month=$data->from_month;
             }
             $members_info[$member->id]['total_schedule']=0;
+
+
+            $fees=$fees_schedule->fees($member->member_type);
+            $fee_amount=0;
             for ($year = $from_year; $year <= $to_year; $year++) {
                 $start_month = ($year == $from_year) ? $from_month : 1;
                 $end_month = ($year == $to_year) ? $to_month : 12;
                 for ($month = $start_month; $month <= $end_month; $month++) {
+
+                    $month=intval($month);
+                    if(sizeof($fees)>0)
+                    {
+                        foreach ($fees as $key=>$fee)
+                        {
+                            if(isset($fees[$key][$year][$month]))
+                            {
+                                $fee_amount=$fees[$key][$year][$month];
+                            }
+                        }
+                    }
+
                     if(date('m',strtotime($member->registration_date))==$month && date('Y',strtotime($member->registration_date))==$year)
                     {
                         if(date('d',strtotime($member->registration_date))<=25)
                         {
                             $members_schedule[$member->id][$year][intval($month)]=0;
+                            $member_payable[$year][intval($month)]=$fee_amount;
                             $members_info[$member->id]['total_schedule']+=1;
                         }
                     }else
                     {
                         $members_schedule[$member->id][$year][intval($month)]=0;
+                        $member_payable[$year][intval($month)]=$fee_amount;
                         $members_info[$member->id]['total_schedule']+=1;
                     }
                 }
             }
+            
+
             $members_ids[$member->id]=$member->id;
+            $members_info[$member->id]['payables']=$member_payable;
             $members_info[$member->id]['first_name']=$member->first_name." (".$member->member_code.")";
             $members_info[$member->id]['registration_date']=$member->registration_date;
             $members_info[$member->id]['type_name']=$member->type_name;
@@ -349,9 +376,11 @@ class DueCalculationService
             $report_data[$key]['registration_date']=$members_info[$key]['registration_date'];
             $report_data[$key]['type_name']=$members_info[$key]['type_name'];
             $report_data[$key]['total_schedule']=$members_info[$key]['total_schedule'];
+            $report_data[$key]['payables']=$members_info[$key]['payables'];
             $report_data[$key]['schedule']=$schedule;
 
         }
+
         return $report_data;
     }
 
@@ -373,6 +402,7 @@ class DueCalculationService
                 ->select('members.id','first_name','member_code','registration_date','admission_fee','membership_types.type_name')
                 ->where('admission_fee','!=',NULL)
                 ->join('membership_types','membership_types.id','=','members.member_type')
+                ->orderBy('members.id','desc')
                 ->get();
         }
         $total_paid_admission_fees=PaymentDetails::where('payment_type',2)
