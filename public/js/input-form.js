@@ -159,7 +159,12 @@ $('#save').on('click',function () {
     {
         Swal.fire("Email required!!")
         $('.lbl_email').css('color','red');
-    }else if($('#present_address').val()=="")
+    }else if($('#occupation').val()=="")
+    {
+        Swal.fire("Occupation required!!");
+        $('.lbl_occupation').css('color','red');
+    }
+    else if($('#present_address').val()=="")
     {
         Swal.fire("Present address required!!")
         $('.lbl_present_address').css('color','red');
@@ -300,27 +305,37 @@ $('#update').on('click',function () {
 })
 
 imgInp.onchange = evt => {
-    const [file] = imgInp.files
+    const [file] = imgInp.files;
     if (file) {
         sample_img.src = URL.createObjectURL(file)
     }
-}
+};
+
+
 
 
 let step=0;
 var size;
+
+
 $("#next").click(function(){
 
+    let is_edit=$('#edit').val();
     var fileUpload = document.getElementById("imgInp");
-    if(fileUpload.files[0]==undefined)
+    // if(fileUpload.files[0]==undefined &&  is_edit!=1)
+    // {
+    //     Swal.fire('Member photo required!');
+    // }
+    // else
+    if(fileUpload.files[0]!=undefined)
     {
-        Swal.fire('Member photo required!');
+        if(parseFloat(fileUpload.files[0].size / 1024).toFixed(2)>100)
+        {
+            Swal.fire('Photo size must be less than 100 kb!');
+        }
     }
-    else if(parseFloat(fileUpload.files[0].size / 1024).toFixed(2)>100)
-    {
-        Swal.fire('Photo size must be less than 100 kb!');
-    }
-    else if(!$('.member_type').is(":checked"))
+    else
+    if(!$('.member_type').is(":checked"))
     {
         $('.mem_type').css('color','red');
         Swal.fire('Type of membership required!');
@@ -332,6 +347,10 @@ $("#next").click(function(){
     {
         Swal.fire("Please select membership type!!");
         $('.lbl_reg_date').css('color','red');
+    }else if($('#member_code').val()=="")
+    {
+        Swal.fire("Member ID required!!");
+        $('.lbl_member_id').css('color','red');
     }else if($('#name').val()=="")
     {
         Swal.fire("Member name required!!");
@@ -373,12 +392,12 @@ $("#next").click(function(){
         $('.lbl_email').css('color','red');
     }else if(($(".member_type:checked").data('short-name')=='UM' || $(".member_type:checked").data('short-name')=='GM') && $('#amount').val()=='')
     {
-        Swal.fire("Payment amount required!!")
+        Swal.fire("Payment amount required!!");
         $('.lbl_payment_amount').css('color','red');
     }
     else if(($(".member_type:checked").data('short-name')=='UM' || $(".member_type:checked").data('short-name')=='GM') && $('.payment_method:checked').val()==null)
     {
-        Swal.fire("Payment method required!!")
+        Swal.fire("Payment method required!!");
         $('.lbl_payment_method').css('color','red');
     }
     else if($('#present_address').val()=="")
@@ -622,3 +641,42 @@ $('#payment3').on('click',function(){
     $('#payment2').prop('checked',false);
     $('#payment1').prop('checked',false);
 });
+
+$('.member_type').on('click',function () {
+    if(($(".member_type:checked").data('short-name')=='UM' || $(".member_type:checked").data('short-name')=='GM'))
+    {
+        $('.required').text('*')
+    }else {
+        $('.required').text('')
+    }
+});
+
+$('.membership_decline').on('click',function () {
+    if($(this).val()==0)
+    {
+        $('#details_of_decline').attr('readonly','readonly')
+    }else
+    {
+        $('#details_of_decline').removeAttr('readonly')
+    }
+})
+
+$('.application_rejected').on('click',function () {
+    if($(this).val()==0)
+    {
+        $('#details_of_reject').attr('readonly','readonly')
+    }else
+    {
+        $('#details_of_reject').removeAttr('readonly')
+    }
+})
+
+$('.criminal_ofence').on('click',function () {
+    if($(this).val()==0)
+    {
+        $('#details_of_criminal_ofence').attr('readonly','readonly')
+    }else
+    {
+        $('#details_of_criminal_ofence').removeAttr('readonly')
+    }
+})

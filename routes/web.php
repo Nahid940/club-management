@@ -61,6 +61,12 @@ Route::group(['middleware' => ['auth','role:super-admin|admin|member']], functio
     Route::post('member-education/delete', [MemberController::class, 'educationDelete'])->name('education-delete');
     Route::post('row-delete', [MemberController::class, 'clubDelete']);
     Route::post('row-delete', [MemberController::class, 'dependentDelete']);
+
+    Route::get('membership-fees',[MemberController::class,'fees'])->name('membership-fees');
+    Route::get('save-membership-fees',[MemberController::class,'feesAdd'])->name('membership-fees-add');
+    Route::post('save-membership-fees',[MemberController::class,'saveFees'])->name('membership-fees-add');
+    Route::get('fee-edit/{id}',[MemberController::class,'feeEdit'])->name('fee-edit');
+    Route::post('membership-fees-update',[MemberController::class,'feesUpdate'])->name('membership-fees-update');
 });
 
 Route::get('settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
@@ -271,6 +277,8 @@ Route::group(['middleware' => ['auth']],function () {
 
 });
 
+Route::get('fees/{id}/{member_id}',[PaymentController::class,'fees']);
+
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');
     return "Cache Cleared";
@@ -281,6 +289,15 @@ Route::get('data-clear',function (){
     \App\Models\PaymentDetails::truncate();
     \App\Models\PaymentDetails::truncate();
     echo "Data truncated";
+});
+
+
+Route::get('backup',function (){
+    Spatie\DbDumper\Databases\MySql::create()
+        ->setDbName('ndc')
+        ->setUserName('root')
+        ->setPassword('Nahid940###***')
+        ->dumpToFile('dump.sql');
 });
 
 require __DIR__.'/auth.php';

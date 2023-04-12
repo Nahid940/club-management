@@ -268,9 +268,31 @@ class MemberController extends Controller
         $fees=DB::table('membership_fees')->select('membership_fees.id','membership_types.type_name','admission_fee','monthly_fee')
         ->join('membership_types','membership_types.id','=','membership_fees.membership_type_id')
         ->where('membership_fees.status',1)
-        ->get()
-        ;
+        ->get();
         return view('pages.member.fees',['title'=>'','fees'=>$fees]);
+    }
+
+    public function feesAdd()
+    {
+        $types=MembershipType::select('id','type_name')
+        ->where('status',1)->get();
+        return view('pages.member.fee-add',['title'=>'','types'=>$types]);
+    }
+
+    public function saveFees(Request $request)
+    {
+        $request->validate([
+            'membership_type_id'=>'unique:membership_fees'
+        ]);
+        DB::table('membership_fees')->insert([
+            'admission_fee'=>$request->admission_fee,
+            'monthly_fee'=>$request->monthly_fee,
+            'membership_type_id'=>$request->membership_type_id,
+            'effective_from'=>$request->opening_date,
+            'updated_at'=>date('Y-m-d'),
+            'status'=>1,
+        ]);
+        return redirect()->route('membership-fees')->with(['message' => "Data added successfully!"]);
     }
 
     public function feeEdit($id)
@@ -286,7 +308,7 @@ class MemberController extends Controller
     public function feesUpdate(Request $request)
     {
         DB::table('membership_fees')->where('id',$request->id)->update([
-            'closing_date'=>date('Y-m-d'),
+            'closing_date'=>$request->closing_date,
             'status'=>0
         ]);
 
@@ -294,7 +316,7 @@ class MemberController extends Controller
             'admission_fee'=>$request->admission_fee,
             'monthly_fee'=>$request->monthly_fee,
             'membership_type_id'=>$request->membership_type_id,
-            'effective_from'=>date('Y-m-d'),
+            'effective_from'=>date('Y-m-01',strtotime("+1 month",strtotime($request->closing_date))),
             'updated_at'=>date('Y-m-d'),
             'status'=>1,
         ]);
