@@ -83,7 +83,9 @@
                                 <select class="form-control" id="payment_type" name="payment_type">
                                     <option value="">--Select--</option>
                                     @foreach($paymentTypes as $paymentType)
-                                        <option value="{{$paymentType->id}}">{{$paymentType->name}}</option>
+                                        @if(strtolower($paymentType->name)!='donation')
+                                            <option value="{{$paymentType->id}}">{{$paymentType->name}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
