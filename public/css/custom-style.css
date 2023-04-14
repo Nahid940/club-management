@@ -212,7 +212,8 @@ input[type="file"] {
     background-color: #fff;
     z-index: 11;
     display: block;
-    height: auto;
+    height: 300px;
+    overflow-y: scroll;
     margin-top:-6px
 }
 .search-item{
@@ -278,4 +279,12 @@ body{
 
 .content-wrapper {
     background-color: #8fb8f7;
+}
+
+[class*=sidebar-dark] .user-panel {
+    border-bottom: none;
+}
+
+[class*=sidebar-dark] .user-panel i {
+    color:#ce3d3d;
 }

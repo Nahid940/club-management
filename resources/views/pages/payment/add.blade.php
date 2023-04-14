@@ -13,8 +13,9 @@
     background-color: #fff;
     z-index: 11;
     display: block;
-    height: auto;
-    margin-top:-16px
+    height: 300px;
+    margin-top:-16px;
+    overflow-y:scroll
     }
     .search-item{
         border-bottom:1px solid #fff;
@@ -129,7 +130,7 @@
                                          <td>
                                              <div class="form-group exp_group">
                                                  {{--<label for="amount">Amount <span class="text-danger">*</span></label>--}}
-                                                 <input type="number" class="form-control exp-form-control amount_val" value="{{old('amount')}}"  name="amount[]" id="amount" placeholder="Amount" required>
+                                                 <input type="number" class="form-control exp-form-control amount_val" name="amount[]" id="amount" placeholder="Amount" required>
                                              </div>
                                          </td>
                                          <td><input type="checkbox" id="same_amount" title="Set Same Amount"></td>

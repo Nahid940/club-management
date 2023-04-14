@@ -64,10 +64,19 @@ class MemberRepository implements MemberInterface
         {
             $member->member_type="NRB Member";
             $member->member_type_dropdown=3;
-        }else
+        }elseif($member->member_type==4)
         {
             $member->member_type="General Member";
             $member->member_type_dropdown=4;
+        }elseif($member->member_type==5)
+        {
+            $member->member_type="User Member";
+            $member->member_type_dropdown=5;
+        }
+        elseif($member->member_type==6)
+        {
+            $member->member_type="Foundation Member";
+            $member->member_type_dropdown=6;
         }
 
         $education = DB::table('member_educations')
@@ -112,6 +121,24 @@ class MemberRepository implements MemberInterface
 
         if(!empty($member))
         {
+//            if($member->member_type==1)
+//            {
+//                $member->member_type="Donor Member";
+//                $member->member_type_dropdown=1;
+//            }elseif($member->member_type==2)
+//            {
+//                $member->member_type="Life Member";
+//                $member->member_type_dropdown=2;
+//            }elseif($member->member_type==3)
+//            {
+//                $member->member_type="NRB Member";
+//                $member->member_type_dropdown=3;
+//            }else
+//            {
+//                $member->member_type="General Member";
+//                $member->member_type_dropdown=4;
+//            }
+
             if($member->member_type==1)
             {
                 $member->member_type="Donor Member";
@@ -124,10 +151,19 @@ class MemberRepository implements MemberInterface
             {
                 $member->member_type="NRB Member";
                 $member->member_type_dropdown=3;
-            }else
+            }elseif($member->member_type==4)
             {
                 $member->member_type="General Member";
                 $member->member_type_dropdown=4;
+            }elseif($member->member_type==5)
+            {
+                $member->member_type="User Member";
+                $member->member_type_dropdown=5;
+            }
+            elseif($member->member_type==6)
+            {
+                $member->member_type="Foundation Member";
+                $member->member_type_dropdown=6;
             }
 
             $education = DB::table('member_educations')
@@ -197,14 +233,19 @@ class MemberRepository implements MemberInterface
             $data['user_id']=null;
         }
 
-        $image=$data['image'];
-        $input['file'] =$data['member_photo'];
-        $data['member_photo_file']= $data['member_code']."_".$input['file'];
-        $destinationPath = public_path('/storage/member_photo');
-        $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
-        $imgFile->resize(150, 150, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$data['member_photo_file']);
+        if(!empty($data['member_photo'])) {
+            $image = $data['image'];
+            $input['file'] = $data['member_photo'];
+            $data['member_photo_file'] = $data['member_code'] . "_" . $input['file'];
+            $destinationPath = public_path('/storage/member_photo');
+            $imgFile = \Intervention\Image\Facades\Image::make($image->getRealPath());
+            $imgFile->resize(150, 150, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $data['member_photo_file']);
+        }else
+        {
+            $data['member_photo_file']=null;
+        }
 
 
         if(!empty($data['nid_doc']))
@@ -391,9 +432,12 @@ class MemberRepository implements MemberInterface
     }
 
     public function deleteMember($id){
-        DB::table('members')
-        ->where('id', $id)
-        ->update(['status' => 0]);
+        DB::table('members')->where('id', $id)->delete();
+        DB::table('club_memberships')->where('member_id', $id)->delete();
+        DB::table('member_dependant_lists')->where('member_id', $id)->delete();
+        DB::table('member_educations')->where('member_id', $id)->delete();
+        DB::table('payments')->where('member_id', $id)->delete();
+        DB::table('payment_details')->where('member_id', $id)->delete();
     }
 
     public function updateMember(array $data){

@@ -337,6 +337,41 @@ class MemberController extends Controller
             $rows[] = array_combine( $header_values, $r );
         }
 
-        echo "<pre>";print_r( $rows );echo "</pre>";
+        foreach ($rows as $key=>$row)
+        {
+            $member_type=substr($rows[$key]['New ID '],0,2);
+            $type_id=0;
+            if($member_type=='FM')
+            {
+                $type_id=6;
+            } else if($member_type=='LM')
+            {
+                $type_id=2;
+            }else if($member_type=='GM')
+            {
+                $type_id=4;
+            }else if($member_type=='DM')
+            {
+                $type_id=1;
+            }
+            else if($member_type=='UM')
+            {
+                $type_id=5;
+            }else if($member_type=='NM')
+            {
+                $type_id=3;
+            }
+
+            DB::table('members')->insert([
+                "first_name"=>$rows[$key]["Member's Name"],
+                "member_code"=>$rows[$key]['New ID '],
+                "member_type"=>$type_id,
+                "registration_date"=>date('Y-m-d',strtotime($rows[$key]["DOM"])),
+                "email"=>$rows[$key]["Email"],
+                "passing_year"=>empty($rows[$key]["Batch"])?0:$rows[$key]["Batch"],
+                "mobile_number"=>$rows[$key]["Contact Number"],
+            ]);
+        }
+
     }
 }
