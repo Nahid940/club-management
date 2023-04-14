@@ -2,121 +2,90 @@
 @section('pageHeading'){{$title}}@stop
 @section('style')
     .table td, .table th {
-        padding: .1rem!important
+    padding: .1rem!important
     }
     .hidden{
-        display:none
+    display:none
     }
     .form-control{
-        height: calc(1.40rem);
-        padding: .1rem 0.75rem;
-        border: 1px solid #b4bae2b5;
-        font-size: 0.7rem;
+    height: calc(1.40rem);
+    padding: .1rem 0.75rem;
+    border: 1px solid #b4bae2b5;
+    font-size: 0.7rem;
     }
     .col-sm-3 {
-        max-width: 20%;
+    max-width: 20%;
     }
     @media (min-width: 992px){
-        .col-lg-3 {
-            -ms-flex: 0 0 20% !important;
-            flex: 0 0 20% !important;
-            max-width: 20% !important;
-        }
+    .col-lg-3 {
+    -ms-flex: 0 0 20% !important;
+    flex: 0 0 20% !important;
+    max-width: 20% !important;
+    }
     }
     label {
-        margin-bottom: 0;
-        color: #4f4d50;
+    margin-bottom: 0;
+    color: #4f4d50;
     }
     .form-group {
-        margin-bottom: 0.4rem;
+    margin-bottom: 0.4rem;
     }
     .txt-info{
-        color:red;
-        font-weight:bold
+    color:red;
+    font-weight:bold
     }
     .circle1{
-        background:rgb(183 19 19);
+    background:rgb(183 19 19);
     }
     #first_step{
-        color:rgb(183 19 19)
+    color:rgb(183 19 19)
     }
     .bs-stepper .line, .bs-stepper-line {
-        min-height: 6px;
+    min-height: 6px;
     }
     .form_part_heading{
-        font-size:15px;
-        margin-bottom: 5px;
-        color:#2b73cce8;
-        border-bottom:1px dashed #ccc
+    font-size:15px;
+    margin-bottom: 5px;
+    color:#2b73cce8;
+    border-bottom:1px dashed #ccc
     }
     .card-title{
-        font-size:14px;
+    font-size:14px;
     }
     .bs-stepper-label{
-        font-size:12px;
+    font-size:12px;
     }
     [class*=icheck-]>label{
-        vertical-align:baseline
+    vertical-align:baseline
     }
 
     .swal2-popup {
-        font-size: 8px !important;
-        width:400;
-        color:#dd234b !important;
+    font-size: 8px !important;
+    width:400;
+    color:#dd234b !important;
     }
 
     .frame {
-        width: 130px;
-        height: 134px;
-        border: 3px solid #ccc;
-        background: #eee;
-        margin-left 2px: ;
-        {{--padding: 60px 25px;--}}
+    width: 130px;
+    height: 134px;
+    border: 3px solid #ccc;
+    background: #eee;
+    margin-left 2px: ;
+    {{--padding: 60px 25px;--}}
     }
     img {
-        width: 100%;
-        height:inherit
+    width: 100%;
+    height:inherit
     }
     .custom-file-upload {
-        border: 1px solid #ccc;
-        display: inline-block;
-        padding: 1% 1.6%;
-        cursor: pointer;
-        color: #0067d2
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 1% 1.6%;
+    cursor: pointer;
+    color: #0067d2
     }
     input[type="file"] {
-        display: none;
-    }
-
-
-    .suggestion-area1, .suggestion-area2 {
-    position: absolute;
-    width: 98%;
-    background-color: #fff;
-    z-index: 11;
-    display: block;
-    height: auto;
-    margin-top:-6px
-    }
-    .search-item{
-    border-bottom:1px solid #fff;
-    }
-    .suggestion-area1 .search-item, .suggestion-area1 .search-item, .suggestion-area2 .search-item {
-    background-color: #0b64d4;
-    color:#fff;
-    padding: 5px;
-    list-style: none;
-    overflow: hidden;
-    }
-    .search-content{
-    color:#fff
-    }
-    .search-item:hover{
-    background-color: #1975e6;
-    cursor:pointer
-    }
-    .hidden_area{
-    display:none
+    display: none;
     }
 @stop
 
@@ -356,7 +325,7 @@
                                     <select class="form-control" id="occupation" name="occupation">
                                         <option value="">--Select--</option>
                                         @foreach($occupations as $occupation)
-                                            <option value="{{$occupation->id}}">{{$occupation->occupation}}</option>
+                                            <option value="{{$occupation->id}}" {{old ('occupation') == $occupation->id ? 'selected' : ''}}>{{$occupation->occupation}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -793,7 +762,7 @@
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label class="custom-file-upload">
-                                    <i class="fa fa-paperclip text-danger"></i>  <span>Attach Your NID (PDF/Image)</span>
+                                    <i class="fa fa-paperclip text-danger"></i>  <span>Attach NID (PDF/Image)</span>
                                     <input type="file" name="nid_doc" class="" id="nid_doc"/>
                                     <span id="nid_file_name_tag" class="text-success"></span>
                                 </label>
@@ -802,7 +771,7 @@
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label class="custom-file-upload">
-                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach You HSC Certificate/Testimonial (PDF/Image)</span>
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach HSC Certificate/Testimonial (PDF/Image)</span>
                                     <input type="file" name="hsc_doc" class="" id="hsc_doc"/>
                                     <span id="hsc_file_name_tag" class="text-success"></span>
                                 </label>
@@ -811,9 +780,18 @@
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <label class="custom-file-upload">
-                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach You eTIN/TIN Certificate (PDF/Image)</span>
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach eTIN/TIN Certificate (PDF/Image)</span>
                                     <input type="file" name="tin_doc" class="" id="tin_doc"/>
                                     <span id="tin_file_name_tag" class="text-success"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <label class="custom-file-upload">
+                                    <i class="fa fa-paperclip text-danger"></i> <span>Attach Other Documents</span>
+                                    <input type="file" name="other_doc" class="" id="other_doc"/>
+                                    <span id="other_file_name_tag" class="text-success"></span>
                                 </label>
                             </div>
                         </div>

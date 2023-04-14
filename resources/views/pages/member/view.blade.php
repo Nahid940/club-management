@@ -55,7 +55,7 @@
                 <tr>
                     <td colspan="2">
                         <div class="callout callout-danger">
-                            <p>Registration Date: <b>{{date('d-m-Y',strtotime($member->registration_date))}}</b></p>
+                            <p>Registration Date: <b>{{empty($member->registration_date)?"N/A":date('d-m-Y',strtotime($member->registration_date))}}</b></p>
                         </div>
                     </td>
                 </tr>
@@ -147,10 +147,16 @@
                         <td><a href="{{route('member-doc-preview',[$member->member_hsc_doc,'hsc'])}}" target="_blank">Preview</a></td>
                     </tr>
                 @endif
-                @if(isset($member->member_hsc_doc) && !empty($member->member_tin_doc))
+                @if(isset($member->member_tin_doc) && !empty($member->member_tin_doc))
                     <tr class="no-print">
                         <td><i class="fa fa-paperclip text-danger"></i> TIN Certificate</td>
                         <td><a href="{{route('member-doc-preview',[$member->member_tin_doc,'tin'])}}" target="_blank">Preview</a></td>
+                    </tr>
+                @endif
+                @if(isset($member->member_other_doc) && !empty($member->member_other_doc))
+                    <tr class="no-print">
+                        <td><i class="fa fa-paperclip text-danger"></i> Other Document</td>
+                        <td><a href="{{route('member-doc-preview',[$member->member_other_doc,'other_document'])}}" target="_blank">Preview</a></td>
                     </tr>
                 @endif
             </table>

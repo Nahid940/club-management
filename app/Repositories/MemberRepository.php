@@ -121,24 +121,6 @@ class MemberRepository implements MemberInterface
 
         if(!empty($member))
         {
-//            if($member->member_type==1)
-//            {
-//                $member->member_type="Donor Member";
-//                $member->member_type_dropdown=1;
-//            }elseif($member->member_type==2)
-//            {
-//                $member->member_type="Life Member";
-//                $member->member_type_dropdown=2;
-//            }elseif($member->member_type==3)
-//            {
-//                $member->member_type="NRB Member";
-//                $member->member_type_dropdown=3;
-//            }else
-//            {
-//                $member->member_type="General Member";
-//                $member->member_type_dropdown=4;
-//            }
-
             if($member->member_type==1)
             {
                 $member->member_type="Donor Member";
@@ -281,6 +263,17 @@ class MemberRepository implements MemberInterface
             $data['member_tin_doc']=null;
         }
 
+        if(!empty($data['other_doc']))
+        {
+            $tin=$data['other_doc'];
+            $input['file'] =$data['member_other_doc'];
+            $data['member_other_doc']= $data['member_code']."_".$input['file'];
+            $tin->move(public_path('/storage/member_other_doc'),$data['member_other_doc']);
+        }else
+        {
+            $data['member_other_doc']=null;
+        }
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             'passing_year'              =>   $data['passing_year'],
@@ -329,6 +322,7 @@ class MemberRepository implements MemberInterface
             "member_nid_file"           =>   $data['member_nid_file'],
             "member_hsc_doc"            =>   $data['member_hsc_doc'],
             "member_tin_doc"            =>   $data['member_tin_doc'],
+            "member_other_doc"          =>   $data['member_other_doc'],
             "admission_fee"             =>   $data['admission_fee'],
             "user_id"                   =>   $data['user_id'],
             "proposed_by"               =>   $data['proposed_by'],
@@ -500,6 +494,18 @@ class MemberRepository implements MemberInterface
             $data['member_tin_doc']=$data['member_tin_old_doc'];
         }
 
+        if(!empty($data['other_doc']))
+        {
+            Storage::disk('local')->delete('public/member_other_doc/'. $data['member_other_old_doc']);
+            $tin=$data['other_doc'];
+            $input['file'] =$data['member_other_doc'];
+            $data['member_other_doc']= $data['member_code']."_".$input['file'];
+            $tin->move(public_path('/storage/member_other_doc'),$data['member_other_doc']);
+        }else
+        {
+            $data['member_other_doc']=$data['member_other_old_doc'];
+        }
+
         $member_basic_data=array(
             'registration_date'         =>   $data['registration_date'],
             'passing_year'              =>   $data['passing_year'],
@@ -549,6 +555,7 @@ class MemberRepository implements MemberInterface
             "member_nid_file"           =>   $data['member_nid_file'],
             "member_hsc_doc"            =>   $data['member_hsc_doc'],
             "member_tin_doc"            =>   $data['member_tin_doc'],
+            "member_other_doc"          =>   $data['member_other_doc'],
             "proposed_by"               =>   $data['proposed_by'],
             "seconded_by"               =>   $data['seconded_by'],
             "updated_at"                =>   Carbon::now(),
@@ -711,6 +718,14 @@ class MemberRepository implements MemberInterface
         $data['tin_doc']                =$tin;
         $data['member_tin_doc']         = !empty($tin)?time().'_TIN.'.$tin->getClientOriginalExtension():null;
         $data['member_tin_old_doc']     =isset($request->member_tin_old_doc)?$request->member_tin_old_doc:null;
+
+
+
+        $other_doc                        =$request->file('other_doc');
+        $data['other_doc']                =$other_doc;
+        $data['member_other_doc']         = !empty($other_doc)?time().'_other_doc.'.$other_doc->getClientOriginalExtension():null;
+        $data['member_other_old_doc']     =isset($request->member_other_old_doc)?$request->member_other_old_doc:null;
+
 
         $data['user_id']                =isset($request->user_id)?$request->user_id:null;
         $data['member_id']              =isset($request->member_id)?$request->member_id:null;

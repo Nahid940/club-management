@@ -626,6 +626,11 @@ $('#tin_doc').change(function(e){
     $('#tin_file_name_tag').text(" | "+file+" Selected" );
 });
 
+$('#other_doc').change(function(e){
+    var file = e.target.files[0].name;
+    $('#other_file_name_tag').text(" | "+file+" Selected");
+});
+
 
 $('#payment1').on('click',function(){
     $('#payment2').prop('checked',false);
