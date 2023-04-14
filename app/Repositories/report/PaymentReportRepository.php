@@ -38,10 +38,11 @@ class PaymentReportRepository implements PaymentReportInterface
         if(!empty($request->payment_type))
         {
             $where[]=['payment_details.payment_type','=',$request->payment_type];
-        }else
-        {
-            $where[]=['payment_details.payment_type','=',1];
         }
+//        else
+//        {
+//            $where[]=['payment_details.payment_type','=',1];
+//        }
 
         $payments=PaymentDetails::where($where)
             ->where('payment_details.status',1)
@@ -52,16 +53,8 @@ class PaymentReportRepository implements PaymentReportInterface
             ->orderBy('payment_id','desc')
             ->get();
 
-        if(!empty($request->member))
-        {
-            $members=Member::select('first_name','id')->where('id',$request->member)->get();
-        }else
-        {
-            $members=Member::select('first_name','id')->where('status',1)->get();
-        }
-
         $report_data=array();
-
+        $member_id=array();
         foreach ($payments as $payment)
         {
             $report_data[$payment->member_id]['payment'][$payment->id]['amount']=$payment->amount;
@@ -69,6 +62,15 @@ class PaymentReportRepository implements PaymentReportInterface
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_type']=$payment->name;
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_year']=$payment->payment_year;
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_month']=$payment->payment_month;
+            $member_id[$payment->member_id]=$payment->member_id;
+        }
+
+        if(!empty($request->member))
+        {
+            $members=Member::select('first_name','member_code','id')->where('id',$request->member)->whereIn('id',$member_id)->get();
+        }else
+        {
+            $members=Member::select('first_name','member_code','id')->where('status',1)->whereIn('id',$member_id)->get();
         }
 
         foreach ($members as $member)
@@ -76,7 +78,7 @@ class PaymentReportRepository implements PaymentReportInterface
             if(isset($report_data[$member->id]))
             {
                 $report_data[$member->id]['id']=$member->id;
-                $report_data[$member->id]['name']=$member->first_name;
+                $report_data[$member->id]['name']=$member->first_name." (".$member->member_code.")";
             }
         }
 //        echo "<pre>";print_r($report_data);echo "</pre>";die;
