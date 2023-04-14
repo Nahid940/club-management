@@ -43,14 +43,22 @@ class DonationReportService
             ->join('payment_details','payment_details.payment_id','=','payments.id')
             ->select('payments.id','payments.member_id','payments.payment_date','amount')
             ->get();
-        $members=Donor::select('name','id')->where('status',1)->get();
-
         $report_data=array();
-
+        $member_id=array();
         foreach ($payments as $payment)
         {
+//            $report_data[$payment->member_id]['payment'][$payment->id]['id']=$payment->id;
             $report_data[$payment->member_id]['payment'][$payment->id]['amount']=$payment->amount;
             $report_data[$payment->member_id]['payment'][$payment->id]['payment_date']=$payment->payment_date;
+            $member_id[$payment->member_id]=$payment->member_id;
+        }
+
+        if($data->donation_by==1)
+        {
+            $members=Donor::select('name','id')->where('status',1)->whereIn('id',$member_id)->get();
+        }else
+        {
+            $members=Member::select('first_name as name','id')->where('status',1)->whereIn('id',$member_id)->get();
         }
 
         foreach ($members as $member)
@@ -61,7 +69,6 @@ class DonationReportService
                 $report_data[$member->id]['name']=$member->name;
             }
         }
-
         return $report_data;
     }
 
