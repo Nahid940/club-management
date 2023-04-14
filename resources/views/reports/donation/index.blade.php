@@ -59,6 +59,13 @@
                         <div class="row search_frm">
 
                             <div class="col-md-2 col-sm-12">
+                                <label for="donation_by">Donation By</label>
+                                <select class="form-control" id="donation_by" name="donation_by">
+                                    <option value="1" selected>Donors</option>
+                                    <option value="2">Members</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
                                 <label for="">Date From <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" value="{{ request()->input('date_from') }}" id="date_from" name="date_from"/>
                                 <span id="date_from_error" class="text-danger"></span>
@@ -79,6 +86,7 @@
                             </div>
                             <div class="col-2" style="margin-top: 19px;font-size: inherit">
                                 <button type="button" class="btn btn-primary btn-xs" id="show-payment-report">View Report</button>
+                                <a href="" class="btn btn-warning btn-xs" id="show-payment-report">Reset</a>
                             </div>
                         </div>
                     </form>
