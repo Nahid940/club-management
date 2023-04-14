@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentDetails extends Model
 {
     use HasFactory;
-    protected $fillable=['payment_id','member_id','payment_date','amount','currency_rate',
-        'currency','payment_month','payment_year','is_payment',
+    protected $fillable=['payment_id','member_id','payment_type','payment_date','amount','currency_rate',
+        'currency','payment_month','payment_year','is_payment','status',
         'created_at','created_by','updated_at','updated_by'];
 }

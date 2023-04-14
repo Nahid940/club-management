@@ -14,6 +14,7 @@ use App\Services\DueCalculationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -116,7 +117,8 @@ class PaymentController extends Controller
                     "payment_year"=>$request->year[$i],
                     "created_at"=>Carbon::now(),
                     "created_by"=>Auth::user()->id,
-                    "is_payment"=>1
+                    "is_payment"=>1,
+                    "status"=>0
                 ]);
             }
         }
@@ -141,9 +143,9 @@ class PaymentController extends Controller
                 return redirect()->back()->with('message','Payment approved successfully!');
             }else if($request->action_type==2)
             {
-                Payment::where('id',$request->process_payment)->update(['status'=>-1]);
-                PaymentDetails::where('payment_id',$request->process_payment)->update(['status'=>-1]);
-                return redirect()->back()->with('warning','Payment declined successfully!');
+                Payment::where('id',$request->process_payment)->delete();
+                PaymentDetails::where('payment_id',$request->process_payment)->delete();
+                return redirect()->route('payment-index')->with('warning','Payment declined successfully!');
             }else if($request->action_type==3){
                 Payment::where('id',$request->process_payment)->update(['status'=>0]);
                 PaymentDetails::where('payment_id',$request->process_payment)->update(['status'=>0]);
@@ -196,7 +198,8 @@ class PaymentController extends Controller
                     "payment_year"=>$request->year[$i],
                     "created_at"=>Carbon::now(),
                     "created_by"=>Auth::user()->id,
-                    "is_payment"=>1
+                    "is_payment"=>1,
+                    "status"=>1
                 ]);
             }
         }
@@ -278,18 +281,21 @@ class PaymentController extends Controller
         {
             $where[] =['payment_type','=',$request->payment_type];
         }
-        $payments=Payment::info()->where('status',1)->where('is_payment','=','1')->where($where)->orderBy('id','desc')->get();
+        $payments=PaymentDetails::where('payment_details.status',1)->where('is_payment','=','1')
+            ->join('members','members.id','=','payment_details.member_id')
+            ->where($where)
+            ->select('first_name','member_code','payment_year','payment_month','amount')
+            ->orderBy('payment_details.id','desc')
+            ->get();
         $data=array();
         foreach ($payments as $payment)
         {
-            $data[$payment->id]['name']=isset($payment->member->first_name)?$payment->member->first_name:"";
-            $data[$payment->id]['member_code']=isset($payment->member->member_code)?$payment->member->member_code:"";
+            $data[$payment->id]['name']=$payment->first_name;
+            $data[$payment->id]['member_code']=$payment->member_code;
             $data[$payment->id]['amount']=$payment->amount;
             $data[$payment->id]['payment_date']=$payment->payment_date;
-            $data[$payment->id]['payment_month']=date('F',strtotime($payment->payment_month));
+            $data[$payment->id]['payment_month']=$payment->payment_month;
             $data[$payment->id]['payment_year']=$payment->payment_year;
-            $data[$payment->id]['purpose']=isset($payment->purpose->purpose)?$payment->purpose->purpose:"";
-            $data[$payment->id]['donation_for']=isset($payment->purpose->donation_for)?$payment->purpose->donation_for:"";
         }
         $payments=$data;
         if(empty($data))
@@ -309,5 +315,39 @@ class PaymentController extends Controller
     {
         PaymentDetails::where('id',$request->payment_details_id)->delete();
         return redirect()->back()->with('message','Data deleted successfully!!');
+    }
+
+
+
+    public function fees($id,$member_id)
+    {
+        $fees=DB::table('membership_fees')
+            ->where('membership_type_id',$id)
+            ->orderBy('id','asc')->get();
+        $schedule_fees=array();
+        $i=1;
+        foreach ($fees as $fee)
+        {
+            $from_year=date('Y',strtotime($fee->effective_from));
+            $from_month=intval(date('m',strtotime($fee->effective_from)));
+
+            $to_year=empty($fee->closing_date)?date('Y',strtotime(date('Y-m-d'))):date('Y',strtotime($fee->closing_date));
+//            $to_year=date('Y',strtotime($fee->closing_date));
+
+            $to_month=intval(date('m',strtotime($fee->closing_date)));
+            $to_month=empty($fee->closing_date)?date('m',strtotime(date('Y-m-d'))):intval(date('m',strtotime($fee->closing_date)));
+
+            $monthly_fee=$fee->monthly_fee;
+
+            for ($year = $from_year; $year <= $to_year; $year++) {
+                $start_month = ($year == $from_year) ? $from_month : 1;
+                $end_month = ($year == $to_year) ? $to_month : 12;
+                for ($month = $start_month; $month <= $end_month; $month++) {
+                    $schedule_fees[$i][$year][$month]=$monthly_fee;
+                }
+            }
+            $i++;
+        }
+        return $schedule_fees;
     }
 }

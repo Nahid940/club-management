@@ -62,7 +62,7 @@
                                 <select name="member_id" id="member_id" class="form-control">
                                     <option value="">--Select Member--</option>
                                     @foreach($members as $member)
-                                        <option value="{{$member->id}}">{{$member->first_name." (".$member->member_code.")"}}</option>
+                                        <option value="{{$member->id}}">{{$member->member_code." - ".$member->first_name}}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger member_span"></span>

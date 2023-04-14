@@ -8,6 +8,10 @@
         display: none !important;
         }
     }
+    .table td, .table th {
+        padding: .2rem;
+        text-align:center;
+    }
 @stop
 @section('content')
     <div class="row">
@@ -45,8 +49,7 @@
                                 <div class="col-sm-4 invoice-col">
                                     Member Details
                                     <address>
-                                        <strong>Name: {{$payment->member->first_name}}</strong><br>
-                                        {{$payment->member_member_code}}<br>
+                                        <strong>Name: {{$payment->member->first_name." ".$payment->member->member_code}}</strong><br>
                                         <b>
                                             @if($payment->member->member_type==1)
                                                 Donor Member
@@ -54,8 +57,10 @@
                                                 Life Member
                                             @elseif($payment->member->member_type==3)
                                                 NRB Member
-                                            @else
+                                            @elseif($payment->member->member_type==4)
                                                 General Member
+                                            @else
+                                                User Member
                                             @endif
                                         </b>
                                         <br>
@@ -69,7 +74,8 @@
                                 </div>
 
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Payment No.:</b> #{{$payment->id}}<br>
+                                    <b>Payment No.: #{{$payment->id}}</b> <br>
+                                    <b>Money Receipt No.: #{{$payment->mr_no}}</b> <br>
                                     <b>Payment Method:
                                         @if($payment->payment_method==1)
                                             Pay Order
@@ -80,11 +86,11 @@
                                         @endif
                                     </b>
                                     </br>
-                                    <b>Month: {{date('F',strtotime($payment->payment_month))}}</b>
-                                    <br>
-                                    <b>Year: {{date('Y',strtotime($payment->payment_year))}}</b>
-                                    <br>
-                                    <b>Type: {{isset($payment->paymentType->name)?$payment->paymentType->name:""}}</b>
+                                    @if($payment->payment_type==0)
+                                        <b>Type: Membership Fee</b>
+                                    @else
+                                        <b>Type: {{isset($payment->paymentType->name)?$payment->paymentType->name:""}}</b>
+                                    @endif
                                     <br>
                                     <b>Payment Status:
                                         @if($payment->status==1)
@@ -100,28 +106,45 @@
                                         <br>
                                         <b>Donation for : {{$payment->purpose->donation_for}}</b>
                                     @endif
+                                    <b>Payment Date: {{date('d-m-Y',strtotime($payment->payment_date))}}</b>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12 table-responsive">
-                                    <table class="table table-striped">
+                                    <table class="table">
                                         <tbody>
+                                            @php
+                                                $i=1;
+                                                $ttl=0;
+                                            @endphp
                                             <tr>
-                                                <td>Amount</td>
-                                                <td><b>{{number_format($payment->amount,2,".",",")}}</b></td>
+                                                <td><b>#</b></td>
+                                                <td><b>Month</b></td>
+                                                <td><b>Year</b></td>
+                                                <td><b>Amount</b></td>
                                             </tr>
+                                            @foreach($payment->paymentDetails as $details)
+                                                <tr>
+                                                    <td>{{$i++}}.</td>
+                                                    <td>{{date("F", mktime(0, 0, 0, $details->payment_month, 10))}}</td>
+                                                    <td>{{$details->payment_year}}</td>
+                                                    <td><b>{{number_format($details->amount,2,".",",")}}</b></td>
+                                                </tr>
+                                                @php $ttl+=$details->amount @endphp
+                                            @endforeach
                                             <tr>
-                                                <td>Payment Date</td>
-                                                <td>{{date('d-m-Y',strtotime($payment->payment_date))}}</td>
+                                                <td colspan="3"><div align="right"><b>Total</b></div></td>
+                                                <td><b>{{number_format($ttl,2,".",",")}}</b></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <p>{{$payment->remarks}}</p>
+                                <p>Note: {{$payment->remarks}}</p>
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
+                                    <a href="{{route('payment-edit',$payment->id)}}" class="btn btn-danger btn-xs"><i class="fas fa-pen"></i></a>
                                     <a id="print" rel="noopener" onclick="window.print()" class="btn btn-default btn-xs"><i class="fas fa-print"></i> Print</a>
                                     @role('admin|super-admin')
                                         <a href="{{route('payment-index')}}" class="btn btn-primary btn-xs"><i class="fas fa-list"></i> View List</a>
