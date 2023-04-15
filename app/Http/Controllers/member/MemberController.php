@@ -78,6 +78,17 @@ class MemberController extends Controller
         return redirect()->back()->with('message','Postponed reverted successfully');
     }
 
+    public function biodata($id)
+    {
+        if(!empty($id))
+        {
+            $member=DB::table('members')->where('members.id',$id)
+                ->leftJoin('occupations','occupations.id','=','members.occupation')
+                ->first();
+            return view('pages.member.biodata',['title' => "","member"=>$member]);
+        }
+    }
+
     public function dataPrivacy($id)
     {
         DB::statement(DB::raw("UPDATE members SET privacy_mode =(CASE WHEN privacy_mode=0 THEN 1 ELSE 0 END)WHERE id=$id"));
