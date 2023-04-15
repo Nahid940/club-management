@@ -11,6 +11,7 @@ use App\Models\MembershipType;
 use App\Models\Occupation;
 use App\Models\User;
 use App\Services\DueCalculationService;
+use App\Services\MembershipFeeSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ use Shuchkin\SimpleXLSX;
 class MemberController extends Controller
 {
     //
-    private $memberInfo; 
+    private $memberInfo;
 
     public function __construct(MemberInterface $memberInfo)
     {
@@ -55,6 +56,32 @@ class MemberController extends Controller
         $members=$this->memberInfo->getMembers($data);
         $occupations=Occupation::select('id','occupation')->get();
         return view('pages.member.new-application',['title' => $pageTitle,'members'=>$members,"occupations"=>$occupations]);
+    }
+
+    public function postponedMembers(Request $request)
+    {
+        $pageTitle="";
+        $data['branch_id']=1;
+        $data['status']=0; //-1 for new application
+        $data['request_data']=$request->all();
+        $members=$this->memberInfo->getMembers($data);
+        $occupations=Occupation::select('id','occupation')->get();
+        return view('pages.member.postponed',['title' => $pageTitle,'members'=>$members,"occupations"=>$occupations]);
+    }
+
+    public function revertPostponedMembers(Request $request)
+    {
+        if(!empty($request->id))
+        {
+            DB::table('members')->whereIn('id',$request->id)->update(['status'=>1]);
+        }
+        return redirect()->back()->with('message','Postponed reverted successfully');
+    }
+
+    public function dataPrivacy($id)
+    {
+        DB::statement(DB::raw("UPDATE members SET privacy_mode =(CASE WHEN privacy_mode=0 THEN 1 ELSE 0 END)WHERE id=$id"));
+        return redirect()->back()->with('message','Privacy mode changed!!');
     }
 
     public function read($id)
@@ -165,6 +192,12 @@ class MemberController extends Controller
 
     public function delete(MemberDeleteRequest $request)
     {
+        if($request->postponed==1)
+        {
+            Member::where('id',$request->member_id)->update(['status'=>0]);
+            $message="Member postponed successful!!";
+            return redirect()->route('member-index')->with(['message' => $message]);
+        }
        $id=$request->member_id;
        $this->memberInfo->deleteMember($id);
        $message="Member moved to trash!!";
@@ -258,6 +291,11 @@ class MemberController extends Controller
         {
             if(File::exists("public/storage/member_tin/".$request->nid)) {
                 return response()->file("public/storage/member_tin/" . $request->nid);
+            }
+        }elseif ($request->type=='other_document')
+        {
+            if(File::exists("public/storage/member_other_doc/".$request->other_document)) {
+                return response()->file("public/storage/member_other_doc/" . $request->other_document);
             }
         }
     }
@@ -374,4 +412,30 @@ class MemberController extends Controller
         }
 
     }
+
+
+    public function schedule($id,MembershipFeeSchedule $fees_schedule,DueCalculationService $due_calculation)
+    {
+
+        date_default_timezone_set('Asia/Dhaka');
+        $current_date=date('Y-m-d');
+        $current_year=date('Y');
+        $current_month=date('m');
+        $current_day=date('d');
+
+        if($current_day>=1 && $current_day<=25)
+        {
+            $current_date=date('Y-m-t',strtotime('-1 month',strtotime($current_date)));
+            $current_month=date('m',strtotime($current_date));
+        }
+
+        $request=new \stdClass();
+        $request->member_id=$id;
+        $request->date_to=$current_date;
+        $request->to_year=$current_year;
+        $request->to_month=intval($current_month);
+        $schedule=$due_calculation->getMembersPaymentSchedule($request,$fees_schedule);
+        return view('pages.member.schedule',['title'=>'','report_data'=>$schedule]);
+    }
 }
+
