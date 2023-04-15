@@ -84,9 +84,12 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:appr
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view member-list']], function () {
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
+    Route::get('/biodata/{id}', [MemberController::class, 'biodata'])->name('member-biodata');
     Route::get('/member-payment-schedule/{id}', [MemberController::class, 'schedule'])->name('payment-schedule');
     Route::get('/members/new', [MemberController::class, 'newApplications'])->name('new-applications-index');
     Route::get('/members/postponed', [MemberController::class, 'postponedMembers'])->name('postponed-member-index');
+    Route::post('/members/postponed', [MemberController::class, 'revertPostponedMembers'])->name('revert-postponed');
+    Route::get('data-privacy/{id}', [MemberController::class, 'dataPrivacy'])->name('data-privacy');
 });
 
 Route::post('/member/search', [MemberController::class, 'search'])->name('member-search');
