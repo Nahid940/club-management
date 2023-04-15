@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-lg-2 col-sm-12">
                                 {{-- <label for="mobile_number">Mobile Number</label> --}}
-                                <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number" require/>
+                                <input type="text" class="form-control" value="{{ request()->input('mobile_number') }}" id="mobile_number" name="mobile_number" placeholder="Mobile Number"/>
                             </div>
                             <div class="col-lg-2 col-sm-12">
                                 {{-- <label>Member Type <span class="txt-info"></span></label> --}}
@@ -116,8 +116,12 @@
                                                 Life Member
                                             @elseif($member->member_type==3)
                                                 NRB Member
-                                            @else
-                                                Genera Member
+                                            @elseif($member->member_type==4)
+                                                General Member
+                                            @elseif($member->member_type==5)
+                                                User Member
+                                            @elseif($member->member_type==6)
+                                                Foundation Member
                                             @endif
                                         </td>
                                         <td>{{$member->mobile_number}}</td>
@@ -143,7 +147,7 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-        {{ $members->links() }}
+        {{ $members->withQueryString()->links() }}
         <!-- /.card -->
         </div>
     </div>

@@ -84,7 +84,9 @@ Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:appr
 
 Route::group(['middleware' => ['auth','role:super-admin|admin', 'permission:view member-list']], function () {
     Route::get('/members', [MemberController::class, 'index'])->name('member-index');
+    Route::get('/member-payment-schedule/{id}', [MemberController::class, 'schedule'])->name('payment-schedule');
     Route::get('/members/new', [MemberController::class, 'newApplications'])->name('new-applications-index');
+    Route::get('/members/postponed', [MemberController::class, 'postponedMembers'])->name('postponed-member-index');
 });
 
 Route::post('/member/search', [MemberController::class, 'search'])->name('member-search');
@@ -288,6 +290,12 @@ Route::get('data-clear',function (){
     \App\Models\Payment::truncate();
     \App\Models\PaymentDetails::truncate();
     \App\Models\PaymentDetails::truncate();
+    \Illuminate\Support\Facades\DB::table('club_memberships')->truncate();
+    \Illuminate\Support\Facades\DB::table('member_dependant_lists')->truncate();
+    \Illuminate\Support\Facades\DB::table('member_educations')->truncate();
+    \Illuminate\Support\Facades\DB::table('payment_details')->truncate();
+    \Illuminate\Support\Facades\DB::table('billings')->truncate();
+    \App\Models\Member::truncate();
     echo "Data truncated";
 });
 
@@ -298,6 +306,10 @@ Route::get('backup',function (){
         ->setUserName('root')
         ->setPassword('Nahid940###***')
         ->dumpToFile('dump.sql');
+});
+
+Route::get('/storage', function () {
+    Artisan::call('storage:link');
 });
 
 require __DIR__.'/auth.php';
