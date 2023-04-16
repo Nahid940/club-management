@@ -7,6 +7,7 @@ use App\Http\Requests\PaymentRequest;
 use App\Mail\MemberPaymentMail;
 use App\Models\DonationPurpose;
 use App\Models\EmailConfig;
+use App\Models\Member;
 use App\Models\Payment;
 use App\Models\PaymentDetails;
 use App\Models\PaymentType;
@@ -84,8 +85,32 @@ class PaymentController extends Controller
         return view('pages.payment.add')->with(['title'=>$title,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
     }
 
-    public function save(PaymentRequest $request)
+    public function save(Request $request)
     {
+        if($request->payment_type==1) {
+            $request->validate([
+                'member_id'=>'required|numeric',
+                'date'=>'required|date',
+                'payment_type'=>'required',
+                'from_month'=>'required',
+                'to_month'=>'required',
+                'from_year'=>'required',
+                'to_year'=>'required',
+                'payment_method'=>'required'
+            ]);
+        }else
+        {
+            $request->validate([
+                'member_id'=>'required|numeric',
+                'date'=>'required|date',
+                'payment_type'=>'required',
+                'payment_method'=>'required'
+            ]);
+        }
+        $member_id=$request->member_id;
+        $admission_fee=Member::where('id',$member_id)->select('member_type')->first();
+        $member_monthly_fee=DB::table('membership_fees')->where('status',1)->where('membership_type_id',$admission_fee->member_type)
+            ->select('monthly_fee')->first();
 
         $id=Payment::create([
             "member_id"=>$request->member_id,
@@ -98,30 +123,58 @@ class PaymentController extends Controller
             "mr_no"=>$request->mr_no,
             "created_at"=>Carbon::now(),
             "created_by"=>Auth::user()->id,
-            "is_payment"=>1
+            "is_payment"=>empty($request->purpose_id)?1:0
         ]);
 
-        for($i=0;$i<sizeof($request->amount);$i++)
+        if($request->payment_type==1)
         {
-            if($request->amount[$i]>0)
-            {
-                PaymentDetails::create([
-                    "payment_id"=>$id->id,
-                    "member_id"=>$request->member_id,
-                    "payment_type"=>$request->payment_type,
-                    "payment_date"=>$request->date,
-                    "amount"=>$request->amount[$i],
-                    "currency_rate"=>1,
-                    "currency"=>"BDT",
-                    "payment_month"=>$request->month[$i],
-                    "payment_year"=>$request->year[$i],
-                    "created_at"=>Carbon::now(),
-                    "created_by"=>Auth::user()->id,
-                    "is_payment"=>1,
-                    "status"=>0
-                ]);
+            $year1=$request->from_year;
+            $year2=$request->to_year;
+            for ($year = $year1; $year <= $year2; $year++) {
+                $start_month = ($year == $year1) ? intval($request->from_month) : 1;
+                $end_month = ($year == $year2) ? $request->to_month : 12;
+                for ($month = $start_month; $month <= $end_month; $month++) {
+                    $month=intval($month);
+                    $exist=PaymentDetails::where('payment_month',$month)->where('payment_year',$year)->where('amount',$member_monthly_fee->monthly_fee)->where('member_id',$member_id)->count();
+                    if($exist==0)
+                    {
+                        PaymentDetails::create([
+                            "payment_id"=>$id->id,
+                            "member_id"=>$request->member_id,
+                            "payment_type"=>$request->payment_type,
+                            "payment_date"=>$request->date,
+                            "amount"=>$member_monthly_fee->monthly_fee,
+                            "currency_rate"=>1,
+                            "currency"=>"BDT",
+                            "payment_month"=>$month,
+                            "payment_year"=>$year,
+                            "created_at"=>Carbon::now(),
+                            "created_by"=>Auth::user()->id,
+                            "is_payment"=>empty($request->purpose_id)?1:0,
+                            "status"=>0
+                        ]);
+                    }
+                }
             }
+        }else
+        {
+            PaymentDetails::create([
+                "payment_id"=>$id->id,
+                "member_id"=>$request->member_id,
+                "payment_type"=>$request->payment_type,
+                "payment_date"=>$request->date,
+                "amount"=>$request->amount,
+                "currency_rate"=>1,
+                "currency"=>"BDT",
+                "payment_month"=>intval(date('m',strtotime($request->date))),
+                "payment_year"=>intval(date('Y',strtotime($request->date))),
+                "created_at"=>Carbon::now(),
+                "created_by"=>Auth::user()->id,
+                "is_payment"=>empty($request->purpose_id)?1:0,
+                "status"=>0
+            ]);
         }
+
 
         return redirect()->back()->with(['message'=>'Payment saved successfully!']);
     }
@@ -164,9 +217,12 @@ class PaymentController extends Controller
         return view('pages.payment.edit')->with(['title'=>$title,'payment'=>$payment,'payment_details'=>$payment_details,"payment_types"=>$payment_types,"donation_purposes"=>$donation_purpose]);
     }
 
-    public function update(PaymentRequest $request)
+    public function update(Request $request)
     {
-
+        $request->validate([
+            "member_id"=>"required",
+            "payment_method"=>"required",
+        ]);
         Payment::where('id',$request->payment_sl)->update([
             "member_id"=>$request->member_id,
             "payment_ref_no"=>$request->payment_ref_no,

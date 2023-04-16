@@ -14,7 +14,7 @@
     z-index: 11;
     display: block;
     height: 300px;
-    margin-top:-16px;
+    margin-top:-7px;
     overflow-y:scroll
     }
     .search-item{
@@ -92,52 +92,6 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                 <a class="btn btn-xs btn-success float-right" id="add_new_row"><i class="fa fa-plus-circle"></i></a>
-                                 <table class="table" id="pay_row">
-                                     <tr style="padding: 2px">
-                                         <td>1. </td>
-                                         <td>
-                                             <div class="form-group exp_group">
-                                                 {{--<label for="year">Year <span class="text-danger">*</span></label>--}}
-                                                 <select name="year[]" id="year" class="form-control exp-form-control" required>
-                                                     <option value="">--Year--</option>
-                                                     @for($i=2018;$i<=2030;$i++)
-                                                         <option value="{{$i}}" {{$i==date('Y')?'selected':''}}>{{$i}}</option>
-                                                     @endfor
-                                                 </select>
-                                             </div>
-                                         </td>
-                                         <td>
-                                             <div class="form-group exp_group">
-                                                 {{--<label for="month">Month <span class="text-danger">*</span></label>--}}
-                                                 <select name="month[]" id="month" class="form-control exp-form-control" required>
-                                                     <option value="">--Month--</option>
-                                                     <option value="1" {{ date('m')==1?"selected":"" }}>January</option>
-                                                     <option value="2" {{ date('m')==2?"selected":"" }}>February</option>
-                                                     <option value="3" {{ date('m')==3?"selected":"" }}>March</option>
-                                                     <option value="4" {{ date('m')==4?"selected":"" }}>April</option>
-                                                     <option value="5" {{ date('m')==5?"selected":"" }}>May</option>
-                                                     <option value="6" {{ date('m')==6?"selected":"" }}>June</option>
-                                                     <option value="7" {{ date('m')==7?"selected":"" }}>July</option>
-                                                     <option value="8" {{ date('m')==8?"selected":"" }}>August</option>
-                                                     <option value="9" {{ date('m')==9?"selected":"" }}>September</option>
-                                                     <option value="10" {{ date('m')==10?"selected":"" }}>October</option>
-                                                     <option value="11" {{ date('m')==11?"selected":"" }}>November</option>
-                                                     <option value="12" {{ date('m')==12?"selected":"" }}>December</option>
-                                                 </select>
-                                             </div>
-                                         </td>
-                                         <td>
-                                             <div class="form-group exp_group">
-                                                 {{--<label for="amount">Amount <span class="text-danger">*</span></label>--}}
-                                                 <input type="number" class="form-control exp-form-control amount_val" name="amount[]" id="amount" placeholder="Amount" required>
-                                             </div>
-                                         </td>
-                                         <td><input type="checkbox" id="same_amount" title="Set Same Amount"></td>
-                                     </tr>
-                                 </table>
-                            </div>
-                            <div class="col-md-12">
                                 <div class="form-group clearfix">
                                     <label for="" class="mem_type">Payment Type: <span class="text-danger">*</span></label>
                                     <select name="payment_type" id="payment_type" class="form-control" required>
@@ -148,6 +102,86 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <td>
+                                    <div class="form-group exp_group">
+                                        <label for="amount">Amount <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control exp-form-control amount_val" name="amount" id="amount" placeholder="Amount" required>
+                                    </div>
+                                </td>
+                            </div>
+                            <div class="col-md-12">
+                                 <table class="table" id="pay_row">
+                                     <tr style="padding: 2px">
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 {{--<label for="year">Year <span class="text-danger">*</span></label>--}}
+                                                 <label for="mr_no">From Year</label>
+                                                 <select name="from_year" id="from_year" class="form-control exp-form-control" required>
+                                                     <option value="">--From Year--</option>
+                                                     @for($i=2018;$i<=2030;$i++)
+                                                         <option value="{{$i}}">{{$i}}</option>
+                                                     @endfor
+                                                 </select>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 <label>From Month</label>
+                                                 <select name="from_month" id="from_month" class="form-control exp-form-control" required>
+                                                     <option value="">--From Month--</option>
+                                                     <option value="1">January</option>
+                                                     <option value="2">February</option>
+                                                     <option value="3">March</option>
+                                                     <option value="4">April</option>
+                                                     <option value="5">May</option>
+                                                     <option value="6">June</option>
+                                                     <option value="7">July</option>
+                                                     <option value="8">August</option>
+                                                     <option value="9">September</option>
+                                                     <option value="10">October</option>
+                                                     <option value="11">November</option>
+                                                     <option value="12">December</option>
+                                                 </select>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                     <tr style="padding: 2px">
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 <label>To Year</label>
+                                                 <select name="to_year" id="to_year" class="form-control exp-form-control" required>
+                                                     <option value="">--To Year--</option>
+                                                     @for($i=2018;$i<=2030;$i++)
+                                                         <option value="{{$i}}">{{$i}}</option>
+                                                     @endfor
+                                                 </select>
+                                             </div>
+                                         </td>
+                                         <td>
+                                             <div class="form-group exp_group">
+                                                 <label>To Month</label>
+                                                 <select name="to_month" id="to_month" class="form-control exp-form-control" required>
+                                                     <option value="">--To Month--</option>
+                                                     <option value="1">January</option>
+                                                     <option value="2">February</option>
+                                                     <option value="3">March</option>
+                                                     <option value="4">April</option>
+                                                     <option value="5">May</option>
+                                                     <option value="6">June</option>
+                                                     <option value="7">July</option>
+                                                     <option value="8">August</option>
+                                                     <option value="9">September</option>
+                                                     <option value="10">October</option>
+                                                     <option value="11">November</option>
+                                                     <option value="12">December</option>
+                                                 </select>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                 </table>
+                            </div>
+
                             <span>
                                 <a class="mb-1 text-danger add_purpose ml-1" style="cursor: pointer"><i class="fa fa-hand-point-up"></i> Add Donation Purpose</a>
                                 <a class="mb-1 text-danger close_purpose hidden_area ml-1" style="cursor: pointer"><i class="fa fa-times"></i> Close</a>
@@ -214,6 +248,24 @@
     <script src="{{asset('js/get-due.js')}}"></script>
     <script src="{{asset('js/pay_row.js')}}"></script>
     <script>
+
+        $('#payment_type').on('change',function () {
+            let val=$(this).val();
+
+            if(val!=1)
+            {
+                $('#from_year').attr('disabled','disabled');
+                $('#from_month').attr('disabled','disabled');
+                $('#to_year').attr('disabled','disabled');
+                $('#to_month').attr('disabled','disabled');
+            }else{
+                $('#from_year').removeAttr('disabled');
+                $('#from_month').removeAttr('disabled');
+                $('#to_year').removeAttr('disabled');
+                $('#to_month').removeAttr('disabled');
+            }
+        });
+
         $('.save_btn').on('click',function(){
             let null_amount=false;
             $(".amount_val").each(function(){

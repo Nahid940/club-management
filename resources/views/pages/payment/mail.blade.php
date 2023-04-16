@@ -305,6 +305,7 @@
                                         @else
                                             <p>Congratulations! Your payment has been approved.</p>
                                         @endif
+                                            <p>Payment Date {{date('d-m-Y',strtotime($payment->payment_date))}}</p>
 
                                         <p>Thank you for your payment.</p>
                                         <p style="color:#c1344d;font-weight: bold;">Please check the details bellow</p>
@@ -314,29 +315,46 @@
                                                 <td align="left">
                                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                                         <tbody>
-                                                        <tr>
-                                                            <td> Name </td>
-                                                            <td> : </td>
-                                                            <td> {{$payment->member->first_name}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td> Payment Amount </td>
-                                                            <td> : </td>
-                                                            <td> {{number_format($payment->amount,2,".",",")}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td> Payment Date </td>
-                                                            <td> : </td>
-                                                            <td> {{date('d-m-Y',strtotime($payment->payment_date))}}</td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td> <b>Name: </b></td>
+                                                                <td> <b>{{$payment->member->first_name." ".$payment->member->member_code}}</b></td>
+                                                            </tr>
+                                                            @php
+                                                                $i=1;
+                                                                $ttl=0;
+                                                            @endphp
+                                                            <tr>
+                                                                <td>#</td>
+                                                                <td><b>Payment Month</b></td>
+                                                                <td><b>Amount</b></td>
+                                                            </tr>
+                                                            @foreach($payment->paymentDetails as $details)
+                                                                <tr>
+                                                                    <td>{{$i++}}</td>
+                                                                    <td>{{date("F", mktime(0, 0, 0, $details->payment_month, 10))." ".$details->payment_year}}</td>
+                                                                    <td> {{number_format($details->amount,2,".",",")}}</td>
+                                                                </tr>
+                                                                @php
+                                                                    $ttl+=$details->amount;
+                                                                @endphp
+                                                            @endforeach
+                                                            <tr>
+                                                                <td colspan="2"><div align="left"><b>Total Paid</b></div></td>
+                                                                <td><b> {{number_format($ttl,2,".",",")}}</b></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="2"><div align="left"><b>Remaining Due </b></div></td>
+                                                                <td><b> {{!empty($due_amount)?(intval($due_amount)):'0.00'}}</b></td>
+                                                            </tr>
+
                                                         </tbody>
                                                     </table>
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p>Thank you</p>
-                                        <p>Good luck!</p>
+                                        <p>Thank You</p>
                                     </td>
                                 </tr>
                             </table>
