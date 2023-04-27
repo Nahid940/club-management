@@ -1,155 +1,141 @@
-@extends('main')
-@section('pageHeading'){{$title}}@stop
-@section('style')
-    .table td, .table th {
-    padding: .2rem;
-    text-align:center;
-    vertical-align: middle;
-    }
-    .action_button{
-    font-weight: 400;
-    padding: 0.2rem .2rem;
-    font-size: 10px;
-    border-radius: .3re
-    }
-    .form-control{
-    height: calc(1.40rem);
-    padding: .1rem 0.75rem;
-    font-size:inherit
-    }
-    .search_btn{
-    padding: .0rem .5rem;
-    line-height: 1.3;
-    }
-    .search_frm{
-    margin-bottom:.6rem
-    }
-    .action_btn{
-    padding: 0.1rem .1rem
-    }
-    .colon{
-        margin-left:20px;
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-    }
-    .bordernone{
-        border:none !important;
-        background-color:#efeedf
-    }
-@stop
-@section('content')
-    <div class="row">
-        <div class="col-sm-12 col-md-8 offset-md-2">
-            <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                    @hasrole('super-admin|admin')
-                    <a href="{{route('home')}}" class="btn btn-danger btn-xs mb-1 float-right ml-1"><i class="fa fa-window-close"></i> Close</a>
-                    <a href="{{route('member-admission')}}" class="btn btn-success btn-xs mb-1 float-right"><i class="fa fa-plus"></i> Add New</a>
-                    <a href="{{route('member-book')}}" class="btn btn-warning btn-xs mb-1 float-right mr-1"><i class="fa fa-spinner"></i> Refresh</a>
-                    <a href="{{route('new-applications-index')}}" class="btn btn-primary btn-xs mb-1 float-right mr-1"><i class="fa fa-paperclip"></i> Pending Applications</a>
-                    <a href="{{route('book-pdf')}}" class="btn btn-info btn-xs mb-1 float-right mr-1" target="_blank"><i class="fa fa-file-pdf"></i> Download PDF</a>
-                    @endrole
-                    <table id="example2" class="table">
-                        <tbody>
-                        @php $i=1; @endphp
-                            @foreach ($members as $member)
-                                <tr>
-                                    <td rowspan="7" class="bordernone"><img style="width: 140px" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt=""></td>
-                                    <td class="bordernone"><div align="left" class="text-bold">Member Code</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->member_code}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">Name</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->first_name}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">Type Of Membership</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone">
-                                        <div align="left" class="text-bold">
-                                            @if($member->member_type==1)
-                                                Donor Member
-                                            @elseif($member->member_type==2)
-                                                Life Member
-                                            @elseif($member->member_type==3)
-                                                NRB Member
-                                            @elseif($member->member_type==4)
-                                                General Member
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">Blood Group</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->blood_group}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">Mobile</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->mobile_number}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">E-mail</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->email}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="bordernone"><div align="left" class="text-bold">Address</div></td>
-                                    <td class="bordernone">:</td>
-                                    <td class="bordernone"><div align="left" class="text-bold">{{$member->present_address}}</div></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" class="">&nbsp;</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Roboto&family=Source+Sans+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <style>
 
-                {{--Name--}}
-                {{--Type Of Membership--}}
-                {{--Blood Group--}}
-                {{--Mobile--}}
-                {{--Email--}}
-                {{--Address--}}
+        body{
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .main{
+            width: 60%;
+            border: 4px solid #0088ff;
+            padding: 10px;
+            margin: 10px auto 10px auto;
+            background-color: #008ff957;
+            color:#000;
+        }
+        .my_table{
+            width: 100%;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
 
-                <!-- /.card-body -->
-            </div>
-        {{ $members->links() }}
-        <!-- /.card -->
-        </div>
-        <form action="{{route('member-delete')}}" method="POST" id="member_del">
-            {{ csrf_field() }}
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="member_id" id="member_id"/>
-        </form>
-    </div>
-@stop
-@section('script')
-    $('.delete').on('click',function(){
-    let id=$(this).attr('data-id')
-    $('#member_id').val(id)
-    Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-    if (result.isConfirmed) {
-    {{-- Swal.fire(
-    'Deleted!',
-    'Your file has been deleted.',
-    'success'
-    ) --}}
-    $('#member_del').submit();
-    }
-    })
-    })
+<div class="main">
+    @include('reports.report_header')
+    <hr>
+    <table id="" class="my_table">
+        <tbody>
+        @php $i=1; @endphp
+        @foreach ($members as $member)
+            <tr>
+                <td rowspan="7" class="bordernone">
+                    @if(isset($member->member_photo) && !empty($member->member_photo))
+                        <img style="width: 140px" src="{{asset('public/storage/member_photo/'.$member->member_photo)}}" alt="">
+                    @else
+                        <img style="width: 140px" src="{{asset('public/img/user.jpeg')}}" alt="">
+                    @endif
+                </td>
+                <td class="bordernone"><div align="left" class="text-bold">Member ID</div></td>
+                <td class="bordernone">:</td>
+                <td class="bordernone"><div align="left" class="text-bold">{{$member->member_code}}</div></td>
+            </tr>
+            <tr>
+                <td class="bordernone"><div align="left" class="text-bold">Name</div></td>
+                <td class="bordernone">:</td>
+                <td class="bordernone"><div align="left" class="text-bold">{{$member->first_name}}</div></td>
+            </tr>
+            @if($member->privacy_mode==0)
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">Type Of Membership</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone">
+                        <div align="left" class="text-bold">
+                            @if($member->member_type==1)
+                                Donor Member
+                            @elseif($member->member_type==2)
+                                Life Member
+                            @elseif($member->member_type==3)
+                                NRB Member
+                            @elseif($member->member_type==4)
+                                General Member
+                            @elseif($member->member_type==5)
+                                User Member
+                            @elseif($member->member_type==6)
+                                Foundation Member
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">Blood Group</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone"><div align="left" class="text-bold">{{$member->blood_group}}</div></td>
+                </tr>
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">Mobile</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone"><div align="left" class="text-bold">{{$member->mobile_number}}</div></td>
+                </tr>
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">E-mail</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone"><div align="left" class="text-bold">{{$member->email}}</div></td>
+                </tr>
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">Address</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone"><div align="left" class="text-bold">{{$member->present_address}}</div></td>
+                </tr>
+            @else
+                <tr>
+                    <td class="bordernone"><div align="left" class="text-bold">Type Of Membership</div></td>
+                    <td class="bordernone">:</td>
+                    <td class="bordernone">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="bordernone" colspan=""><div align="left" class="text-bold">Blood Group</div></td>
+                    <td class="bordernone" colspan="">:</td>
+                    <td class="bordernone" colspan="">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="bordernone" colspan=""><div align="left" class="text-bold">Mobile</div></td>
+                    <td class="bordernone" colspan="">:</td>
+                    <td class="bordernone" colspan="">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="bordernone"colspan=""><div align="left" class="text-bold">Email</div></td>
+                    <td class="bordernone"colspan="">:</td>
+                    <td class="bordernone"colspan="">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="bordernone" colspan=""><div align="left" class="text-bold">Address</div></td>
+                    <td class="bordernone" colspan="">:</td>
+                    <td class="bordernone" colspan="">&nbsp;</td>
+                </tr>
+            @endif
+            <tr style="">
+                <td colspan="4" class="">
+                    <hr></td>
+            </tr>
 
-@stop
+        @endforeach
+
+        </tbody>
+    </table>
+    {{$members->links()}}
+</div>
+
+</body>
+</html>

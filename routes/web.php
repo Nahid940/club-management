@@ -201,7 +201,7 @@ Route::get('/dashboard', function () {
 
 //=======================================================================
 //User Role
-Route::get('roles',[UserRoleController::class,'index'])->name('role-index');
+Route::get('roles',[UserRoleController::class,'index'])->name('role-index')->middleware('auth');
 //=======================================================================
 //=======================================================================
 //Permission
@@ -282,7 +282,7 @@ Route::group(['middleware' => ['auth']],function () {
 
 });
 
-Route::get('fees/{id}/{member_id}',[PaymentController::class,'fees']);
+Route::get('fees/{id}/{member_id}',[PaymentController::class,'fees'])->middleware('auth');
 
 Route::get('cache-clear',function (){
     \Illuminate\Support\Facades\Artisan::call('permission:cache-reset');

@@ -35,9 +35,7 @@ class DueCalculationService
         $current_date=date('Y-m-d');
         $current_year=date('Y');
         $current_month=date('m');
-//        $member_monthly_fee=DB::table('membership_fees')->where('status',1)
-//            ->where('membership_type_id',$admission_fee->member_type)
-//            ->select('monthly_fee')->first();
+
         $member_registration_date=Member::where('id',$member_id)->select('registration_date')->first();
 
         if(date('d',strtotime($member_registration_date->registration_date))>=25)
@@ -103,9 +101,9 @@ class DueCalculationService
                 ->get();
             foreach ($totalPayment as $pymnt)
             {
-                if($pymnt->payment_year>=$current_year && $pymnt->payment_month>=intval($current_month))
+                if($pymnt->payment_year>=$current_year && $pymnt->payment_month>intval($current_month))
                 {
-                    if(date('m',strtotime($ts2))==$pymnt->payment_month)
+                    if(intval(date('m',strtotime($ts2)))==$pymnt->payment_month)
                     {
                         $total_payment+=$pymnt->amount;
                     }else
