@@ -85,7 +85,8 @@ class MemberController extends Controller
             $member=DB::table('members')->where('members.id',$id)
                 ->leftJoin('occupations','occupations.id','=','members.occupation')
                 ->first();
-            return view('pages.member.biodata',['title' => "","member"=>$member]);
+            $educations=DB::table('member_educations')->where('member_id',$id)->get();
+            return view('pages.member.biodata',['title' => "","member"=>$member,"educations"=>$educations]);
         }
     }
 
@@ -337,7 +338,7 @@ class MemberController extends Controller
             'admission_fee'=>$request->admission_fee,
             'monthly_fee'=>$request->monthly_fee,
             'membership_type_id'=>$request->membership_type_id,
-            'effective_from'=>$request->opening_date,
+            'effective_from'=>'2018-01-01',
             'updated_at'=>date('Y-m-d'),
             'status'=>1,
         ]);

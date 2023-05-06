@@ -48,5 +48,12 @@ This is going to be a powerful club management system that can help to aid day t
   alt="Alt text"
   title="Schedule plan"
   style="display: inline-block; margin: 0 auto; ">
+  
+## Monthly fee payment schedule
+<img
+  src="ss/payment_schedule.png"
+  alt="Alt text"
+  title="Menu"
+  style="display: inline-block; margin: 0 auto; ">
 
   ## and lots of feature are coming.........

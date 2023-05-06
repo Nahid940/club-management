@@ -112,6 +112,10 @@ class PaymentController extends Controller
         $member_monthly_fee=DB::table('membership_fees')->where('status',1)->where('membership_type_id',$admission_fee->member_type)
             ->select('monthly_fee')->first();
 
+        if(empty($member_monthly_fee->monthly_fee) || !isset($member_monthly_fee->monthly_fee))
+        {
+            return redirect()->back()->with(['error'=>"Please set membership fee first!!"]);
+        }
         $id=Payment::create([
             "member_id"=>$request->member_id,
             "payment_ref_no"=>$request->payment_ref_no,
