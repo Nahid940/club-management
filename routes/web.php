@@ -158,9 +158,10 @@ Route::group(['middleware'=>['auth']],function (){
 
 
 Route::group(['middleware' => ['auth']],function (){
-    Route::get('member-book',[MemberBookController::class,'index'])->name('member-book');
     Route::get('book-pdf',[MemberBookController::class,'pdf'])->name('book-pdf');
 });
+
+Route::get('member-book',[MemberBookController::class,'index'])->name('member-book');
 
 Route::group(['middleware' => ['auth']],function (){
     Route::get('classification-inedx',[MemberClassificationController::class,'index'])->name('classification-index');
@@ -213,6 +214,7 @@ Route::post('assign',[PermissionController::class,'assignPermission'])->name('pe
 //=====================================Members=================================================
 Route::group(['middleware' => ['auth','role:member']], function () {
     Route::get('payments', [MemberPaymentController::class, 'index'])->name('member-payment-index');
+    Route::get('schedule', [MemberPaymentController::class, 'memberPaymentSchedule'])->name('member-payment-schedule');
     Route::get('view/payment/{id}', [MemberPaymentController::class, 'view'])->name('member-payment-view');
 });
 
@@ -280,6 +282,11 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('member-fee-due-index',[DueReporController::class,'memberFeeDueIndex'])->name('member-fee-due-index');
     Route::post('member-fee-due-report',[DueReporController::class,'memberFeeDueReport'])->name('member-fee-due-report');
 
+
+    Route::get('monthly-fee', [DueReporController::class, 'getSingleMemberMonthlyFee'])->name('monthly-fee-index');
+    Route::post('monthly-fee', [DueReporController::class, 'getSingleMemberMonthlyFeeReport'])->name('monthly-fee-report');
+
+
 });
 
 Route::get('fees/{id}/{member_id}',[PaymentController::class,'fees'])->middleware('auth');
@@ -314,5 +321,12 @@ Route::get('backup',function (){
 Route::get('/storage', function () {
     Artisan::call('storage:link');
 });
+
+Route::get('mail',[MemberController::class,'birthdayMail'])->middleware('auth');
+
+// Route::get('mail',function (){
+//     birthdayMail
+//     return view('pages.member.birthday-email');
+// });
 
 require __DIR__.'/auth.php';

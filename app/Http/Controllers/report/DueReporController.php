@@ -8,6 +8,7 @@ use App\Models\MembershipType;
 use App\Services\DueCalculationService;
 use App\Services\MembershipFeeSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DueReporController extends Controller
 {
@@ -69,6 +70,23 @@ class DueReporController extends Controller
 //        echo "<pre>";print_r($report_data);die;
         return response()->json([
             'html' => view('reports.member-fee.report',["report_data"=>$report_data])->render()
+        ]);
+    }
+
+
+    public function getSingleMemberMonthlyFee()
+    {
+        return view('reports.individual-member.monthly-fee-index',['title'=>'']);
+    }
+
+    public function getSingleMemberMonthlyFeeReport(Request $request)
+    {
+        $member_info=Member::where('user_id',Auth::user()->id)->select('id')->first();
+        $request->member_id=$member_info->id;
+        $report_data=$this->due_calculation->getMembersDueData($request,$this->fees_schedule);
+//        echo "<pre>";print_r($report_data);die;
+        return response()->json([
+            'html' => view('reports.individual-member.monthly-fee-report',["report_data"=>$report_data])->render()
         ]);
     }
 }
