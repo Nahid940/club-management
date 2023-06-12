@@ -45,6 +45,7 @@ use App\Http\Controllers\report\DueReporController;
 // Route::middleware(['auth', 'user-type:admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard-chart', [HomeController::class, 'chartData'])->name('chart');
 });
 
 
@@ -67,6 +68,9 @@ Route::group(['middleware' => ['auth','role:super-admin|admin|member']], functio
     Route::post('save-membership-fees',[MemberController::class,'saveFees'])->name('membership-fees-add');
     Route::get('fee-edit/{id}',[MemberController::class,'feeEdit'])->name('fee-edit');
     Route::post('membership-fees-update',[MemberController::class,'feesUpdate'])->name('membership-fees-update');
+    Route::get('member-type-change',[MemberController::class,'typeChange'])->name('member-type-change');
+    Route::post('member-type-update/search',[MemberController::class,'searchMemberTypeupdate'])->name('member-search-for-type-update');
+    Route::post('update-member-type',[MemberController::class,'memberTypeUdate'])->name('update-member-type');
 });
 
 Route::get('settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
@@ -285,6 +289,10 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::get('monthly-fee', [DueReporController::class, 'getSingleMemberMonthlyFee'])->name('monthly-fee-index');
     Route::post('monthly-fee', [DueReporController::class, 'getSingleMemberMonthlyFeeReport'])->name('monthly-fee-report');
+
+
+    Route::get('duration-wsie-due', [DueReporController::class, 'durationwiseDue'])->name('duration-wise-due-index');
+    Route::post('duration-wsie-due', [DueReporController::class, 'durationwiseDueReport'])->name('duration-wise-due-report');
 
 
 });

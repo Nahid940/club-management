@@ -160,6 +160,24 @@ class MemberRepository implements MemberInterface
                 ->where('member_id', $member->id)
                 ->get();
 
+            $member->proposed_member="";
+            $member->seconded_member="";
+            if(!empty($member->proposed_by))
+            {
+                $proposed_by = DB::table('members')
+                    ->where('id', $member->proposed_by)
+                    ->select('first_name','member_code')
+                    ->first();
+                $member->proposed_member=$proposed_by->first_name ."-".$proposed_by->member_code;
+            }
+            if(!empty($member->seconded_by)) {
+                $seconded_by = DB::table('members')
+                    ->where('id', $member->seconded_by)
+                    ->select('first_name', 'member_code')
+                    ->first();
+                $member->seconded_member=$seconded_by->first_name ."-".$seconded_by->member_code;
+            }
+
             $member->education= $education->isEmpty()?array():$education;
             $member->dependants= $dependants->isEmpty()?array():$dependants;
             $member->club_memberships= $club_memberships->isEmpty()?array():$club_memberships;
@@ -197,11 +215,11 @@ class MemberRepository implements MemberInterface
         {
             $where[]=['member_code',$data['request_data']['member_code']];
         }
-        $members=DB::table('members')->select("id","first_name","last_name","member_code","registration_date","member_type","mobile_number","email","blood_group")
+        $members=DB::table('members')->select("id","first_name","last_name","member_code","registration_date","passing_year","member_type","mobile_number","email","blood_group","privacy_mode")
         ->where('status',$data['status'])
         ->where($where)
-        ->orderBy('id','desc')
-        ->paginate(15);
+        ->orderBy('id','asc')
+        ->paginate(25);
         return $members;
     }
 
@@ -341,7 +359,7 @@ class MemberRepository implements MemberInterface
                     if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
                         DB::table('member_educations')->insert([
                             'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
-                            'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+                            'passing_year' => isset($data['edu_passing_year'][$i]) ? $data['edu_passing_year'][$i] : 0,
                             'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
                             'member_id' => $id
                         ]);
@@ -513,7 +531,7 @@ class MemberRepository implements MemberInterface
             "member_code"               =>   $data['member_code'],
             "last_name"                 =>   $data['name'],
             "member_photo"              =>   $data['member_photo_file'],
-            "member_type"               =>   $data['member_type'],
+            // "member_type"               =>   $data['member_type'],
             "blood_group"               =>   $data['blood_group'],
             "college_roll"              =>   $data['college_roll'],
             "date_of_birth"             =>   $data['date_of_birth'],
@@ -570,7 +588,7 @@ class MemberRepository implements MemberInterface
                 if(isset($data['institution_name'][$i]) && !empty(isset($data['institution_name'][$i]))) {
                     DB::table('member_educations')->insert([
                         'institution_name' => isset($data['institution_name'][$i]) ? $data['institution_name'][$i] : "",
-                        'passing_year' => isset($data['passing_year'][$i]) ? $data['passing_year'][$i] : 0,
+                        'passing_year' => isset($data['edu_passing_year'][$i]) ? $data['edu_passing_year'][$i] : 0,
                         'degree' => isset($data['degree'][$i]) ? $data['degree'][$i] : "",
                         'member_id' => $data['member_id']
                     ]);
@@ -662,6 +680,7 @@ class MemberRepository implements MemberInterface
 
         $data['institution_name']       =$request->institution_name;
         $data['degree']                 =$request->degree;
+        $data['edu_passing_year']                 =$request->passing_year;
         $data['present_address']        =$validated['present_address'];
         $data['permanent_address']      =$request->permanent_address;
         $data['company_name']           =$request->company_name;

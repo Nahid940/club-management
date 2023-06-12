@@ -4,6 +4,7 @@ namespace App\Http\Controllers\member;
 
 use App\Http\Requests\MemberProfileUpdateRequest;
 use App\Mail\MemberMail;
+use App\Mail\BirthdayMail;
 use App\Models\EmailConfig;
 use App\Models\Member;
 use App\Models\MemberClassification;
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Shuchkin\SimpleXLSX;
+use App\Models\Payment;
+use App\Models\PaymentDetails;
 
 class MemberController extends Controller
 {
@@ -186,7 +189,7 @@ class MemberController extends Controller
         }else
         {
             $today=date('Y-m-d');
-            return view('pages.member.admission',['title' => "",'today'=>$today,"occupations"=>$occupations,'membership_types'=>$membership_types]);
+            return view('pages.member.new_application_form',['title' => "",'today'=>$today,"occupations"=>$occupations,'membership_types'=>$membership_types]);
         }
     }
 
@@ -211,8 +214,18 @@ class MemberController extends Controller
             return redirect()->route('member-index')->with(['message' => $message]);
         }
        $id=$request->member_id;
+       $member=DB::table('members')->where('id',$id)->first();;
        $this->memberInfo->deleteMember($id);
+       if(!empty($member->user_id))
+       {
+            DB::table('users')->where('id',$member->user_id)->where('email',$member->email)->delete();
+            DB::table('model_has_roles')->where('model_id',$member->user_id)->delete();
+       }
        $message="Member moved to trash!!";
+       if(isset($request->new_application))
+       {
+            return redirect()->route('new-applications-index')->with(['message' => $message]);
+       }
        return redirect()->route('member-index')->with(['message' => $message]);
     }
 
@@ -281,7 +294,7 @@ class MemberController extends Controller
     public function search(Request $request)
     {
         if(empty($request->value)) return false;
-        $members=Member::where('member_code','LIKE',"%$request->value%")
+        $members=Member::where('first_name','LIKE',"%$request->value%")->orWhere('member_code','LIKE',"%$request->value%")
             ->where('status',1)->select('id','first_name','member_code')->get();
         return json_encode(["members"=>$members]);
     }
@@ -306,8 +319,8 @@ class MemberController extends Controller
             }
         }elseif ($request->type=='other_document')
         {
-            if(File::exists("public/storage/member_other_doc/".$request->other_document)) {
-                return response()->file("public/storage/member_other_doc/" . $request->other_document);
+            if(File::exists("public/storage/member_other_doc/".$request->nid)) {
+                return response()->file("public/storage/member_other_doc/" . $request->nid);
             }
         }
     }
@@ -376,6 +389,11 @@ class MemberController extends Controller
 
     public function import()
     {
+
+        DB::table('payments')->truncate();
+        DB::table('payment_details')->truncate();
+        DB::table('members')->truncate();
+
         $xlsx = SimpleXLSX::parse('storage/members.xlsx');
 
         $header_values = $rows = [];
@@ -412,17 +430,221 @@ class MemberController extends Controller
                 $type_id=3;
             }
 
-            DB::table('members')->insert([
-                "first_name"=>$rows[$key]["Member's Name"],
-                "member_code"=>$rows[$key]['New ID '],
-                "member_type"=>$type_id,
-                "registration_date"=>date('Y-m-d',strtotime($rows[$key]["DOM"])),
-                "email"=>$rows[$key]["Email"],
-                "passing_year"=>empty($rows[$key]["Batch"])?0:$rows[$key]["Batch"],
-                "mobile_number"=>$rows[$key]["Contact Number"],
-            ]);
+            $image_file=null;
+            if(File::exists("public/storage/member_photo/".$rows[$key]['New ID '].".jpg")) {
+                $image_file= $rows[$key]['New ID '].".jpg";
+            }else if(File::exists("public/storage/member_photo/".$rows[$key]['New ID '].".JPG"))
+            {
+                $image_file= $rows[$key]['New ID '].".JPG";
+            }
+            else if(File::exists("public/storage/member_photo/".$rows[$key]['New ID '].".jpeg"))
+            {
+                $image_file= $rows[$key]['New ID '].".jpeg";
+            }
+            else if(File::exists("public/storage/member_photo/".$rows[$key]['New ID '].".png"))
+            {
+                $image_file= $rows[$key]['New ID '].".png";
+            }
+
+            if(!empty($rows[$key]["Member's Name"]))
+            {
+                DB::table('members')->insert([
+                    "first_name"=>$rows[$key]["Member's Name"],
+                    "member_code"=>$rows[$key]['New ID '],
+                    "member_type"=>$type_id,
+                    "registration_date"=>date('Y-m-d',strtotime($rows[$key]["DOM"])),
+                    "email"=>$rows[$key]["Email"],
+                    "passing_year"=>empty($rows[$key]["Batch"])?0:$rows[$key]["Batch"],
+                    "mobile_number"=>$rows[$key]["Contact Number"],
+                    "member_photo"=>$image_file,
+                ]);
+            }
         }
 
+        $xlsx = SimpleXLSX::parse('storage/monthly_fee.xlsx');
+
+        $header_values = $rows = [];
+        foreach ( $xlsx->rows() as $k => $r ) {
+            if ( $k === 0 ) {
+                $header_values = $r;
+                continue;
+            }
+            $rows[] = array_combine( $header_values, $r );
+        }
+
+
+        $year1=2019;
+        $year2=2024;
+        $month1=1;
+        $month2=12;
+
+        $new_array=array();
+        foreach ($rows as $key=>$row)
+        {
+            
+            $code=$rows[$key]['Membership ID '];
+            $member_id=DB::table('members')->where('member_code',$code)->select('id')->first();
+            if(!empty($member_id->id))
+            {
+                $new_array[$member_id->id]['total']=0;
+                $new_array[$member_id->id]['code']=$code;
+                for ($year = $year1; $year <= $year2; $year++) {
+                    $start_month = ($year == $year1) ? $month1 : 1;
+                    $end_month = ($year == $year2) ? $month2 : 12;
+                    for ($month = $start_month; $month <= $end_month; $month++) {
+                        $time_val=$year."-".($month<10?"0".$month:$month)."-01 00:00:00";
+
+                        if(!empty($row[$time_val]) && intval($row[$time_val])>0)
+                        {
+                            $new_array[$member_id->id]['payments'][$year."-".($month<10?"0".$month:$month)."-01"]=$row[$time_val];
+                            $new_array[$member_id->id]['total']+=intval($row[$time_val]);
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach($new_array as $key=>$val)
+        {
+            if($val['total']>0)
+            {
+                $id=Payment::create([
+                    "member_id"=>$key,
+                    "payment_ref_no"=>null,
+                    "remarks"=>null,
+                    "payment_method"=>2,
+                    "payment_type"=>1,
+                    "payment_date"=>"2023-05-01",
+                    "purpose_id"=>null,
+                    "mr_no"=>null,
+                    "created_at"=>Carbon::now(),
+                    "created_by"=>1,
+                    "is_payment"=>1,
+                    "status"=>1
+                ]);
+
+                foreach($val['payments'] as $key_date=>$v)
+                {
+                    PaymentDetails::create([
+                        "payment_id"=>$id->id,
+                        "member_id"=>$key,
+                        "payment_type"=>1,
+                        "payment_date"=>$key_date,
+                        "amount"=>$v,
+                        "currency_rate"=>1,
+                        "currency"=>"BDT",
+                        "payment_month"=>date('m',strtotime($key_date)),
+                        "payment_year"=>date('Y',strtotime($key_date)),
+                        "created_at"=>$v,
+                        "created_by"=>1,
+                        "is_payment"=>1,
+                        "status"=>1
+                    ]);
+                }
+            }
+        }
+
+
+        $xlsx = SimpleXLSX::parse('storage/member_admission_fee.xlsx');
+
+        $header_values = $rows = [];
+        foreach ( $xlsx->rows() as $k => $r ) {
+            if ( $k === 0 ) {
+                $header_values = $r;
+                continue;
+            }
+            $rows[] = array_combine( $header_values, $r );
+        }
+
+        $new_array=array();
+        foreach ($rows as $key=>$row)
+        {
+            $code=$row['Membership ID'];
+            if(!empty($row['Membership ID']))
+            {
+                $member_id=DB::table('members')->where('member_code',$code)->select('id')->first();
+                if(!empty( $member_id->id))
+                {
+                    if(!empty($row['Total']))
+                    {
+                        // echo $member_id->id."<br>";
+                        $id=Payment::create([
+                            "member_id"=>$member_id->id,
+                            "payment_ref_no"=>null,
+                            "remarks"=>null,
+                            "payment_method"=>2,
+                            "payment_type"=>2,
+                            "payment_date"=>"2023-05-01",
+                            "purpose_id"=>null,
+                            "mr_no"=>null,
+                            "created_at"=>Carbon::now(),
+                            "created_by"=>1,
+                            "is_payment"=>1,
+                            "status"=>1
+                        ]);
+
+                        DB::table('members')->where('id',$member_id->id)->update(['admission_fee'=>$row['Total']]);
+
+
+                        for ($x = 1; $x <= 13; $x++) {
+
+                            $amount=$row[$x."Installment"];
+                            if(!empty($row[$x."Installment"]) && $amount>0)
+                            {
+                                PaymentDetails::create([
+                                    "payment_id"=>$id->id,
+                                    "member_id"=>$member_id->id,
+                                    "payment_type"=>2,
+                                    "payment_date"=>"2023-01-01",
+                                    "amount"=>$row[$x."Installment"],
+                                    "currency_rate"=>1,
+                                    "currency"=>"BDT",
+                                    "payment_month"=>5,
+                                    "payment_year"=>2023,
+                                    "created_at"=>Carbon::now(),
+                                    "created_by"=>1,
+                                    "is_payment"=>1,
+                                    "status"=>1
+                                ]);
+                            }
+                            
+                        }
+        
+                    }
+                }
+            }
+        }
+
+        DB::table('members')->update(['status'=>1]);
+        DB::table('payments')->update(['status'=>1]);
+        DB::table('payment_details')->update(['status'=>1]);
+  
+        // echo "<pre>";print_r($rows);die;
+
+    }
+
+
+
+
+    public function birthdayMail()
+    {
+        $date=date('d');
+        $month=date('m');
+        $memberInfo=Member::whereMonth('date_of_birth', $month)
+        ->whereDay('date_of_birth', $date)
+        ->select('first_name','member_code','email','member_type','registration_date','user_id')->get();
+        if(count($memberInfo)>0)
+        {
+            foreach($memberInfo as $info)
+            {
+                if(isset($info->email) && !empty($info->email))
+                {
+                    Mail::to($info->email)->send(new BirthdayMail());
+                }
+            }
+        }
+        
+        
     }
 
 
@@ -448,6 +670,48 @@ class MemberController extends Controller
         $request->to_month=intval($current_month);
         $schedule=$due_calculation->getMembersPaymentSchedule($request,$fees_schedule);
         return view('pages.member.schedule',['title'=>'','report_data'=>$schedule]);
+    }
+
+    public function searchMemberApi($key)
+    {
+        $members=Member::where('first_name','LIKE','%'.$key.'%')->orWhere('member_code','LIKE','%'.$key.'%')
+        ->select('id','first_name','member_code','mobile_number')
+        ->get();
+        return response()->json($members,200);
+    }
+
+    public function typeChange()
+    {
+        $types=MembershipType::select('id','type_name')
+        ->where('status',1)->get();
+        return view('pages.member.member-type-update',['types'=>$types]);
+    }
+
+    public function searchMemberTypeupdate(Request $request)
+    {
+        if(empty($request->value)) return false;
+        $members=Member::where('first_name','LIKE',"%$request->value%")->orWhere('member_code','LIKE',"%$request->value%")
+            ->join('membership_types','membership_types.id','=','members.member_type')
+            ->where('members.status',1)->select('members.id','member_type','first_name','member_code','membership_types.type_name')->get();
+        return json_encode(["members"=>$members]);
+    }
+
+    public function memberTypeUdate(Request $request)
+    {
+        $user=Auth::user()->id;
+        DB::table('members')->where('id',$request->member_id)->update(['member_type'=>$request->new_type_id]);
+        DB::table('member_type_changes')->where('member_id',$request->member_id)->update(['status'=>0]);
+        DB::table('member_type_changes')->insert([
+            'current_type_id'=>$request->present_type_id,
+            'new_type_id'=>$request->new_type_id,
+            'member_id'=>$request->member_id,
+            'updated_at'=>Carbon::now(),
+            'updated_by'=>$user,
+            'created_by'=>$user,
+            'created_at'=>Carbon::now(),
+            'status'=>1,
+        ]);
+        return redirect()->back()->with('message','Data updated successfully!');
     }
 }
 
